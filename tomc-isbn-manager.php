@@ -10,11 +10,17 @@ if( ! defined('ABSPATH') ) exit;
 
 class TOMCBookISBNPlugin {
     function __construct() {
-        global $wpdb; 
+        global $wpdb;         
         $this->charset = $wpdb->get_charset_collate();
         $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
+        $this->meta_table = $wpdb->prefix . "postmeta";
+        $this->book_products_table = $wpdb->prefix . "tomc_book_products";
+        $this->books_table = $wpdb->prefix .  "tomc_books";
+        $this->book_products_table = $wpdb->prefix . "tomc_book_products";
+
+        $this->cartContainsISBN = false;
 
         wp_localize_script('tomc-bookorg-js', 'tomcBookorgData', array(
             'root_url' => get_site_url()
@@ -25,7 +31,9 @@ class TOMCBookISBNPlugin {
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
 
-        add_action('woocommerce_after_order_notes', array($this, 'isbnProduct'));
+        add_action('woocommerce_after_order_notes', array($this, 'isbnInfoFields'));
+        add_action('woocommerce_checkout_process', array($this, 'validateIsbnInfo'));
+        add_action('woocommerce_checkout_update_order_meta', array($this, 'isbnInfoUpdateMeta'));
     }
 
     function registerScripts(){
@@ -78,22 +86,51 @@ class TOMCBookISBNPlugin {
         return $template;
     }
 
-    function isbnProduct($checkout){
-        $cart = WC()->cart->get_cart(); 
+    function isbnInfoFields($checkout){ 
+        global $wpdb;                
+        $user = wp_get_current_user();
+        $cart = WC()->cart->get_cart();
+        $now = date('Y-m-d H:i:s');
+        $userId = get_current_user_id();        
+
         foreach( $cart as $cart_item_key => $cart_item ){  
-            $product = $cart_item['data'];
-            if ($product->get_name() == 'ISBN'){
-                echo '<div id="tomcIsbnProductDiv"><h2>' . __('Which product will you be using your new ISBN for?') . '</h2>';
+            $item = $cart_item['data'];
+            if ($item->get_name() == 'ISBN'){
+                $this->cartContainsISBN = true;
+                $query = 'select a.id, a.post_title from %i a where a.post_type = %s and a.post_status = %s and a.post_author = %d order by a.post_title';
+                $products = $wpdb->get_results($wpdb->prepare($query, $this->posts_table, 'product', 'publish', $userId), ARRAY_A);
+                $productsArr = [];
+                for($i = 0; $i < count($products); $i++){
+                    $productsArr[$products[$i]['id']] = $products[$i]['post_title'];
+                }
+                if (!(is_user_logged_in() && (in_array( 'dc_vendor', (array) $user->roles ) ))){
+                    echo '<h2 class="small-heading tomc-book-organization--red-text">Please log in</h2><p class="tomc-book-organization--red-text">Only logged in authors can purchase ISBN registration services.</p>';
+                }
+                echo '<div id="tomcIsbnInfoFieldsDiv"><h2 class="small-heading">' . __('ISBN Book Information') . '</h2><p>Each ISBN can only be used for one book in one format (such as ebook or audiobook).</p>';
                 woocommerce_form_field('tomc_isbn_product', array(
-                    'type' => 'text',
+                    'type' => 'select',
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __('select your product'),
+                    'label' => __('select your book and format'),
+                    'required'    => true,
+                    'options'     => $productsArr,
                 ),
                 $checkout->get_value('tomc_isbn_product'));
                 echo '</div>';
             }
+        }
+    }
+
+    function validateIsbnInfo(){
+        if ($this->cartContainsISBN){
+            if (!$_POST['tomc_isbn_product']) wc_add_notice(__('You must choose a book format if you are purchasing an ISBN registration service. ') , 'error');
+        }
+    }
+
+    function isbnInfoUpdateMeta($order_id){
+        if (!empty($_POST['tomc_isbn_product'])) {
+            update_post_meta($order_id, 'ISBN Product ID',sanitize_text_field($_POST['tomc_isbn_product']));  
         }
     }
 }
