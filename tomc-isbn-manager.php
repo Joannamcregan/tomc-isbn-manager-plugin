@@ -112,11 +112,147 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __('select your book and format'),
+                    'label' => __('Select your book and format.'),
                     'required'    => true,
                     'options'     => $productsArr,
                 ),
                 $checkout->get_value('tomc_isbn_product'));
+                woocommerce_form_field('tomc_isbn_title', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's title."),
+                    'required'    => true,
+                ),
+                $checkout->get_value('tomc_isbn_title'));
+                woocommerce_form_field('tomc_isbn_subtitle', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's subtitle (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_subtitle'));
+                woocommerce_form_field('tomc_isbn_description', array(
+                    'type' => 'textarea',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's description (up to 350 words)."),
+                    'required'    => true,
+                ),
+                $checkout->get_value('tomc_isbn_description'));
+                woocommerce_form_field('tomc_isbn_format', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Select your book's format."),
+                    'required'    => true,
+                    'options' => array(
+                        'audiobook' => __('audiobook'),
+                        'ebook' => __('ebook')
+                    )
+                ),
+                $checkout->get_value('tomc_isbn_format'));
+                woocommerce_form_field('tomc_isbn_first_genre', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Select your book's first genre. (Note: this can be different from the genres you use for the Trunk of My Car search and browse features."),
+                    'required'    => true,
+                    'options' => array(
+                        'nonfiction_agriculture' => __('Agriculture (Nonfiction)'),
+                        'nonfiction_architecture' => __('Architecture (Nonfiction)'),
+                        'nonfiction_art' => __('Art (Nonfiction)'),
+                        'nonfiction_astrology' => __('Astrology (Nonfiction)'),
+                        'nonfiction_bible_commentaries' => __('Bible Commentaries (Nonfiction)'),
+                        'nonfiction_biography' => __('Biography (Nonfiction)'),
+                        'nonfiction_business' => __('Business (Nonfiction)'),
+                        'nonfiction_collectors_and_collecting' => __('Collectors and Collecting (Nonfiction)'),
+                        'nonfiction_computer_software' => __('Computer Software (Nonfiction)'),
+                        'nonfiction_computers' => __('Computers (Nonfiction)'),
+                        'nonfiction_cooking' => __('Cooking (Nonfiction)'),
+                        'nonfiction_crime' => __('Crime (Nonfiction)'),
+                        'nonfiction_curiosities_and_wonders' => __('Curiosities and Wonders (Nonfiction)'),
+                        'nonfiction_drama_history_and_criticism' => __('Drama History and Criticism (Nonfiction)'),
+                        'nonfiction_economics' => __('Economics (Nonfiction)'),
+                        'nonfiction_education' => __('Education (Nonfiction)'),
+                        'nonfiction_family' => __('Family (Nonfiction)'),
+                        'nonfiction_gardening' => __('Gardening (Nonfiction)'),
+                        'nonfiction_geneology' => __('Geneology (Nonfiction)'),
+                        'nonfiction_handicraft' => __('Handicraft (Nonfiction)'),
+                        'nonfiction_health' => __('Health (Nonfiction)'),
+                        'nonfiction_interior_decorating' => __('Interior Decorating (Nonfiction)'),
+                        'nonfiction_internet' => __('Internet (Nonfiction)'),
+                        'nonfiction_interpersonal_relationships' => __('Interpersonal Relationships (Nonfiction)'),
+                        'nonfiction_language_and_languages' => __('Language and Languages (Nonfiction)'),
+                        'nonfiction_language_arts' => __('Language Arts (Nonfiction)'),
+                        'nonfiction_law' => __('Law (Nonfiction)'),
+                        'nonfiction_literature_history_and_criticism' => __('Literary History and Criticism (Nonfiction)'),
+                        'nonfiction_mathematics' => __('Mathematics (Nonfiction)'),
+                        'nonfiction_medicine' => __('Medicine (Nonfiction)'),
+                        'nonfiction_military_art_and_science' => __('Military Art and Science (Nonfiction)'),
+                        'nonfiction_mind_and_body' => __('Mind and Body (Nonfiction)'),
+                        'nonfiction_music' => __('Music (Nonfiction)'),
+                        'nonfiction_nature' => __('Nature (Nonfiction)'),
+                        'nonfiction_nutrition' => __('Nutrition (Nonfiction)'),
+                        'nonfiction_parenting' => __('Parenting (Nonfiction)'),
+                        'nonfiction_performing_arts' => __('Performing Arts (Nonfiction)'),
+                        'nonfiction_personal_finance' => __('Personal Finance (Nonfiction)'),
+                        'nonfiction_pets' => __('Pets (Nonfiction)'),
+                        'nonfiction_philosophy' => __('Philosophy (Nonfiction)'),
+                        'nonfiction_physical_fitness' => __('Physical Fitness (Nonfiction)'),
+                        'nonfiction_physics' => __('Physics (Nonfiction)'),
+                        'nonfiction_poetry_history_and_criticism' => __('Poetry History and Criticism (Nonfiction)'),
+                        'nonfiction_political_science' => __('Political Science (Nonfiction)'),
+                        'nonfiction_psychology' => __('Psychology (Nonfiction)'),
+                        'nonfiction_reference_books' => __('Reference Books (Nonfiction)'),
+                        'nonfiction_science' => __('Science (Nonfiction)'),
+                        'nonfiction_self_help_techniques' => __('Self-Help Techniques (Nonfiction)'),
+                        'nonfiction_social_sciences' => __('Social Sciences (Nonfiction)'),
+                        'nonfiction_sports' => __('Sports (Nonfiction)'),
+                        'nonfiction_technology' => __('Technology (Nonfiction)'),
+                        'nonfiction_transportation' => __('Transportation (Nonfiction)'),
+                        'nonfiction_travel' => __('Travel (Nonfiction)'),
+                        'nonfiction_world_history' => __('World History (Nonfiction)'),
+
+                        'childrens_fiction' => __("Children's Fiction"),
+                        'comics_and_graphic_novels' => __('Comics and Graphic Novels'),
+                        'poetry' => __("Poetry from One Author"),
+
+                        'drama' => __('Dramatic Works from One Author'),
+                        'games' => __('Games'),
+                        'photography' => __('Photography'),
+                        'religion' => __("Religion"),
+                        'spirituality' => __("Spirituality"),
+                        'wit_and_humor' => __("Wit and Humor"),
+
+                        'fiction_action_and_adventure' => __('Action and Adventure (Fiction)'),
+                        'fiction_erotica' => __('Erotica (Fiction)'),
+                        'fiction_espionage' => __('Espionage (Fiction)'),
+                        'fiction_fantasy' => __('Fantasy (Fiction)'),
+                        'fiction_gay' => __('Gay (Fiction)'),
+                        'fiction_general' => __('General (Fiction)'),
+                        'fiction_historical' => __('Historical (Fiction)'),
+                        'fiction_horror' => __('Horror (Fiction)'),
+                        'fiction_mystery_and_detective' => __('Mystery and Detective (Fiction)'),
+                        'fiction_psychological' => __('Psychological (Fiction)'),
+                        'fiction_religious' => __('Religious (Fiction)'),
+                        'fiction_romance' => __('Romance (Fiction)'),
+                        'fiction_science_fiction' => __('Science Fiction'),
+                        'fiction_short_stories' => __('Short Story Collections from One Author (Fiction)'),
+                        'fiction_suspense' => __('Suspense (Fiction)'),
+                        'fiction_thrillers' => __('Thrillers (Fiction)'),
+                        'fiction_visionary_and_metaphysical' => __('Visionary and Metaphysical Fiction'),
+                        'fiction_war_and_military' => __('War and Military (Fiction)'),
+                        'fiction_westerns' => __('Westerns (Fiction)'),
+                    )
+                ),
+                $checkout->get_value('tomc_isbn_first_genre'));
                 echo '</div>';
             }
         }
@@ -124,13 +260,20 @@ class TOMCBookISBNPlugin {
 
     function validateIsbnInfo(){
         if ($this->cartContainsISBN){
-            if (!$_POST['tomc_isbn_product']) wc_add_notice(__('You must choose a book format if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_product']) wc_add_notice(__("You must select a product you've uploaded if you are purchasing an ISBN registration service. ") , 'error');
+            if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_format']) wc_add_notice(__('You must select a book format if you are purchasing an ISBN registration service. ') , 'error');
         }
     }
 
     function isbnInfoUpdateMeta($order_id){
         if (!empty($_POST['tomc_isbn_product'])) {
-            update_post_meta($order_id, 'ISBN Product ID',sanitize_text_field($_POST['tomc_isbn_product']));  
+            update_post_meta($order_id, 'tomc_isbn_product',sanitize_text_field($_POST['tomc_isbn_product']));
+            update_post_meta($order_id, 'tomc_isbn_title',sanitize_text_field($_POST['tomc_isbn_title']));
+            update_post_meta($order_id, 'tomc_isbn_subtitle',sanitize_text_field($_POST['tomc_isbn_subtitle']));
+            update_post_meta($order_id, 'tomc_isbn_description',sanitize_text_field($_POST['tomc_isbn_description']));
+            update_post_meta($order_id, 'tomc_isbn_format',sanitize_text_field($_POST['tomc_isbn_format']));
         }
     }
 }
