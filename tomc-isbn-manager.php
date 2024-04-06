@@ -393,6 +393,70 @@ class TOMCBookISBNPlugin {
                     'id' => 'tomc_isbn_biography1'
                 ),
                 $checkout->get_value('tomc_isbn_biography1'));
+                woocommerce_form_field('tomc_isbn_contributor2', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Add the name of someone who contributed to your book (optional)."),
+                    'required'    => true,
+                    'default' => 'function_author'
+                ),
+                $checkout->get_value('tomc_isbn_contributor2'));
+                woocommerce_form_field('tomc_isbn_function2', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("What is their relationship to this work? (This is optional.)"),
+                    'required'    => true,
+                    'options' => array(
+                        'function_author' => __('Author')
+                    ),
+                    'default' => 'function_author'
+                ),
+                $checkout->get_value('tomc_isbn_function2'));
+                woocommerce_form_field('tomc_isbn_biography2', array(
+                    'type' => 'textarea',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter their biography (up to 350 words; this is optional)."),
+                    'required'    => true
+                ),
+                $checkout->get_value('tomc_isbn_biography2'));
+                woocommerce_form_field('tomc_isbn_contributor3', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Add the name of someone else who contributed to your book (optional)."),
+                    'required'    => true,
+                    'default' => 'function_author'
+                ),
+                $checkout->get_value('tomc_isbn_contributor3'));
+                woocommerce_form_field('tomc_isbn_function3', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("What is their relationship to this work? (This is optional.)"),
+                    'required'    => true,
+                    'options' => array(
+                        'function_author' => __('Author')
+                    ),
+                    'default' => 'function_author'
+                ),
+                $checkout->get_value('tomc_isbn_function3'));
+                woocommerce_form_field('tomc_isbn_biography3', array(
+                    'type' => 'textarea',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter their biography (up to 350 words; this is optional)."),
+                    'required'    => true
+                ),
+                $checkout->get_value('tomc_isbn_biography3'));
                 woocommerce_form_field('tomc_isbn_publication_date', array(
                     'type' => 'text',
                     'class' => array(
@@ -540,26 +604,82 @@ class TOMCBookISBNPlugin {
     function isbnInfoUpdateMeta($order_id){
         if (!empty($_POST['tomc_isbn_product'])) {
             update_post_meta($order_id, 'tomc_isbn_product',sanitize_text_field($_POST['tomc_isbn_product']));
-            update_post_meta($order_id, 'tomc_isbn_title',sanitize_text_field($_POST['tomc_isbn_title']));
-            update_post_meta($order_id, 'tomc_isbn_subtitle',sanitize_text_field($_POST['tomc_isbn_subtitle']));
-            update_post_meta($order_id, 'tomc_isbn_description',sanitize_text_field($_POST['tomc_isbn_description']));
-            update_post_meta($order_id, 'tomc_isbn_format',sanitize_text_field($_POST['tomc_isbn_format']));
-            update_post_meta($order_id, 'tomc_isbn_first_genre',sanitize_text_field($_POST['tomc_isbn_first_genre']));
-            update_post_meta($order_id, 'tomc_isbn_second_genre',sanitize_text_field($_POST['tomc_isbn_second_genre']));
-            update_post_meta($order_id, 'tomc_isbn_contributor1',sanitize_text_field($_POST['tomc_isbn_contributor1']));
-            update_post_meta($order_id, 'tomc_isbn_biography1',sanitize_text_field($_POST['tomc_isbn_biography1']));
-            update_post_meta($order_id, 'tomc_isbn_function1',sanitize_text_field($_POST['tomc_isbn_function1']));
-            update_post_meta($order_id, 'tomc_isbn_publication_date',sanitize_text_field($_POST['tomc_isbn_publication_date']));
-            update_post_meta($order_id, 'tomc_isbn_status',sanitize_text_field($_POST['tomc_isbn_status']));
-            update_post_meta($order_id, 'tomc_isbn_target_audience',sanitize_text_field($_POST['tomc_isbn_target_audience']));
-            update_post_meta($order_id, 'tomc_isbn_book_price',sanitize_text_field($_POST['tomc_isbn_book_price']));
-            update_post_meta($order_id, 'tomc_isbn_book_language',sanitize_text_field($_POST['tomc_isbn_book_language']));
-            update_post_meta($order_id, 'tomc_isbn_copyright_year',sanitize_text_field($_POST['tomc_isbn_copyright_year']));
-            update_post_meta($order_id, 'tomc_isbn_control_number',sanitize_text_field($_POST['tomc_isbn_control_number']));
-            update_post_meta($order_id, 'tomc_isbn_translated_title',sanitize_text_field($_POST['tomc_isbn_translated_title']));
-            update_post_meta($order_id, 'tomc_isbn_number_of_pages',sanitize_text_field($_POST['tomc_isbn_number_of_pages']));
-            update_post_meta($order_id, 'tomc_isbn_number_of_illustrations',sanitize_text_field($_POST['tomc_isbn_number_of_illustrations']));
         }
+        if (!empty($_POST['tomc_isbn_title'])) {
+            update_post_meta($order_id, 'tomc_isbn_title',sanitize_text_field($_POST['tomc_isbn_title']));
+        }
+        if (!empty($_POST['tomc_isbn_subtitle'])) {
+            update_post_meta($order_id, 'tomc_isbn_subtitle',sanitize_text_field($_POST['tomc_isbn_subtitle']));
+        }
+        if (!empty($_POST['tomc_isbn_description'])) {
+            update_post_meta($order_id, 'tomc_isbn_description',sanitize_text_field($_POST['tomc_isbn_description']));
+        }
+        if (!empty($_POST['tomc_isbn_format'])) {
+            update_post_meta($order_id, 'tomc_isbn_format',sanitize_text_field($_POST['tomc_isbn_format']));
+        }    
+        if (!empty($_POST['tomc_isbn_first_genre'])) {
+            update_post_meta($order_id, 'tomc_isbn_first_genre',sanitize_text_field($_POST['tomc_isbn_first_genre']));
+        }    
+        if (!empty($_POST['tomc_isbn_second_genre'])) {
+            update_post_meta($order_id, 'tomc_isbn_second_genre',sanitize_text_field($_POST['tomc_isbn_second_genre']));
+        }  
+        if (!empty($_POST['tomc_isbn_contributor1'])) {
+            update_post_meta($order_id, 'tomc_isbn_contributor1',sanitize_text_field($_POST['tomc_isbn_contributor1']));
+        }  
+        if (!empty($_POST['tomc_isbn_biography1'])) {
+            update_post_meta($order_id, 'tomc_isbn_biography1',sanitize_text_field($_POST['tomc_isbn_biography1']));
+        }    
+        if (!empty($_POST['tomc_isbn_function1'])) {
+            update_post_meta($order_id, 'tomc_isbn_function1',sanitize_text_field($_POST['tomc_isbn_function1']));
+        }  
+        if (!empty($_POST['tomc_isbn_contributor2'])) {
+            update_post_meta($order_id, 'tomc_isbn_contributor1',sanitize_text_field($_POST['tomc_isbn_contributor1']));
+        }  
+        if (!empty($_POST['tomc_isbn_biography2'])) {
+            update_post_meta($order_id, 'tomc_isbn_biography1',sanitize_text_field($_POST['tomc_isbn_biography1']));
+        }    
+        if (!empty($_POST['tomc_isbn_function2'])) {
+            update_post_meta($order_id, 'tomc_isbn_function1',sanitize_text_field($_POST['tomc_isbn_function1']));
+        }
+        if (!empty($_POST['tomc_isbn_contributor3'])) {
+            update_post_meta($order_id, 'tomc_isbn_contributor1',sanitize_text_field($_POST['tomc_isbn_contributor1']));
+        }  
+        if (!empty($_POST['tomc_isbn_biography3'])) {
+            update_post_meta($order_id, 'tomc_isbn_biography1',sanitize_text_field($_POST['tomc_isbn_biography1']));
+        }    
+        if (!empty($_POST['tomc_isbn_function3'])) {
+            update_post_meta($order_id, 'tomc_isbn_function1',sanitize_text_field($_POST['tomc_isbn_function1']));
+        }  
+        if (!empty($_POST['tomc_isbn_publication_date'])) {
+            update_post_meta($order_id, 'tomc_isbn_publication_date',sanitize_text_field($_POST['tomc_isbn_publication_date']));
+        }    
+        if (!empty($_POST['tomc_isbn_status'])) {
+            update_post_meta($order_id, 'tomc_isbn_status',sanitize_text_field($_POST['tomc_isbn_status']));
+        }    
+        if (!empty($_POST['tomc_isbn_target_audience'])) {
+            update_post_meta($order_id, 'tomc_isbn_target_audience',sanitize_text_field($_POST['tomc_isbn_target_audience']));
+        }    
+        if (!empty($_POST['tomc_isbn_book_price'])) {
+            update_post_meta($order_id, 'tomc_isbn_book_price',sanitize_text_field($_POST['tomc_isbn_book_price']));
+        }    
+        if (!empty($_POST['tomc_isbn_book_language'])) {
+            update_post_meta($order_id, 'tomc_isbn_book_language',sanitize_text_field($_POST['tomc_isbn_book_language']));
+        }    
+        if (!empty($_POST['tomc_isbn_copyright_year'])) {
+            update_post_meta($order_id, 'tomc_isbn_copyright_year',sanitize_text_field($_POST['tomc_isbn_copyright_year']));
+        }    
+        if (!empty($_POST['tomc_isbn_control_number'])) {
+            update_post_meta($order_id, 'tomc_isbn_control_number',sanitize_text_field($_POST['tomc_isbn_control_number']));
+        }   
+        if (!empty($_POST['tomc_isbn_translated_title'])) {
+            update_post_meta($order_id, 'tomc_isbn_translated_title',sanitize_text_field($_POST['tomc_isbn_translated_title']));
+        }    
+        if (!empty($_POST['tomc_isbn_number_of_pages'])) {
+            update_post_meta($order_id, 'tomc_isbn_number_of_pages',sanitize_text_field($_POST['tomc_isbn_number_of_pages']));
+        }    
+        if (!empty($_POST['tomc_isbn_number_of_illustrations'])) {
+            update_post_meta($order_id, 'tomc_isbn_number_of_illustrations',sanitize_text_field($_POST['tomc_isbn_number_of_illustrations']));
+        }    
     }
 }
 

@@ -33,7 +33,7 @@ class ISBNForm{
                     this.subtitle.val(response[0]['subtitle']);
                     this.description.val(response[0]['description']);
                     this.format.val(response[0]['format']);
-                    this.biography.val(response[0]['biography']);
+                    this.biography1.val(response[0]['biography']);
                 }
             },
             error: (response) => {
