@@ -162,7 +162,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Select your book's first genre. (Note: this can be different from the genres you use for the Trunk of My Car search and browse features."),
+                    'label' => __("Select your book's first genre. (Note: this can be different from the genres you use for the Trunk of My Car search and browse features.)"),
                     'required'    => true,
                     'options' => array(
                         'nonfiction_agriculture' => __('Agriculture (Nonfiction)'),
@@ -258,7 +258,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Select your book's second genre. (This is optional. Note: this can be different from the genres you use for the Trunk of My Car search and browse features."),
+                    'label' => __("Select your book's second genre. (This is optional. Note: this can be different from the genres you use for the Trunk of My Car search and browse features.)"),
                     'required'    => false,
                     'options' => array(
                         'nonfiction_agriculture' => __('Agriculture (Nonfiction)'),
@@ -358,6 +358,127 @@ class TOMCBookISBNPlugin {
                     'required'    => true,
                 ),
                 $checkout->get_value('tomc_isbn_biography'));
+                woocommerce_form_field('tomc_isbn_function', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("What is your relationship to this work?"),
+                    'required'    => true,
+                    'options' => array(
+                        'function_author' => __('Author')
+                    )
+                ),
+                $checkout->get_value('tomc_isbn_function'));
+                woocommerce_form_field('tomc_isbn_publication_date', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's publication date (for this format)."),
+                    'required'    => true,
+                ),
+                $checkout->get_value('tomc_isbn_publication_date'));
+                woocommerce_form_field('tomc_isbn_status', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("What is the publication status of this book?"),
+                    'required'    => true,
+                    'options' => array(
+                        'status_active' => __('Active Record'),
+                        'status_forthcoming' => __('Forthcoming')
+                    )
+                ),
+                $checkout->get_value('tomc_isbn_status'));
+                woocommerce_form_field('tomc_isbn_target_audience', array(
+                    'type' => 'select',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("What is the target audience for this book? (Note: if your book is intended for a general adult audience, choose 'trade'.)"),
+                    'required'    => true,
+                    'options' => array(
+                        'status_adult_education' => __('Adult Education'),
+                        'status_college_audience' => __('College Audience'),
+                        'status_elementary_high_school' => __('Elementary/High School'),
+                        'status_english_as_second_language' => __('English as Second Language'),
+                        'status_family' => __('Family'),
+                        'status_juvenile_audience' => __('Juvenile Audience'),
+                        'status_lower_secondary_education' => __('Lower Secondary Education'),
+                        'status_pre_primary_education' => __('Pre-Primary Education'),
+                        'status_scholarly_and_professional' => __('Scholarly and Professional'),
+                        'status_second_language_teaching' => __('Second Language Teaching'),
+                        'status_trade' => __('Trade'),
+                        'status_upper_secondary_education' => __('Upper Secondary Education'),
+                        'status_young_adult_audience' => __('Young Adult Audience'),
+                    )
+                ),
+                $checkout->get_value('tomc_isbn_target_audience'));
+                woocommerce_form_field('tomc_isbn_book_price', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's current price (for this format--it's okay if the price changes later)."),
+                    'required'    => true,
+                ),
+                $checkout->get_value('tomc_isbn_book_price'));
+                woocommerce_form_field('tomc_isbn_book_language', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's primary language (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_book_language'));
+                woocommerce_form_field('tomc_isbn_copyright_year', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's copyright year (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_copyright_year'));
+                woocommerce_form_field('tomc_isbn_control_number', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your Library of Congress Control Number (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_control_number'));
+                woocommerce_form_field('tomc_isbn_translated_title', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your book's translated title (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_translated_title'));
+                woocommerce_form_field('tomc_isbn_number_of_pages', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter the number of pages in your book (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_number_of_pages'));
+                woocommerce_form_field('tomc_isbn_number_of_illustrations', array(
+                    'type' => 'text',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter the number of illustrations in your book (optional)."),
+                    'required'    => false,
+                ),
+                $checkout->get_value('tomc_isbn_number_of_illustrations'));
 
                 echo '</div>';
             }
@@ -372,6 +493,11 @@ class TOMCBookISBNPlugin {
             if (!$_POST['tomc_isbn_format']) wc_add_notice(__('You must select a book format if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_first_genre']) wc_add_notice(__("You must select one of Bowker's genres if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_biography']) wc_add_notice(__('You must enter a biography if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_function']) wc_add_notice(__('You must select your relationship to the work if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_publication_date']) wc_add_notice(__("You must enter your book's publication date if you are purchasing an ISBN registration service. ") , 'error');
+            if (!$_POST['tomc_isbn_status']) wc_add_notice(__("You must enter your book's publication status if you are purchasing an ISBN registration service. ") , 'error');
+            if (!$_POST['tomc_isbn_target_audience']) wc_add_notice(__("You must enter your book's target audience if you are purchasing an ISBN registration service. ") , 'error');
+            if (!$_POST['tomc_isbn_book_price']) wc_add_notice(__("You must enter your book's current price if you are purchasing an ISBN registration service. ") , 'error');
         }
     }
 
@@ -385,6 +511,17 @@ class TOMCBookISBNPlugin {
             update_post_meta($order_id, 'tomc_isbn_first_genre',sanitize_text_field($_POST['tomc_isbn_first_genre']));
             update_post_meta($order_id, 'tomc_isbn_second_genre',sanitize_text_field($_POST['tomc_isbn_second_genre']));
             update_post_meta($order_id, 'tomc_isbn_biography',sanitize_text_field($_POST['tomc_isbn_biography']));
+            update_post_meta($order_id, 'tomc_isbn_function',sanitize_text_field($_POST['tomc_isbn_function']));
+            update_post_meta($order_id, 'tomc_isbn_publication_date',sanitize_text_field($_POST['tomc_isbn_publication_date']));
+            update_post_meta($order_id, 'tomc_isbn_status',sanitize_text_field($_POST['tomc_isbn_status']));
+            update_post_meta($order_id, 'tomc_isbn_target_audience',sanitize_text_field($_POST['tomc_isbn_target_audience']));
+            update_post_meta($order_id, 'tomc_isbn_book_price',sanitize_text_field($_POST['tomc_isbn_book_price']));
+            update_post_meta($order_id, 'tomc_isbn_book_language',sanitize_text_field($_POST['tomc_isbn_book_language']));
+            update_post_meta($order_id, 'tomc_isbn_copyright_year',sanitize_text_field($_POST['tomc_isbn_copyright_year']));
+            update_post_meta($order_id, 'tomc_isbn_control_number',sanitize_text_field($_POST['tomc_isbn_control_number']));
+            update_post_meta($order_id, 'tomc_isbn_translated_title',sanitize_text_field($_POST['tomc_isbn_translated_title']));
+            update_post_meta($order_id, 'tomc_isbn_number_of_pages',sanitize_text_field($_POST['tomc_isbn_number_of_pages']));
+            update_post_meta($order_id, 'tomc_isbn_number_of_illustrations',sanitize_text_field($_POST['tomc_isbn_number_of_illustrations']));
         }
     }
 }
