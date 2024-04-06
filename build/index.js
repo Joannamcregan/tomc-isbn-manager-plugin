@@ -18,6 +18,13 @@ __webpack_require__.r(__webpack_exports__);
 class ISBNForm {
   constructor() {
     this.product = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_product');
+    this.title = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_title');
+    this.subtitle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_subtitle');
+    this.description = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_description');
+    this.format = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_format');
+    this.contributor1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_contributor1');
+    this.function1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_function1');
+    this.biography1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_biography1');
     this.events();
   }
   events() {
@@ -36,7 +43,13 @@ class ISBNForm {
       },
       success: response => {
         console.log(response);
-        for (let i = 0; i < response.length; i++) {}
+        if (response.length > 0) {
+          this.title.val(response[0]['title']);
+          this.subtitle.val(response[0]['subtitle']);
+          this.description.val(response[0]['description']);
+          this.format.val(response[0]['format']);
+          this.biography.val(response[0]['biography']);
+        }
       },
       error: response => {
         console.log(response);

@@ -358,17 +358,18 @@ class TOMCBookISBNPlugin {
                     'default' => ''
                 ),
                 $checkout->get_value('tomc_isbn_second_genre'));
-                woocommerce_form_field('tomc_isbn_biography', array(
-                    'type' => 'textarea',
+                woocommerce_form_field('tomc_isbn_contributor1', array(
+                    'type' => 'text',
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your biography (up to 350 words)."),
+                    'label' => __("What name did you publish this book under?"),
                     'required'    => true,
-                    'id' => 'tomc_isbn_biography'
+                    'default' => 'function_author',
+                    'id' => 'tomc_isbn_contributor1'
                 ),
-                $checkout->get_value('tomc_isbn_biography'));
-                woocommerce_form_field('tomc_isbn_function', array(
+                $checkout->get_value('tomc_isbn_contributor1'));
+                woocommerce_form_field('tomc_isbn_function1', array(
                     'type' => 'select',
                     'class' => array(
                         'form-row-wide'
@@ -378,9 +379,20 @@ class TOMCBookISBNPlugin {
                     'options' => array(
                         'function_author' => __('Author')
                     ),
-                    'default' => 'function_author'
+                    'default' => 'function_author',
+                    'id' => 'tomc_isbn_function1'
                 ),
-                $checkout->get_value('tomc_isbn_function'));
+                $checkout->get_value('tomc_isbn_function1'));
+                woocommerce_form_field('tomc_isbn_biography1', array(
+                    'type' => 'textarea',
+                    'class' => array(
+                        'form-row-wide'
+                    ),
+                    'label' => __("Enter your biography (up to 350 words)."),
+                    'required'    => true,
+                    'id' => 'tomc_isbn_biography1'
+                ),
+                $checkout->get_value('tomc_isbn_biography1'));
                 woocommerce_form_field('tomc_isbn_publication_date', array(
                     'type' => 'text',
                     'class' => array(
@@ -515,8 +527,9 @@ class TOMCBookISBNPlugin {
             if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_format']) wc_add_notice(__('You must select a book format if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_first_genre']) wc_add_notice(__("You must select one of Bowker's genres if you are purchasing an ISBN registration service. ") , 'error');
-            if (!$_POST['tomc_isbn_biography']) wc_add_notice(__('You must enter a biography if you are purchasing an ISBN registration service. ') , 'error');
-            if (!$_POST['tomc_isbn_function']) wc_add_notice(__('You must select your relationship to the work if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_contributor1']) wc_add_notice(__('You must enter the name you published your book under if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_biography1']) wc_add_notice(__('You must enter a biography if you are purchasing an ISBN registration service. ') , 'error');
+            if (!$_POST['tomc_isbn_function1']) wc_add_notice(__('You must select your relationship to the work if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_publication_date']) wc_add_notice(__("You must enter your book's publication date if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_status']) wc_add_notice(__("You must enter your book's publication status if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_target_audience']) wc_add_notice(__("You must enter your book's target audience if you are purchasing an ISBN registration service. ") , 'error');
@@ -533,8 +546,9 @@ class TOMCBookISBNPlugin {
             update_post_meta($order_id, 'tomc_isbn_format',sanitize_text_field($_POST['tomc_isbn_format']));
             update_post_meta($order_id, 'tomc_isbn_first_genre',sanitize_text_field($_POST['tomc_isbn_first_genre']));
             update_post_meta($order_id, 'tomc_isbn_second_genre',sanitize_text_field($_POST['tomc_isbn_second_genre']));
-            update_post_meta($order_id, 'tomc_isbn_biography',sanitize_text_field($_POST['tomc_isbn_biography']));
-            update_post_meta($order_id, 'tomc_isbn_function',sanitize_text_field($_POST['tomc_isbn_function']));
+            update_post_meta($order_id, 'tomc_isbn_contributor1',sanitize_text_field($_POST['tomc_isbn_contributor1']));
+            update_post_meta($order_id, 'tomc_isbn_biography1',sanitize_text_field($_POST['tomc_isbn_biography1']));
+            update_post_meta($order_id, 'tomc_isbn_function1',sanitize_text_field($_POST['tomc_isbn_function1']));
             update_post_meta($order_id, 'tomc_isbn_publication_date',sanitize_text_field($_POST['tomc_isbn_publication_date']));
             update_post_meta($order_id, 'tomc_isbn_status',sanitize_text_field($_POST['tomc_isbn_status']));
             update_post_meta($order_id, 'tomc_isbn_target_audience',sanitize_text_field($_POST['tomc_isbn_target_audience']));
