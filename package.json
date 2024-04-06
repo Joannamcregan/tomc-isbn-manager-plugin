@@ -1,0 +1,21 @@
+{
+  "name": "tomc-isbn-manager",
+  "version": "1.0.0",
+  "description": "a plugin to manage isbn registration service",
+  "main": "index.js",
+  "scripts": {
+    "watch-bs": "npm-run --parallel sync start",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "dev": "wp-scripts start",
+    "devFast": "wp-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Joanna",
+  "license": "ISC",
+  "dependencies": {
+    "@wordpress/scripts": "*",
+    "normalize.css": "^8.0.1"
+  }
+}
