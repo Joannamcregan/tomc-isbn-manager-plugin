@@ -23,7 +23,6 @@ class ISBNForm {
     this.description = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_description');
     this.format = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_format');
     this.contributor1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_contributor1');
-    this.function1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_function1');
     this.biography1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_biography1');
     this.events();
   }
@@ -48,6 +47,7 @@ class ISBNForm {
           this.subtitle.val(response[0]['subtitle']);
           this.description.val(response[0]['description']);
           this.format.val(response[0]['format']);
+          this.contributor1.val(response[0]['contributor']);
           this.biography1.val(response[0]['biography']);
         }
       },

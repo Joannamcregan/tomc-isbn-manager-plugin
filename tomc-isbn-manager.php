@@ -365,7 +365,6 @@ class TOMCBookISBNPlugin {
                     ),
                     'label' => __("What name did you publish this book under?"),
                     'required'    => true,
-                    'default' => 'function_author',
                     'id' => 'tomc_isbn_contributor1'
                 ),
                 $checkout->get_value('tomc_isbn_contributor1'));
@@ -399,8 +398,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Add the name of someone who contributed to your book (optional)."),
-                    'required'    => true,
-                    'default' => 'function_author'
+                    'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_contributor2'));
                 woocommerce_form_field('tomc_isbn_function2', array(
@@ -411,9 +409,35 @@ class TOMCBookISBNPlugin {
                     'label' => __("What is their relationship to this work? (This is optional.)"),
                     'required'    => true,
                     'options' => array(
-                        'function_author' => __('Author')
-                    ),
-                    'default' => 'function_author'
+                        'function_appendix_by' => __('Appendix by'),
+                        'function_artist' => __('Artist'),
+                        'function_assisted_by' => __('Assisted by'),
+                        'function_author' => __('Author'),
+                        'function_continued_by' => __('Continued by'),
+                        'function_cover_design_by' => __('Cover Design by'),
+                        'function_editor' => __('Editor'),
+                        'function_epilogue_by' => __('Epilogue by'),
+                        'function_footnotes_by' => __('Footnotes by'),
+                        'function_forward_by' => __('Forward by'),
+                        'function_historical_advisor' => __('Historical Advisor'),
+                        'function_illustrator' => __('Illustrator'),
+                        'function_interviewee' => __('Interviewee'),
+                        'function_interviewer' => __('Interviewer'),
+                        'function_introduction_by' => __('Introduction by'),
+                        'function_notes_by' => __('Notes by'),
+                        'function_performed_by' => __('Performed by'),
+                        'function_photographer' => __('Photographer'),
+                        'function_preface_by' => __('Preface by'),
+                        'function_prologue_by' => __('Prologue by'),
+                        'function_research_by' => __('Retold by'),
+                        'function_reviewed_by' => __('Reviewed by'),
+                        'function_scientific_editor' => __('Scientific Editor'),
+                        'function_software_by' => __('Software by'),
+                        'function_technical_editor' => __('Technical Editor'),
+                        'function_thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
+                        'function_transcribed_by' => __('Transcribed by'),
+                        'function_translated_by' => __('Translated by')
+                    )
                 ),
                 $checkout->get_value('tomc_isbn_function2'));
                 woocommerce_form_field('tomc_isbn_biography2', array(
@@ -431,8 +455,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Add the name of someone else who contributed to your book (optional)."),
-                    'required'    => true,
-                    'default' => 'function_author'
+                    'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_contributor3'));
                 woocommerce_form_field('tomc_isbn_function3', array(
@@ -443,7 +466,34 @@ class TOMCBookISBNPlugin {
                     'label' => __("What is their relationship to this work? (This is optional.)"),
                     'required'    => true,
                     'options' => array(
-                        'function_author' => __('Author')
+                        'function_appendix_by' => __('Appendix by'),
+                        'function_artist' => __('Artist'),
+                        'function_assisted_by' => __('Assisted by'),
+                        'function_author' => __('Author'),
+                        'function_continued_by' => __('Continued by'),
+                        'function_cover_design_by' => __('Cover Design by'),
+                        'function_editor' => __('Editor'),
+                        'function_epilogue_by' => __('Epilogue by'),
+                        'function_footnotes_by' => __('Footnotes by'),
+                        'function_forward_by' => __('Forward by'),
+                        'function_historical_advisor' => __('Historical Advisor'),
+                        'function_illustrator' => __('Illustrator'),
+                        'function_interviewee' => __('Interviewee'),
+                        'function_interviewer' => __('Interviewer'),
+                        'function_introduction_by' => __('Introduction by'),
+                        'function_notes_by' => __('Notes by'),
+                        'function_performed_by' => __('Performed by'),
+                        'function_photographer' => __('Photographer'),
+                        'function_preface_by' => __('Preface by'),
+                        'function_prologue_by' => __('Prologue by'),
+                        'function_research_by' => __('Retold by'),
+                        'function_reviewed_by' => __('Reviewed by'),
+                        'function_scientific_editor' => __('Scientific Editor'),
+                        'function_software_by' => __('Software by'),
+                        'function_technical_editor' => __('Technical Editor'),
+                        'function_thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
+                        'function_transcribed_by' => __('Transcribed by'),
+                        'function_translated_by' => __('Translated by')
                     ),
                     'default' => 'function_author'
                 ),

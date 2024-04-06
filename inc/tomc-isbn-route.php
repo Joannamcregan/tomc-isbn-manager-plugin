@@ -23,7 +23,8 @@ function populate($data){
     books.subtitle,
     books.book_description as description,
     producttypes.type_name as format,
-    authorposts.post_title as title
+    authorposts.post_title as contributor,
+    authorposts.post_content as biography
     from %i posts
     left join %i bookproducts on posts.id = bookproducts.productid
     left join %i books on bookproducts.bookid = books.id
