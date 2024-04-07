@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 class ISBNForm{
     constructor(){
+        this.formSection = $('#tomcIsbnInfoFieldsDiv');
         this.product = $('#tomc_isbn_product');
         this.title = $('#tomc_isbn_title');
         this.subtitle = $('#tomc_isbn_subtitle');
@@ -16,6 +17,7 @@ class ISBNForm{
         this.events();
     }
     events(){
+        this.formSection.on('load', setTimeout(this.populate.bind(this), 300));
         this.product.on('change', this.populate.bind(this));
     }
     populate(){

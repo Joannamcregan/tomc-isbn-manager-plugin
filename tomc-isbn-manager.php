@@ -66,8 +66,6 @@ class TOMCBookISBNPlugin {
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_records_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             productid bigint(20) unsigned NOT NULL,
-            createdate datetime NOT NULL,
-            hasBeenProcessed bit NOT NULL DEFAULT 0,
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
             PRIMARY KEY  (id),
@@ -75,7 +73,7 @@ class TOMCBookISBNPlugin {
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
-        if (post_exists('ISBN Records', '', '', 'page', 'publish') == 0){
+        if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){
             $this->addISBNRecordsPage();
         }
     }
@@ -630,7 +628,7 @@ class TOMCBookISBNPlugin {
 
     function validateIsbnInfo(){
         if ($this->cartContainsISBN){
-            if (!$_POST['tomc_isbn_product']) wc_add_notice(__("You must select a product you've uploaded if you are purchasing an ISBN registration service. ") , 'error');
+            if ((!$_POST['tomc_isbn_product']) || $_POST['tomc_isbn_product'] == '') wc_add_notice(__("You must select a product you've uploaded if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_format']) wc_add_notice(__('You must select a book format if you are purchasing an ISBN registration service. ') , 'error');
@@ -646,7 +644,7 @@ class TOMCBookISBNPlugin {
     }
 
     function isbnInfoUpdateMeta($order_id){
-        if (!empty($_POST['tomc_isbn_product'])) {
+        if ((!empty($_POST['tomc_isbn_product'])) && ($_POST['tomc_isbn_product'] != 0)) {
             update_post_meta($order_id, 'tomc_isbn_product',sanitize_text_field($_POST['tomc_isbn_product']));
         }
         if (!empty($_POST['tomc_isbn_title'])) {

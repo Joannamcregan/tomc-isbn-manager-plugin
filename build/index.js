@@ -17,6 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class ISBNForm {
   constructor() {
+    this.formSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomcIsbnInfoFieldsDiv');
     this.product = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_product');
     this.title = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_title');
     this.subtitle = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_subtitle');
@@ -31,6 +32,7 @@ class ISBNForm {
     this.events();
   }
   events() {
+    this.formSection.on('load', setTimeout(this.populate.bind(this), 300));
     this.product.on('change', this.populate.bind(this));
   }
   populate() {
