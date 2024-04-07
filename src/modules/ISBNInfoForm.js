@@ -9,6 +9,8 @@ class ISBNForm{
         this.format = $('#tomc_isbn_format');
         this.contributor1 = $('#tomc_isbn_contributor1');
         this.biography1 = $('#tomc_isbn_biography1');
+        this.publicationdate = $('#tomc_isbn_publication_date');
+        this.status = $('#tomc_isbn_status');
         this.events();
     }
     events(){
@@ -34,7 +36,8 @@ class ISBNForm{
                     this.format.val(response[0]['format']);
                     this.contributor1.val(response[0]['contributor']);
                     this.biography1.val(response[0]['biography']);
-                    
+                    this.publicationdate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
+                    this.status.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
                 }
             },
             error: (response) => {

@@ -134,7 +134,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your book's subtitle (optional)."),
+                    'label' => __("Enter your book's subtitle."),
                     'required'    => false,
                     'id' => 'tomc_isbn_subtitle'
                 ),
@@ -265,7 +265,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Select your book's second genre. (This is optional. Note: this can be different from the genres you use for the Trunk of My Car search and browse features.)"),
+                    'label' => __("Select your book's second genre. (Note: this can be different from the genres you use for the Trunk of My Car search and browse features.)"),
                     'required'    => false,
                     'options' => array(
                         'none' => '',
@@ -397,7 +397,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Add the name of someone who contributed to your book (optional)."),
+                    'label' => __("Add the name of someone who contributed to your book."),
                     'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_contributor2'));
@@ -406,7 +406,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("What is their relationship to this work? (This is optional.)"),
+                    'label' => __("What is their relationship to this work?"),
                     'required'    => true,
                     'options' => array(
                         'function_appendix_by' => __('Appendix by'),
@@ -445,7 +445,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter their biography (up to 350 words; this is optional)."),
+                    'label' => __("Enter their biography (up to 350 words)."),
                     'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_biography2'));
@@ -454,7 +454,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Add the name of someone else who contributed to your book (optional)."),
+                    'label' => __("Add the name of someone else who contributed to your book."),
                     'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_contributor3'));
@@ -463,7 +463,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("What is their relationship to this work? (This is optional.)"),
+                    'label' => __("What is their relationship to this work?"),
                     'required'    => true,
                     'options' => array(
                         'function_appendix_by' => __('Appendix by'),
@@ -494,8 +494,7 @@ class TOMCBookISBNPlugin {
                         'function_thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
                         'function_transcribed_by' => __('Transcribed by'),
                         'function_translated_by' => __('Translated by')
-                    ),
-                    'default' => 'function_author'
+                    )
                 ),
                 $checkout->get_value('tomc_isbn_function3'));
                 woocommerce_form_field('tomc_isbn_biography3', array(
@@ -503,7 +502,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter their biography (up to 350 words; this is optional)."),
+                    'label' => __("Enter their biography (up to 350 words)."),
                     'required'    => true
                 ),
                 $checkout->get_value('tomc_isbn_biography3'));
@@ -512,7 +511,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your book's publication date (for this format)."),
+                    'label' => __("Enter your book's publication date (for this format--please use 'm/d/yyyy' format)."),
                     'required'    => true,
                     'id' => 'tomc_isbn_publication_date'
                 ),
@@ -573,7 +572,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your book's primary language (optional)."),
+                    'label' => __("Enter your book's primary language."),
                     'required'    => false,
                     'id' => 'tomc_isbn_book_language'
                 ),
@@ -583,7 +582,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your book's copyright year (optional)."),
+                    'label' => __("Enter your book's copyright year."),
                     'required'    => false,
                     'id' => 'tomc_isbn_copyright_year'
                 ),
@@ -593,7 +592,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your Library of Congress Control Number (optional)."),
+                    'label' => __("Enter your Library of Congress Control Number."),
                     'required'    => false,
                     'id' => 'tomc_isbn_control_number'
                 ),
@@ -603,7 +602,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter your book's translated title (optional)."),
+                    'label' => __("Enter your book's translated title."),
                     'required'    => false,
                     'id' => 'tomc_isbn_translated_title'
                 ),
@@ -613,7 +612,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter the number of pages in your book (optional)."),
+                    'label' => __("Enter the number of pages in your book."),
                     'required'    => false,
                     'id' => 'tomc_isbn_number_of_pages'
                 ),
@@ -623,7 +622,7 @@ class TOMCBookISBNPlugin {
                     'class' => array(
                         'form-row-wide'
                     ),
-                    'label' => __("Enter the number of illustrations in your book (optional)."),
+                    'label' => __("Enter the number of illustrations in your book."),
                     'required'    => false,
                     'id' => 'tomc_isbn_number_of_illustrations'
                 ),
