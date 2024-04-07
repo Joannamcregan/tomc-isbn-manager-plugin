@@ -26,6 +26,8 @@ class ISBNForm {
     this.biography1 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_biography1');
     this.publicationdate = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_publication_date');
     this.status = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_status');
+    this.price = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_book_price');
+    this.language = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc_isbn_book_language');
     this.events();
   }
   events() {
@@ -53,6 +55,8 @@ class ISBNForm {
           this.biography1.val(response[0]['biography']);
           this.publicationdate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
           this.status.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
+          this.price.val('$' + response[0]['price']);
+          this.language.val(response[0]['language']);
         }
       },
       error: response => {

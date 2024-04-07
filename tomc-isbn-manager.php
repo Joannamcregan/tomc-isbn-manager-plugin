@@ -583,8 +583,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter your book's copyright year."),
-                    'required'    => false,
-                    'id' => 'tomc_isbn_copyright_year'
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_copyright_year'));
                 woocommerce_form_field('tomc_isbn_control_number', array(
@@ -593,8 +592,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter your Library of Congress Control Number."),
-                    'required'    => false,
-                    'id' => 'tomc_isbn_control_number'
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_control_number'));
                 woocommerce_form_field('tomc_isbn_translated_title', array(
@@ -603,8 +601,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter your book's translated title."),
-                    'required'    => false,
-                    'id' => 'tomc_isbn_translated_title'
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_translated_title'));
                 woocommerce_form_field('tomc_isbn_number_of_pages', array(
@@ -613,8 +610,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter the number of pages in your book."),
-                    'required'    => false,
-                    'id' => 'tomc_isbn_number_of_pages'
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_number_of_pages'));
                 woocommerce_form_field('tomc_isbn_number_of_illustrations', array(
@@ -623,8 +619,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter the number of illustrations in your book."),
-                    'required'    => false,
-                    'id' => 'tomc_isbn_number_of_illustrations'
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_number_of_illustrations'));
 
