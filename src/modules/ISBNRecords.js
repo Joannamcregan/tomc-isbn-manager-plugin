@@ -2,24 +2,20 @@ import $ from 'jquery';
 
 class ISBNRecords{
     constructor(){
-        
+        this.getUnfiled = $('#tomc-isbn-get-unfiled-records');
+        this.getFiled = $('#tomc-isbn-get-filed-records');
         this.events();
     }
     events(){
-        // this.formSection.on('load', setTimeout(this.populate.bind(this), 300));
-        // this.product.on('change', this.populate.bind(this));
+        this.getUnfiled.on('click', this.getUnfiledRecords.bind(this));
     }
-    populate(){
-        var productId = this.product.val();
+    getUnfiledRecords(){
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
             type: 'GET',
-            data: {
-                'productId': productId
-            },
             success: (response) => {
                 console.log(response);
                 

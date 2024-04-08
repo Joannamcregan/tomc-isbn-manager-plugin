@@ -4,7 +4,7 @@ add_action('rest_api_init', 'tomcIsbnRegisterRoute');
 
 function tomcIsbnRegisterRoute() {
     register_rest_route('tomcISBN/v1', 'populate', array(
-        'methods' => 'POST',
+        'methods' => 'GET',
         'callback' => 'populate'
     ));
     register_rest_route('tomcISBN/v1', 'getUnfiledRecords', array(
@@ -28,7 +28,7 @@ function populate($data){
     $pen_names_table = $wpdb->prefix . "tomc_pen_names_books";
     $users_table = $wpdb->prefix . "users";
     $usermeta_table = $wpdb->prefix . "usermeta";
-    $isbn_table = $wpdb->prefix . "tomc_isbn_records";
+    $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
     $query = 'select IFNULL(books.title, posts.post_title) as title,
     books.subtitle,
     books.book_description as description,
@@ -59,13 +59,13 @@ function populate($data){
     // return $wpdb->prepare($query, $posts_table, $postmeta_table, $users_table, $usermeta_table, $book_products_table, $books_table, $product_types_table, $pen_names_table, $posts_table, $book_languages_table, $languages_table, $productId);
 }
 
-function getUnfiledRecords($data){
-    $productId = sanitize_text_field($data['productId']);
+function getUnfiledRecords(){
     $user = wp_get_current_user();
     global $wpdb;
     $posts_table = $wpdb->prefix . "posts";
     $postmeta_table = $wpdb->prefix . "postmeta";
     $users_table = $wpdb->prefix . "users";
+    $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
     $query = 'select 
     products.id as isbn_for, 
     users.display_name as user_display_name, 
@@ -151,6 +151,7 @@ function getUnfiledRecords($data){
     and pages.meta_key = "tomc_isbn_number_of_pages"
     left join %i ills on isbnposts.id = ills.post_id
     and ills.meta_key = "tomc_isbn_number_of_illustrations"';
-    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
+    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
+    // return prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table);
     return $results;
 }

@@ -31,7 +31,7 @@ class ISBNForm{
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/populate',
-            type: 'POST',
+            type: 'GET',
             data: {
                 'productId': productId
             },
