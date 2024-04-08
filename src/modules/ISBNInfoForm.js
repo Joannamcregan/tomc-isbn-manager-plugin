@@ -16,11 +16,15 @@ class ISBNForm{
         this.language = $('#tomc_isbn_book_language');
         this.events();
     }
-    events(){
-        this.formSection.on('load', setTimeout(this.populate.bind(this), 300));
+    events(){             
         this.product.on('change', this.populate.bind(this));
+        $( window ).on( "load", this.initialPopulate.bind(this));
+    }
+    initialPopulate(){
+        setTimeout(this.populate.bind(this), 100);
     }
     populate(){
+        console.log('populate called!!!');
         var productId = this.product.val();
         $.ajax({
             beforeSend: (xhr) => {

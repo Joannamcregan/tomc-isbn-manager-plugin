@@ -65,11 +65,11 @@ class TOMCBookISBNPlugin {
 
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_records_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            productid bigint(20) unsigned NOT NULL,
+            isbnproductid bigint(20) unsigned NOT NULL,
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
             PRIMARY KEY  (id),
-            FOREIGN KEY  (productid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (isbnproductid) REFERENCES $this->posts_table(id),
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
@@ -374,9 +374,9 @@ class TOMCBookISBNPlugin {
                     'label' => __("What is your relationship to this work?"),
                     'required'    => true,
                     'options' => array(
-                        'function_author' => __('Author')
+                        'author' => __('Author')
                     ),
-                    'default' => 'function_author',
+                    'default' => 'author',
                     'id' => 'tomc_isbn_function1'
                 ),
                 $checkout->get_value('tomc_isbn_function1'));
@@ -396,7 +396,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Add the name of someone who contributed to your book."),
-                    'required'    => true
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_contributor2'));
                 woocommerce_form_field('tomc_isbn_function2', array(
@@ -405,36 +405,36 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("What is their relationship to this work?"),
-                    'required'    => true,
+                    'required'    => false,
                     'options' => array(
-                        'function_appendix_by' => __('Appendix by'),
-                        'function_artist' => __('Artist'),
-                        'function_assisted_by' => __('Assisted by'),
-                        'function_author' => __('Author'),
-                        'function_continued_by' => __('Continued by'),
-                        'function_cover_design_by' => __('Cover Design by'),
-                        'function_editor' => __('Editor'),
-                        'function_epilogue_by' => __('Epilogue by'),
-                        'function_footnotes_by' => __('Footnotes by'),
-                        'function_forward_by' => __('Forward by'),
-                        'function_historical_advisor' => __('Historical Advisor'),
-                        'function_illustrator' => __('Illustrator'),
-                        'function_interviewee' => __('Interviewee'),
-                        'function_interviewer' => __('Interviewer'),
-                        'function_introduction_by' => __('Introduction by'),
-                        'function_notes_by' => __('Notes by'),
-                        'function_performed_by' => __('Performed by'),
-                        'function_photographer' => __('Photographer'),
-                        'function_preface_by' => __('Preface by'),
-                        'function_prologue_by' => __('Prologue by'),
-                        'function_research_by' => __('Retold by'),
-                        'function_reviewed_by' => __('Reviewed by'),
-                        'function_scientific_editor' => __('Scientific Editor'),
-                        'function_software_by' => __('Software by'),
-                        'function_technical_editor' => __('Technical Editor'),
-                        'function_thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
-                        'function_transcribed_by' => __('Transcribed by'),
-                        'function_translated_by' => __('Translated by')
+                        'appendix_by' => __('Appendix by'),
+                        'artist' => __('Artist'),
+                        'assisted_by' => __('Assisted by'),
+                        'author' => __('Author'),
+                        'continued_by' => __('Continued by'),
+                        'cover_design_by' => __('Cover Design by'),
+                        'editor' => __('Editor'),
+                        'epilogue_by' => __('Epilogue by'),
+                        'footnotes_by' => __('Footnotes by'),
+                        'forward_by' => __('Forward by'),
+                        'historical_advisor' => __('Historical Advisor'),
+                        'illustrator' => __('Illustrator'),
+                        'interviewee' => __('Interviewee'),
+                        'interviewer' => __('Interviewer'),
+                        'introduction_by' => __('Introduction by'),
+                        'notes_by' => __('Notes by'),
+                        'performed_by' => __('Performed by'),
+                        'photographer' => __('Photographer'),
+                        'preface_by' => __('Preface by'),
+                        'prologue_by' => __('Prologue by'),
+                        'research_by' => __('Retold by'),
+                        'reviewed_by' => __('Reviewed by'),
+                        'scientific_editor' => __('Scientific Editor'),
+                        'software_by' => __('Software by'),
+                        'technical_editor' => __('Technical Editor'),
+                        'thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
+                        'transcribed_by' => __('Transcribed by'),
+                        'translated_by' => __('Translated by')
                     )
                 ),
                 $checkout->get_value('tomc_isbn_function2'));
@@ -444,7 +444,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter their biography (up to 350 words)."),
-                    'required'    => true
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_biography2'));
                 woocommerce_form_field('tomc_isbn_contributor3', array(
@@ -453,7 +453,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Add the name of someone else who contributed to your book."),
-                    'required'    => true
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_contributor3'));
                 woocommerce_form_field('tomc_isbn_function3', array(
@@ -462,36 +462,36 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("What is their relationship to this work?"),
-                    'required'    => true,
+                    'required'    => false,
                     'options' => array(
-                        'function_appendix_by' => __('Appendix by'),
-                        'function_artist' => __('Artist'),
-                        'function_assisted_by' => __('Assisted by'),
-                        'function_author' => __('Author'),
-                        'function_continued_by' => __('Continued by'),
-                        'function_cover_design_by' => __('Cover Design by'),
-                        'function_editor' => __('Editor'),
-                        'function_epilogue_by' => __('Epilogue by'),
-                        'function_footnotes_by' => __('Footnotes by'),
-                        'function_forward_by' => __('Forward by'),
-                        'function_historical_advisor' => __('Historical Advisor'),
-                        'function_illustrator' => __('Illustrator'),
-                        'function_interviewee' => __('Interviewee'),
-                        'function_interviewer' => __('Interviewer'),
-                        'function_introduction_by' => __('Introduction by'),
-                        'function_notes_by' => __('Notes by'),
-                        'function_performed_by' => __('Performed by'),
-                        'function_photographer' => __('Photographer'),
-                        'function_preface_by' => __('Preface by'),
-                        'function_prologue_by' => __('Prologue by'),
-                        'function_research_by' => __('Retold by'),
-                        'function_reviewed_by' => __('Reviewed by'),
-                        'function_scientific_editor' => __('Scientific Editor'),
-                        'function_software_by' => __('Software by'),
-                        'function_technical_editor' => __('Technical Editor'),
-                        'function_thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
-                        'function_transcribed_by' => __('Transcribed by'),
-                        'function_translated_by' => __('Translated by')
+                        'appendix_by' => __('Appendix by'),
+                        'artist' => __('Artist'),
+                        'assisted_by' => __('Assisted by'),
+                        'author' => __('Author'),
+                        'continued_by' => __('Continued by'),
+                        'cover_design_by' => __('Cover Design by'),
+                        'editor' => __('Editor'),
+                        'epilogue_by' => __('Epilogue by'),
+                        'footnotes_by' => __('Footnotes by'),
+                        'forward_by' => __('Forward by'),
+                        'historical_advisor' => __('Historical Advisor'),
+                        'illustrator' => __('Illustrator'),
+                        'interviewee' => __('Interviewee'),
+                        'interviewer' => __('Interviewer'),
+                        'introduction_by' => __('Introduction by'),
+                        'notes_by' => __('Notes by'),
+                        'performed_by' => __('Performed by'),
+                        'photographer' => __('Photographer'),
+                        'preface_by' => __('Preface by'),
+                        'prologue_by' => __('Prologue by'),
+                        'research_by' => __('Retold by'),
+                        'reviewed_by' => __('Reviewed by'),
+                        'scientific_editor' => __('Scientific Editor'),
+                        'software_by' => __('Software by'),
+                        'technical_editor' => __('Technical Editor'),
+                        'thesis_advisor_or_supervisor' => __('Thesis Advisor or Supervisor'),
+                        'transcribed_by' => __('Transcribed by'),
+                        'translated_by' => __('Translated by')
                     )
                 ),
                 $checkout->get_value('tomc_isbn_function3'));
@@ -501,7 +501,7 @@ class TOMCBookISBNPlugin {
                         'form-row-wide'
                     ),
                     'label' => __("Enter their biography (up to 350 words)."),
-                    'required'    => true
+                    'required'    => false
                 ),
                 $checkout->get_value('tomc_isbn_biography3'));
                 woocommerce_form_field('tomc_isbn_publication_date', array(
