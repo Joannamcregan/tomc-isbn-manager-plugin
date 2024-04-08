@@ -1,0 +1,49 @@
+#tomc-isbn-unfiled-records-section{
+    background: pink;
+    padding-bottom: 50px;
+}
+#tomc-isbn-unfiled-records-banner{
+    width: 90%;
+    background: #4c0548;
+    border-right: solid #0c6980 5px;
+    border-bottom: solid #0c6980 15px;
+    border-radius: 0 0 55px 25px;
+    padding: 20px 15px;
+}
+#tomc-isbn-unfiled-records-banner h1{
+    margin: 10px;
+    font-family: tankindred, serif;
+    font-size: 54;
+    font-weight: 300;
+    color: #eee2d4;
+    text-shadow: 3px 3px #e44e2d;
+}
+#tomc-isbn-filed-records-banner{
+    width: 90%;
+    background: #0c6980;
+    border-right: solid #4c0548 5px;
+    border-bottom: solid #4c0548 15px;
+    border-top: solid #4c0548 5px;
+    border-radius: 0 35px 55px 25px;
+    padding: 20px 15px;
+}
+#tomc-isbn-filed-records-banner h1, #tomc-isbn-unfiled-records-banner h1{
+    margin: 10px;
+    font-family: tankindred, serif;
+    font-size: 54;
+    font-weight: 300;
+    color: #eee2d4;
+    text-shadow: 3px 3px #e44e2d;
+}
+#tomc-isgn-get-unfiled-records{
+    margin: 30px auto 0px auto;
+    padding: 20px 40px;
+    background: #4c0548;
+    border: solid #eee2d4 5px;
+    border-radius: 25px;
+    color: #eee2d4;
+    font-size: 20;
+    display: block;
+    width: fit-content;
+    cursor: pointer;
+}

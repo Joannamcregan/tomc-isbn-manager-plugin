@@ -20,14 +20,16 @@ get_header();
         ?><div id="tomc-isbn-unfiled-records-section">
             <div id="tomc-isbn-unfiled-records-banner">
                 <h1>Unfiled Records</h1>
-                <div id="tomc-isbn-unfiled-records-container"></div>
             </div>
+            <div id="tomc-isbn-unfiled-records-container"></div>
+            <span id="tomc-isgn-get-unfiled-records">get the records</span>
         </div>
         <div id="tomc-isbn-filed-records-section">
             <div id="tomc-isbn-filed-records-banner">
                 <h1>Filed Records</h1>
-                <div id="tomc-isbn-filed-records-container"></div>
             </div>
+            <div id="tomc-isbn-filed-records-container"></div>
+            <span id="tomc-isgn-get-filed-records">get the records</span>
         </div>
     <?php } else {
         ?><p class="centered-text">Only logged in admin can access ISBN records. If you're an author looking for your personal ISBN records, please contact us by email.</p>
