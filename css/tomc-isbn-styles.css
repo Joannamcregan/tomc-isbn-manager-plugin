@@ -1,5 +1,16 @@
+.tomc-blue-purple-tie-dye{
+    background: radial-gradient(circle at 120% 50%, transparent 20%, #8fc6d3 31%,
+    #8fc6d3 25%, transparent 35%, transparent),
+    radial-gradient(circle at 100% 50%, transparent 20%, #8fc6d3 31%,
+    #8fc6d3 5%, transparent 99%, transparent);
+    background-color: #8b5488;
+    background-size: 150px 50px;
+    margin-bottom: -50px;
+}
 #tomc-isbn-unfiled-records-section{
-    background: pink;
+    padding-bottom: 50px;
+}
+#tomc-isbn-filed-records-section{
     padding-bottom: 50px;
 }
 #tomc-isbn-unfiled-records-banner{
@@ -35,7 +46,7 @@
     color: #eee2d4;
     text-shadow: 3px 3px #e44e2d;
 }
-#tomc-isgn-get-unfiled-records{
+#tomc-isbn-get-unfiled-records{
     margin: 30px auto 0px auto;
     padding: 20px 40px;
     background: #4c0548;
@@ -46,4 +57,56 @@
     display: block;
     width: fit-content;
     cursor: pointer;
+}
+#tomc-isbn-get-filed-records{
+    margin: 30px auto 0px auto;
+    padding: 20px 40px;
+    background: #0c6980;
+    border: solid #eee2d4 5px;
+    border-radius: 25px;
+    color: #eee2d4;
+    font-size: 20;
+    display: block;
+    width: fit-content;
+    cursor: pointer;
+}
+@media screen and (max-width: 480px){
+    #tomc-isbn-unfiled-records-banner h1{
+        font-size: 46;
+    }
+    #tomc-isbn-filed-records-banner h1{
+        font-size: 28;
+    }
+}
+@media screen and (max-width: 400px){
+    #tomc-isbn-unfiled-records-banner h1{
+        font-size: 42;
+    }
+    #tomc-isbn-filed-records-banner h1{
+        font-size: 28;
+    }
+}
+@media screen and (max-width: 360px){
+    #tomc-isbn-unfiled-records-banner h1{
+        font-size: 38;
+    }
+    #tomc-isbn-filed-records-banner h1{
+        font-size: 28;
+    }
+}
+@media screen and (max-width: 320px){
+    #tomc-isbn-unfiled-records-banner h1{
+        font-size: 32;
+    }
+    #tomc-isbn-filed-records-banner h1{
+        font-size: 28;
+    }
+}
+@media screen and (max-width: 280px){
+    #tomc-isbn-unfiled-records-banner h1{
+        font-size: 28;
+    }
+    #tomc-isbn-filed-records-banner h1{
+        font-size: 28;
+    }
 }
