@@ -15,6 +15,26 @@ class ISBNRecords{
         $(e.target).parent('.tomc-isbn-record').children('.tomc-isbn-hidden-fields').toggleClass('hidden');
         console.log('hidden toggle called');
     }
+    markCompleted(e){
+        var recordId = $(e.target).parent('.tomc-isbn-record').data('isbn-for');
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markRecordFiled',
+            type: 'POST',
+            data: {
+                'recordId' : recordId
+            },
+            success: (response) => {
+                console.log(response);
+                location.reload(true);
+            },
+            failure: (response) => {
+                console.log(response);
+            }
+        })
+    }
     getUnfiledRecords(){
         $.ajax({
             beforeSend: (xhr) => {
@@ -23,7 +43,7 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
             type: 'GET',
             success: (response) => {
-                console.log(response);
+                // console.log(response);
                 for(let i = 0; i < response.length; i++){
                     this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-for', response[i]['isbn_for']);
                     this.field = $('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
@@ -75,11 +95,13 @@ class ISBNRecords{
                     this.hiddenSection.append(this.field);
                     this.field = $('<p />').html('<strong>Number of Illustrations:</strong> ' + response[i]['number_of_illustrations']).addClass('tomc-purple-isbn-field');
                     this.hiddenSection.append(this.field);
-                    this.field = $('<span />').html('mark as submitted').addClass('tomc-isbn-submit');
+                    this.field = $('<span />').html('mark as submitted').addClass('tomc-isbn-submit').on('click', this.markCompleted.bind(this));
                     this.hiddenSection.append(this.field);
                     this.newDiv.append(this.hiddenSection);
                     this.unfiledSection.append(this.newDiv)
                 }
+                this.getUnfiled.addClass('hidden');
+                this.getUnfiled.removeClass('block');
             },
             error: (response) => {
                 console.log(response);

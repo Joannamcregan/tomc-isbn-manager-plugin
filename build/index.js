@@ -103,6 +103,26 @@ class ISBNRecords {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('.tomc-isbn-record').children('.tomc-isbn-hidden-fields').toggleClass('hidden');
     console.log('hidden toggle called');
   }
+  markCompleted(e) {
+    var recordId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('.tomc-isbn-record').data('isbn-for');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+      },
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markRecordFiled',
+      type: 'POST',
+      data: {
+        'recordId': recordId
+      },
+      success: response => {
+        console.log(response);
+        location.reload(true);
+      },
+      failure: response => {
+        console.log(response);
+      }
+    });
+  }
   getUnfiledRecords() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
@@ -111,7 +131,7 @@ class ISBNRecords {
       url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
       type: 'GET',
       success: response => {
-        console.log(response);
+        // console.log(response);
         for (let i = 0; i < response.length; i++) {
           this.newDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('tomc-isbn-record').attr('data-isbn-for', response[i]['isbn_for']);
           this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
@@ -163,11 +183,13 @@ class ISBNRecords {
           this.hiddenSection.append(this.field);
           this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Number of Illustrations:</strong> ' + response[i]['number_of_illustrations']).addClass('tomc-purple-isbn-field');
           this.hiddenSection.append(this.field);
-          this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').html('mark as submitted').addClass('tomc-isbn-submit');
+          this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').html('mark as submitted').addClass('tomc-isbn-submit').on('click', this.markCompleted.bind(this));
           this.hiddenSection.append(this.field);
           this.newDiv.append(this.hiddenSection);
           this.unfiledSection.append(this.newDiv);
         }
+        this.getUnfiled.addClass('hidden');
+        this.getUnfiled.removeClass('block');
       },
       error: response => {
         console.log(response);

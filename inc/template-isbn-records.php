@@ -22,14 +22,14 @@ get_header();
                 <h1>Unfiled Records</h1>
             </div>
             <div id="tomc-isbn-unfiled-records-container"></div>
-            <span id="tomc-isbn-get-unfiled-records">get the records</span>
+            <span id="tomc-isbn-get-unfiled-records" class="block">get the records</span>
         </div>
         <div id="tomc-isbn-filed-records-section">
             <div id="tomc-isbn-filed-records-banner">
                 <h1>Filed Records</h1>
             </div>
             <div id="tomc-isbn-filed-records-container"></div>
-            <span id="tomc-isbn-get-filed-records">get the records</span>
+            <span id="tomc-isbn-get-filed-records" class="block">get the records</span>
         </div>
     <?php } else {
         ?><p class="centered-text">Only logged in admin can access ISBN records. If you're an author looking for your personal ISBN records, please contact us by email.</p>

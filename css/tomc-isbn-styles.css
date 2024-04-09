@@ -56,7 +56,6 @@
     border-radius: 25px;
     color: #eee2d4;
     font-size: 20;
-    display: block;
     width: fit-content;
     cursor: pointer;
     box-shadow: 3px 3px 8px #333;
@@ -69,7 +68,6 @@
     border-radius: 25px;
     color: #eee2d4;
     font-size: 20;
-    display: block;
     width: fit-content;
     cursor: pointer;
     box-shadow: 3px 3px 8px #333;
@@ -91,7 +89,7 @@
     padding: 0 10px;
 }
 .tomc-isbn-submit{
-    margin: 20px auto;
+    margin: 30px auto 50px auto;
     padding: 10px 20px;
     background: #e44e2d;
     border: solid #eee2d4 5px;
