@@ -1,9 +1,9 @@
 .tomc-blue-purple-tie-dye{
-    background: radial-gradient(circle at 120% 50%, transparent 20%, #8fc6d3 31%,
-    #8fc6d3 25%, transparent 35%, transparent),
-    radial-gradient(circle at 100% 50%, transparent 20%, #8fc6d3 31%,
-    #8fc6d3 5%, transparent 99%, transparent);
-    background-color: #8b5488;
+    background: radial-gradient(circle at 120% 50%, transparent 20%, #71abb7 31%,
+    #71abb7 25%, transparent 35%, transparent),
+    radial-gradient(circle at 100% 50%, transparent 20%, #71abb7 31%,
+    #71abb7 5%, transparent 99%, transparent);
+    background-color: #8d698b;
     background-size: 150px 50px;
     margin-bottom: -50px;
 }
@@ -20,6 +20,7 @@
     border-bottom: solid #0c6980 15px;
     border-radius: 0 0 55px 25px;
     padding: 20px 15px;
+    box-shadow: 3px 3px 8px #333;
 }
 #tomc-isbn-unfiled-records-banner h1{
     margin: 10px;
@@ -37,6 +38,7 @@
     border-top: solid #4c0548 5px;
     border-radius: 0 35px 55px 25px;
     padding: 20px 15px;
+    box-shadow: 3px 3px 8px #333;
 }
 #tomc-isbn-filed-records-banner h1, #tomc-isbn-unfiled-records-banner h1{
     margin: 10px;
@@ -57,6 +59,7 @@
     display: block;
     width: fit-content;
     cursor: pointer;
+    box-shadow: 3px 3px 8px #333;
 }
 #tomc-isbn-get-filed-records{
     margin: 30px auto 0px auto;
@@ -69,6 +72,37 @@
     display: block;
     width: fit-content;
     cursor: pointer;
+    box-shadow: 3px 3px 8px #333;
+}
+.tomc-isbn-record{
+    margin: 30px 20px 0px 20px;
+    padding: 1px 10px;
+    /* background: linear-gradient(to right, #f6f0e9, #fffaf4); */
+    background: #f6ece1;
+    border-radius: 25px;
+    box-shadow: 3px 3px 8px #333;
+}
+.tomc-purple-isbn-field{
+    background: rgba(76, 5, 72, 0.05);
+    padding: 10px;
+    border-radius: 15px;
+}
+.tomc-plain-isbn-field{
+    padding: 0 10px;
+}
+.tomc-isbn-submit{
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #e44e2d;
+    border: solid #eee2d4 5px;
+    border-radius: 25px;
+    color: #eee2d4;
+    text-shadow: 0px 0px 1px #333;
+    font-size: 20;
+    display: block;
+    width: fit-content;
+    cursor: pointer;
+    box-shadow: 3px 3px 8px #333;
 }
 @media screen and (max-width: 480px){
     #tomc-isbn-unfiled-records-banner h1{
