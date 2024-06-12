@@ -27,8 +27,8 @@ class TOMCBookISBNPlugin {
             'root_url' => get_site_url()
         ));
 
-        //add_action('activate_tomc-isbn-manager/tomc-isbn-manager.php', array($this, 'onActivate'));
-        add_action('init', array($this, 'onActivate'));
+        add_action('activate_tomc-isbn-manager/tomc-isbn-manager.php', array($this, 'onActivate'));
+        //add_action('init', array($this, 'onActivate'));
         add_action('init', array($this, 'registerScripts'));
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
