@@ -14,6 +14,7 @@ class TOMCBookISBNPlugin {
         global $wpdb;         
         $this->charset = $wpdb->get_charset_collate();
         $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
+        $this->isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
         $this->meta_table = $wpdb->prefix . "postmeta";
@@ -32,11 +33,37 @@ class TOMCBookISBNPlugin {
         add_action('init', array($this, 'registerScripts'));
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
-
-        add_action('woocommerce_after_order_notes', array($this, 'isbnInfoFields'));
+        add_action( 'woocommerce_after_order_notes', array($this, 'my_custom_checkout_field') );
+        //add_action('woocommerce_after_order_notes', array($this, 'isbnInfoFields'));
         add_action('woocommerce_checkout_process', array($this, 'validateIsbnInfo'));
         add_action('woocommerce_checkout_update_order_meta', array($this, 'isbnInfoUpdateMeta'));
     }
+
+    		/**
+ * Add the field to the checkout
+ */
+
+ 
+function my_custom_checkout_field( $checkout ) {
+
+    echo '<div id="my_custom_checkout_field"><h2>' . esc_html__( 'My Field' ) . '</h2>';
+
+    woocommerce_form_field(
+        'my_field_name',
+        array(
+            'type'        => 'text',
+            'class'       => array( 'my-field-class form-row-wide' ),
+            'label'       => __( 'Fill in this field' ),
+            'placeholder' => __( 'Enter something' ),
+        ),
+        $checkout->get_value( 'my_field_name' )
+    );
+
+    echo '</div>';
+
+}
+
+	
 
     function registerScripts(){
         wp_register_style('tomc_isbn_styles', plugins_url('css/tomc-isbn-styles.css', __FILE__), false, '1.0', 'all');
@@ -61,6 +88,17 @@ class TOMCBookISBNPlugin {
         wp_insert_post($records_page);
     }
 
+    function MyISBNs() {
+        $isbns_page = array(
+            'post_title' => 'My ISBNs',
+            'post_content' => '',
+            'post_status' => 'publish',
+            'post_author' => 0,
+            'post_type' => 'page'
+        );
+        wp_insert_post($isbns_page);
+    }
+
     function onActivate() {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
@@ -74,8 +112,24 @@ class TOMCBookISBNPlugin {
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
+        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_numbers_table (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            isbn varchar(20) NOT NULL,
+            assignedproductid bigint(20) unsigned NULL,
+            assigneddate datetime NULL,
+            addeddate datetime NOT NULL,
+            addedby bigint(20) unsigned NOT NULL,
+            PRIMARY KEY  (id),
+            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (addedby) REFERENCES $this->users_table(id)
+        ) $this->charset;");
+
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){
             $this->addISBNRecordsPage();
+        }
+
+        if (post_exists('My ISBNs', '', '', 'page', 'publish') == ''){
+            $this->addMyISBNsPage();
         }
     }
 
@@ -86,13 +140,13 @@ class TOMCBookISBNPlugin {
         return $template;
     }
 
-    function isbnInfoFields($checkout){ 
+    function isbnInfoFields($checkout){       
+        echo 'something is happening';
         global $wpdb;                
         $user = wp_get_current_user();
         $cart = WC()->cart->get_cart();
         $now = date('Y-m-d H:i:s');
-        $userId = get_current_user_id();        
-
+        $userId = get_current_user_id();  
         foreach( $cart as $cart_item_key => $cart_item ){  
             $item = $cart_item['data'];
             if ($item->get_name() == 'ISBN'){
@@ -623,6 +677,8 @@ class TOMCBookISBNPlugin {
                 $checkout->get_value('tomc_isbn_number_of_illustrations'));
 
                 echo '</div>';
+            } else {
+                echo $item->get_name();
             }
         }
     }
