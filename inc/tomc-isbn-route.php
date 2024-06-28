@@ -132,11 +132,11 @@ function getUnfiledRecords(){
         from %i isbnposts
         left join %i pm on isbnposts.id = pm.post_id
         and pm.meta_key = "tomc_isbn_product"
-        and isbnposts.id not in (select isbnproductid from %i)
         left join %i products on pm.meta_value = products.id
         left join %i users on products.post_author = users.id
         join %i titlemeta on isbnposts.id = titlemeta.post_id
         and titlemeta.meta_key = "tomc_isbn_title"
+        and isbnposts.id not in (select isbnproductid from %i)
         left join %i subtitlemeta on isbnposts.id = subtitlemeta.post_id
         and subtitlemeta.meta_key = "tomc_isbn_subtitle"
         left join %i descriptionmeta on isbnposts.id = descriptionmeta.post_id
@@ -185,7 +185,7 @@ function getUnfiledRecords(){
         and pages.meta_key = "tomc_isbn_number_of_pages"
         left join %i ills on isbnposts.id = ills.post_id
         and ills.meta_key = "tomc_isbn_number_of_illustrations"';
-        $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
+        $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $posts_table, $users_table, $postmeta_table, $isbn_records_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
         // return $wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table);
         return $results;
     } else {
@@ -233,12 +233,12 @@ function getFiledRecords(){
         ills.meta_value as number_of_illustrations
         from %i isbnposts
         left join %i pm on isbnposts.id = pm.post_id
-        and pm.meta_key = "tomc_isbn_product"
-        and isbnposts.id in (select isbnproductid from %i)
+        and pm.meta_key = "tomc_isbn_product"        
         left join %i products on pm.meta_value = products.id
         left join %i users on products.post_author = users.id
         join %i titlemeta on isbnposts.id = titlemeta.post_id
         and titlemeta.meta_key = "tomc_isbn_title"
+        and isbnposts.id in (select isbnproductid from %i)
         left join %i subtitlemeta on isbnposts.id = subtitlemeta.post_id
         and subtitlemeta.meta_key = "tomc_isbn_subtitle"
         left join %i descriptionmeta on isbnposts.id = descriptionmeta.post_id
@@ -287,7 +287,7 @@ function getFiledRecords(){
         and pages.meta_key = "tomc_isbn_number_of_pages"
         left join %i ills on isbnposts.id = ills.post_id
         and ills.meta_key = "tomc_isbn_number_of_illustrations"';
-        $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
+        $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $postmeta_table, $posts_table, $users_table, $postmeta_table, $isbn_records_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
         // return $wpdb->prepare($query, $posts_table, $postmeta_table, $isbn_records_table, $posts_table, $users_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table);
         return $results;
     } else {
