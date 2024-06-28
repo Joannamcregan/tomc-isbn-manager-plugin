@@ -31,7 +31,7 @@ function markRecordFiled($data){
         $query = '';
         $record = [];
         $record['isbnproductid'] = $recordId;
-        $record['processeddate'] = date('Y-m-d H:i:s'); 
+        $record['processeddate'] = date('Y-m-d H:i:s');
         $record['processedby'] = $userId;
         $wpdb->insert($isbn_records_table, $record);
         $recordId = $wpdb->insert_id;
@@ -101,7 +101,7 @@ function getUnfiledRecords(){
         $users_table = $wpdb->prefix . "users";
         $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $query = 'select 
-        products.id as isbn_for, 
+        isbnposts.id as isbn_product_id, 
         users.display_name as user_display_name, 
         users.user_email,
         titlemeta.meta_value as title,
@@ -130,12 +130,12 @@ function getUnfiledRecords(){
         pages.meta_value as number_of_pages,
         ills.meta_value as number_of_illustrations
         from %i isbnposts
-        join %i pm on isbnposts.id = pm.post_id
+        left join %i pm on isbnposts.id = pm.post_id
         and pm.meta_key = "tomc_isbn_product"
-        and pm.meta_value not in (select isbnproductid from %i)
+        and isbnposts.id not in (select isbnproductid from %i)
         left join %i products on pm.meta_value = products.id
         left join %i users on products.post_author = users.id
-        left join %i titlemeta on isbnposts.id = titlemeta.post_id
+        join %i titlemeta on isbnposts.id = titlemeta.post_id
         and titlemeta.meta_key = "tomc_isbn_title"
         left join %i subtitlemeta on isbnposts.id = subtitlemeta.post_id
         and subtitlemeta.meta_key = "tomc_isbn_subtitle"
@@ -203,7 +203,7 @@ function getFiledRecords(){
         $users_table = $wpdb->prefix . "users";
         $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $query = 'select 
-        products.id as isbn_for, 
+        isbnposts.id as isbn_product_id, 
         users.display_name as user_display_name, 
         users.user_email,
         titlemeta.meta_value as title,
@@ -232,12 +232,12 @@ function getFiledRecords(){
         pages.meta_value as number_of_pages,
         ills.meta_value as number_of_illustrations
         from %i isbnposts
-        join %i pm on isbnposts.id = pm.post_id
+        left join %i pm on isbnposts.id = pm.post_id
         and pm.meta_key = "tomc_isbn_product"
-        and pm.meta_value in (select isbnproductid from %i)
+        and isbnposts.id in (select isbnproductid from %i)
         left join %i products on pm.meta_value = products.id
         left join %i users on products.post_author = users.id
-        left join %i titlemeta on isbnposts.id = titlemeta.post_id
+        join %i titlemeta on isbnposts.id = titlemeta.post_id
         and titlemeta.meta_key = "tomc_isbn_title"
         left join %i subtitlemeta on isbnposts.id = subtitlemeta.post_id
         and subtitlemeta.meta_key = "tomc_isbn_subtitle"

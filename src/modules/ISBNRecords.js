@@ -14,10 +14,10 @@ class ISBNRecords{
     }
     toggleHiddenFields(e){
         $(e.target).parent('.tomc-isbn-record').children('.tomc-isbn-hidden-fields').toggleClass('hidden');
-        console.log('hidden toggle called');
+        // console.log('hidden toggle called');
     }
     markCompleted(e){
-        var recordId = $(e.target).parent('.tomc-isbn-hidden-fields').parent('.tomc-isbn-record').data('isbn-for');
+        var recordId = $(e.target).parent('.tomc-isbn-hidden-fields').parent('.tomc-isbn-record').data('isbn-product-id');
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -28,13 +28,13 @@ class ISBNRecords{
                 'recordId' : recordId
             },
             success: (response) => {
-                console.log(response);
+                // console.log(response);
                 if (response > 0){
-                    // location.reload(true);
+                    location.reload(true);
                 }
             },
             failure: (response) => {
-                console.log(response);
+                // console.log(response);
             }
         })
     }
@@ -46,10 +46,10 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
             type: 'GET',
             success: (response) => {
-                console.log(response);
+                // console.log(response);
                 if(response.length){
                     for(let i = 0; i < response.length; i++){
-                        this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-for', response[i]['isbn_for']);
+                        this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-product-id', response[i]['isbn_product_id']);
                         this.field = $('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
                         this.newDiv.append(this.field);
                         this.hiddenSection = $('<div />').addClass('hidden tomc-isbn-hidden-fields');                    
@@ -112,6 +112,8 @@ class ISBNRecords{
                     this.newDiv.append(this.field);
                     this.unfiledSection.append(this.newDiv);
                 }   
+                this.getUnfiled.addClass('hidden');
+                this.getUnfiled.removeClass('block');
             },
             error: (response) => {
                 console.log(response);
@@ -126,10 +128,10 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFiledRecords',
             type: 'GET',
             success: (response) => {
-                console.log(response);
+                // console.log(response);
                 if (response.length){
                     for(let i = 0; i < response.length; i++){
-                        this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-for', response[i]['isbn_for']);
+                        this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-product-id', response[i]['isbn_product_id']);
                         this.field = $('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
                         this.newDiv.append(this.field);
                         this.hiddenSection = $('<div />').addClass('hidden tomc-isbn-hidden-fields');                    

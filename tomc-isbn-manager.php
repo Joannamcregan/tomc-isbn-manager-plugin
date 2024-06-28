@@ -86,12 +86,12 @@ class TOMCBookISBNPlugin {
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_numbers_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             isbn varchar(20) NOT NULL,
-            assignedproductid bigint(20) unsigned NULL,
+            recordid bigint(20) unsigned NULL,
             assigneddate datetime NULL,
             addeddate datetime NOT NULL,
             addedby bigint(20) unsigned NOT NULL,
             PRIMARY KEY  (id),
-            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (recordid) REFERENCES $this->isbn_records_table(id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
@@ -127,13 +127,14 @@ class TOMCBookISBNPlugin {
                     $productsArr[$products[$i]['id']] = $products[$i]['post_title'];
                 }
                 if (count($productsArr) > 0){
+                    array_unshift($productsArr, '');
                     echo '<div id="tomcIsbnInfoFieldsDiv"><h2 class="small-heading">' . __('ISBN Book Information') . '</h2><p>Each ISBN can only be used for one book in one format (such as ebook or audiobook).</p>';
                     woocommerce_form_field('tomc_isbn_product', array(
                         'type' => 'select',
                         'class' => array(
                             'form-row-wide'
                         ),
-                        'label' => __("If you're obtaining this ISBN for a book you've already uploaded with us, select it from the dropdown to pre-populate some of the following fields."),
+                        'label' => __("If you're obtaining this ISBN for a book you've already uploaded, select it from the dropdown to pre-populate some of the following fields."),
                         'required'    => true,
                         'options'     => $productsArr,
                         'id' => 'tomc_isbn_product'
@@ -645,7 +646,7 @@ class TOMCBookISBNPlugin {
 
                     echo '</div>';
                 } else {
-                    wc_add_notice(__('In order to use our ISBN registration service, you must first use your vendor portal to upload the e-book or audiobook you want to attach the ISBN to.') , 'error');
+                    wc_add_notice(__('In order to use our ISBN registration service, you must have at least one book available for sale on our platform.') , 'error');
                 }
             }
         }
@@ -662,7 +663,7 @@ class TOMCBookISBNPlugin {
             } 
         }
         if ($cart_contains_ISBN == true){
-            if ((!$_POST['tomc_isbn_product']) || $_POST['tomc_isbn_product'] == '') wc_add_notice(__("You must select a product you've uploaded if you are purchasing an ISBN registration service. ") , 'error');
+            // if ((!$_POST['tomc_isbn_product']) || $_POST['tomc_isbn_product'] == '') wc_add_notice(__("You must select a product you've uploaded if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_format']) wc_add_notice(__('You must select a book format if you are purchasing an ISBN registration service. ') , 'error');
