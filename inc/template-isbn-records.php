@@ -14,29 +14,29 @@ $userid = get_current_user_id();
 $user = wp_get_current_user();
 
 get_header();
-?><main class="tomc-blue-purple-tie-dye">
-<?php if (is_user_logged_in()){
+if (is_user_logged_in()){
     if (in_array( 'administrator', (array) $user->roles ) ){
-        ?><div id="tomc-isbn-unfiled-records-section">
-            <div id="tomc-isbn-unfiled-records-banner">
-                <h1>Unfiled Records</h1>
+        ?><main class="tomc-blue-purple-tie-dye">
+            <div id="tomc-isbn-unfiled-records-section">
+                <div id="tomc-isbn-unfiled-records-banner">
+                    <h1>Unfiled Records</h1>
+                </div>
+                <div id="tomc-isbn-unfiled-records-container"></div>
+                <span id="tomc-isbn-get-unfiled-records" class="block">get the records</span>
             </div>
-            <div id="tomc-isbn-unfiled-records-container"></div>
-            <span id="tomc-isbn-get-unfiled-records" class="block">get the records</span>
-        </div>
-        <div id="tomc-isbn-filed-records-section">
-            <div id="tomc-isbn-filed-records-banner">
-                <h1>Filed Records</h1>
+            <div id="tomc-isbn-filed-records-section">
+                <div id="tomc-isbn-filed-records-banner">
+                    <h1>Filed Records</h1>
+                </div>
+                <div id="tomc-isbn-filed-records-container"></div>
+                <span id="tomc-isbn-get-filed-records" class="block">get the records</span>
             </div>
-            <div id="tomc-isbn-filed-records-container"></div>
-            <span id="tomc-isbn-get-filed-records" class="block">get the records</span>
-        </div>
+        </main>
     <?php } else {
-        ?><p class="centered-text">Only logged in admin can access ISBN records. If you're an author looking for your personal ISBN records, please contact us by email.</p>
+        ?><p class="centered-text half-screen">Only logged in admin can access ISBN records. If you're an author looking for your personal ISBN records, please contact us by email.</p>
     <?php }
 } else {
     ?><p class="centered-text">Only logged in admin can access ISBN records.</p>
 <?php }
-?></main>
-<?php get_footer();
+get_footer();
 ?>

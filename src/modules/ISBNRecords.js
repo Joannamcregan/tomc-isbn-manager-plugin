@@ -46,6 +46,7 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
             type: 'GET',
             success: (response) => {
+                console.log(response);
                 if(response.length){
                     for(let i = 0; i < response.length; i++){
                         this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-for', response[i]['isbn_for']);
@@ -101,7 +102,7 @@ class ISBNRecords{
                         this.field = $('<span />').html('mark as submitted').addClass('tomc-isbn-submit').on('click', this.markCompleted.bind(this));
                         this.hiddenSection.append(this.field);
                         this.newDiv.append(this.hiddenSection);
-                        this.unfiledSection.append(this.newDiv)
+                        this.unfiledSection.append(this.newDiv);
                     }
                     this.getUnfiled.addClass('hidden');
                     this.getUnfiled.removeClass('block');
