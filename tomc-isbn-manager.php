@@ -71,25 +71,29 @@ class TOMCBookISBNPlugin {
     function onActivate() {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
+        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_numbers_table (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            isbn varchar(20) NOT NULL,
+            addeddate datetime NOT NULL,
+            addedby bigint(20) unsigned NOT NULL,
+            assignedproductid bigint(20) unsigned NULL,
+            shoporderid bigint(20) unsigned NULL,
+            assigneddate datetime NULL,
+            UNIQUE (isbn),
+            PRIMARY KEY  (id),
+            FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
+            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id)
+        ) $this->charset;");
+        
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_records_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            isbnproductid bigint(20) unsigned NOT NULL,
+            shoporderid bigint(20) unsigned NULL,
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
             PRIMARY KEY  (id),
-            FOREIGN KEY  (isbnproductid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id),
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
-        ) $this->charset;");
-
-        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_numbers_table (
-            isbn varchar(20) NOT NULL,
-            recordid bigint(20) unsigned NULL,
-            assigneddate datetime NULL,
-            addeddate datetime NOT NULL,
-            addedby bigint(20) unsigned NOT NULL,
-            PRIMARY KEY  (isbn),
-            FOREIGN KEY  (recordid) REFERENCES $this->isbn_records_table(id),
-            FOREIGN KEY  (addedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){
@@ -663,11 +667,11 @@ class TOMCBookISBNPlugin {
         if ($cart_contains_ISBN == true){
             if (($_POST['tomc_isbn_product']) && $_POST['tomc_isbn_product'] > 0){
                 $query = 'select isbn from %i where assignedproductid = %d';
-                // $existingIsbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product']), ARRAY_A);
-                // if (count($existingIsbn) > 0){
-                //     wc_add_notice(__('Our records indicate you have already obtained an ISBN for this product. ') , 'error');
-                // }
-                wc_add_notice(__($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product'])) , 'error');
+                $existingIsbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product']), ARRAY_A);
+                if (count($existingIsbn) > 0){
+                    wc_add_notice(__('Our records indicate you have already obtained an ISBN for this product. ') , 'error');
+                }
+                // wc_add_notice(__($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product'])) , 'error');
             }
             if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
@@ -768,23 +772,34 @@ class TOMCBookISBNPlugin {
 
     function assignIsbn($order_id){
         global $wpdb;
-        $isbn_product;
         $order = wc_get_order($order_id);
         $items = $order->get_items();
         foreach($items as $item){
             if ($item->get_name() == 'ISBN'){
-                $isbn_product = $item->get_product_id();
-                $query = 'select isbn from %i where assignedproductid is null order by addeddate limit 1';
+                $query = 'select isbn from %i where assignedproductid is null and shoporderid is null and assigneddate is null order by addeddate limit 1';
                 $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
-                $wpdb->update($this->isbn_numbers_table,  
-                array(
-                    'assigneddate' => date('Y-m-d H:i:s'),
-                    'assignedproductid' => $isbn_product
-                ), 
-                array('ISBN' => $isbn[0]['isbn']));
-                ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
-                <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN dashboard</a>.</p>
-                <?php break;
+                if (($_POST['tomc_isbn_product']) && $_POST['tomc_isbn_product'] > 0){
+                    $isbn_product = $_POST['tomc_isbn_product'];
+                    $wpdb->update($this->isbn_numbers_table,  
+                    array(
+                        'assigneddate' => date('Y-m-d H:i:s'),
+                        'assignedproductid' => $isbn_product,
+                        'shoporderid' => $order_id
+                    ), 
+                    array(
+                        'ISBN' => $isbn[0]['isbn']
+                    ));
+                } else {
+                    $wpdb->update($this->isbn_numbers_table,  
+                    array(
+                        'assigneddate' => date('Y-m-d H:i:s'),
+                        'shoporderid' => $order_id
+                    ), 
+                    array(
+                        'ISBN' => $isbn[0]['isbn']
+                    ));
+                }
+                break;
             }
         }
     }
@@ -796,12 +811,13 @@ class TOMCBookISBNPlugin {
         $items = $order->get_items();
         foreach($items as $item){
             if ($item->get_name() == 'ISBN'){
-                $isbn_product = $item->get_product_id();
-                $query = 'select isbn from %i where assignedproductid = %d order by assigneddate desc limit 1';
-                $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $isbn_product), ARRAY_A);
-                ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
-                <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN dashboard</a>.</p>
-                <?php break;
+                $query = 'select isbn from %i where shoporderid = %d order by assigneddate desc limit 1';
+                $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $order_id), ARRAY_A);
+                if (count($isbn) > 0){
+                    ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
+                    <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN dashboard</a>.</p>
+                <?php }
+                break;
             }
         }
     }
