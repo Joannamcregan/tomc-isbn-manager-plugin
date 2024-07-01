@@ -53,6 +53,8 @@ class ISBNRecords{
                         this.field = $('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
                         this.newDiv.append(this.field);
                         this.hiddenSection = $('<div />').addClass('hidden tomc-isbn-hidden-fields');                    
+                        this.field = $('<p />').html('<strong>ISBN:</strong> ' + response[i]['isbn']).addClass('tomc-plain-isbn-field');
+                        this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Subtitle:</strong> ' + response[i]['subtitle']).addClass('tomc-purple-isbn-field');
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Description:</strong> ' + response[i]['description']).addClass('tomc-plain-isbn-field');
@@ -135,6 +137,8 @@ class ISBNRecords{
                         this.field = $('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
                         this.newDiv.append(this.field);
                         this.hiddenSection = $('<div />').addClass('hidden tomc-isbn-hidden-fields');                    
+                        this.field = $('<p />').html('<strong>ISBN:</strong> ' + response[i]['isbn']).addClass('tomc-plain-isbn-field');
+                        this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Subtitle:</strong> ' + response[i]['subtitle']).addClass('tomc-purple-isbn-field');
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Description:</strong> ' + response[i]['description']).addClass('tomc-plain-isbn-field');
