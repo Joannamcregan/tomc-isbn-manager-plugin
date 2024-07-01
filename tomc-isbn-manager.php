@@ -17,6 +17,7 @@ class TOMCBookISBNPlugin {
         $this->isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
+        $this->postmeta_table = $wpdb->prefix . "postmeta";
 
         wp_localize_script('tomc-isbn-js', 'tomcBookorgData', array(
             'root_url' => get_site_url()
@@ -802,6 +803,25 @@ class TOMCBookISBNPlugin {
                     array(
                         'ISBN' => $isbn[0]['isbn']
                     ));
+                }
+                $query = "select meta_id from %i where meta_key = '_mvx_gtin_code' and post_id = %d";
+                $gtin = $wpdb->get_results($wpdb->prepare($query, $this->postmeta_table, $isbn_product), ARRAY_A);
+                if (count($gtin) > 0){
+                    for($i = 0; $i < count($gtin); $i++){
+                        $wpdb->update($this->postmeta_table,  
+                        array(
+                            'meta_value' => $isbn[0]['isbn']
+                        ), 
+                        array(
+                            'meta_id' => $gtin[$i]['meta_id']
+                        ));
+                    }
+                } else {
+                    $record = [];
+                    $record['post_id'] = $isbn_product;
+                    $record['meta_key'] = '_mvx_gtin_code';
+                    $record['meta_value'] = $isbn[0]['isbn'];
+                    $wpdb->insert($this->postmeta_table, $record);
                 }
                 break;
             }
