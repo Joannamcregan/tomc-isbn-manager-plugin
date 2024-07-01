@@ -121,6 +121,11 @@ class TOMCBookISBNPlugin {
         foreach( $cart as $cart_item_key => $cart_item ){  
             $item = $cart_item['data'];
             if ($item->get_name() == 'ISBN'){
+                $query = 'select isbn from %i where assignedproductid is null and shoporderid is null and assigneddate is null order by addeddate';
+                $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
+                if (count($isbn) < 1){
+                    wc_add_notice(__('Unfortunately, we cannot offer the ISBN Registration Service at this time as we have temporarily run out of ISBN numbers. Please remove the ISBN Registration Service item from your cart and keep an eye on our social media accounts. We will provide an update when we have a fresh batch of ISBNs available.') , 'error');
+                }
                 $query = 'select a.id, a.post_title from %i a where a.post_type = %s and a.post_status = %s and a.post_author = %d order by a.post_title';
                 $products = $wpdb->get_results($wpdb->prepare($query, $this->posts_table, 'product', 'publish', $userId), ARRAY_A);
                 $productsArr = [];
@@ -671,7 +676,6 @@ class TOMCBookISBNPlugin {
                 if (count($existingIsbn) > 0){
                     wc_add_notice(__('Our records indicate you have already obtained an ISBN for this product. ') , 'error');
                 }
-                // wc_add_notice(__($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product'])) , 'error');
             }
             if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
             if (!$_POST['tomc_isbn_description']) wc_add_notice(__('You must enter a book description if you are purchasing an ISBN registration service. ') , 'error');
