@@ -103,6 +103,7 @@ function getUnfiledRecords(){
         $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
         $query = 'select 
         isbnposts.id as isbn_product_id, 
+        isbnnumbers.isbn,
         users.display_name as user_display_name, 
         users.user_email,
         titlemeta.meta_value as title,
@@ -207,6 +208,7 @@ function getFiledRecords(){
         $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
         $query = 'select 
         isbnposts.id as isbn_product_id, 
+        isbnnumbers.isbn,
         users.display_name as user_display_name, 
         users.user_email,
         titlemeta.meta_value as title,

@@ -58,7 +58,7 @@ class TOMCBookISBNPlugin {
         wp_insert_post($records_page);
     }
 
-    function MyISBNs() {
+    function addMyISBNsPage() {
         $isbns_page = array(
             'post_title' => 'My ISBNs',
             'post_content' => '',
@@ -109,6 +109,8 @@ class TOMCBookISBNPlugin {
     function loadTemplate($template){
         if (is_page('isbn-records')){
             return plugin_dir_path(__FILE__) . 'inc/template-isbn-records.php';
+        } else if (is_page('my-isbns')){
+            return plugin_dir_path(__FILE__) . 'inc/template-my-isbns.php';
         }  else
         return $template;
     }
@@ -124,7 +126,7 @@ class TOMCBookISBNPlugin {
             if ($item->get_name() == 'ISBN'){
                 $query = 'select isbn from %i where assignedproductid is null and shoporderid is null and assigneddate is null order by addeddate';
                 $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
-                if (count($isbn) < 1){
+                if (($isbn) && count($isbn) < 1){
                     wc_add_notice(__('Unfortunately, we cannot offer the ISBN Registration Service at this time as we have temporarily run out of ISBN numbers. Please remove the ISBN Registration Service item from your cart and keep an eye on our social media accounts. We will provide an update when we have a fresh batch of ISBNs available.') , 'error');
                 }
                 $query = 'select a.id, a.post_title from %i a where a.post_type = %s and a.post_status = %s and a.post_author = %d order by a.post_title';
@@ -674,7 +676,7 @@ class TOMCBookISBNPlugin {
             if (($_POST['tomc_isbn_product']) && $_POST['tomc_isbn_product'] > 0){
                 $query = 'select isbn from %i where assignedproductid = %d';
                 $existingIsbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product']), ARRAY_A);
-                if (count($existingIsbn) > 0){
+                if (($existingIsbn) && count($existingIsbn) > 0){
                     wc_add_notice(__('Our records indicate you have already obtained an ISBN for this product. ') , 'error');
                 }
             }
@@ -806,7 +808,7 @@ class TOMCBookISBNPlugin {
                 }
                 $query = "select meta_id from %i where meta_key = '_mvx_gtin_code' and post_id = %d";
                 $gtin = $wpdb->get_results($wpdb->prepare($query, $this->postmeta_table, $isbn_product), ARRAY_A);
-                if (count($gtin) > 0){
+                if (($gtin) && count($gtin) > 0){
                     for($i = 0; $i < count($gtin); $i++){
                         $wpdb->update($this->postmeta_table,  
                         array(
@@ -837,7 +839,7 @@ class TOMCBookISBNPlugin {
             if ($item->get_name() == 'ISBN'){
                 $query = 'select isbn from %i where shoporderid = %d order by assigneddate desc limit 1';
                 $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $order_id), ARRAY_A);
-                if (count($isbn) > 0){
+                if (($isbn) && count($isbn) > 0){
                     ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
                     <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN dashboard</a>.</p>
                 <?php }
