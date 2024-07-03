@@ -83,7 +83,7 @@ class ISBNRecords{
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Publication Date:</strong> ' + response[i]['publication_date']).addClass('tomc-plain-isbn-field');
                         this.hiddenSection.append(this.field);
-                        this.field = $('<p />').html('<strong>Publication Status:</strong> ' + response[i]['publication_status']).addClass('tomc-purple-isbn-field');
+                        this.field = $('<p />').html('<strong>Publication Status:</strong> ' + response[i]['status']).addClass('tomc-purple-isbn-field');
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Target Audience:</strong> ' + response[i]['target_audience']).addClass('tomc-plain-isbn-field');
                         this.hiddenSection.append(this.field);
@@ -130,7 +130,7 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFiledRecords',
             type: 'GET',
             success: (response) => {
-                // console.log(response);
+                console.log(response);
                 if (response.length){
                     for(let i = 0; i < response.length; i++){
                         this.newDiv = $('<div />').addClass('tomc-isbn-record').attr('data-isbn-product-id', response[i]['isbn_product_id']);
@@ -167,7 +167,7 @@ class ISBNRecords{
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Publication Date:</strong> ' + response[i]['publication_date']).addClass('tomc-plain-isbn-field');
                         this.hiddenSection.append(this.field);
-                        this.field = $('<p />').html('<strong>Publication Status:</strong> ' + response[i]['publication_status']).addClass('tomc-purple-isbn-field');
+                        this.field = $('<p />').html('<strong>Publication Status:</strong> ' + response[i]['status']).addClass('tomc-purple-isbn-field');
                         this.hiddenSection.append(this.field);
                         this.field = $('<p />').html('<strong>Target Audience:</strong> ' + response[i]['target_audience']).addClass('tomc-plain-isbn-field');
                         this.hiddenSection.append(this.field);

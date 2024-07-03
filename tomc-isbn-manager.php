@@ -18,6 +18,9 @@ class TOMCBookISBNPlugin {
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
         $this->postmeta_table = $wpdb->prefix . "postmeta";
+        $this->term_relationships_table = $wpdb->prefix . "term_relationships";
+        $this->terms_table = $wpdb->prefix . "terms";
+        $this->term_taxonomy_table = $wpdb->prefix . "term_taxonomy";
 
         wp_localize_script('tomc-isbn-js', 'tomcBookorgData', array(
             'root_url' => get_site_url()
@@ -129,8 +132,18 @@ class TOMCBookISBNPlugin {
                 if (($isbn) && count($isbn) < 1){
                     wc_add_notice(__('Unfortunately, we cannot offer the ISBN Registration Service at this time as we have temporarily run out of ISBN numbers. Please remove the ISBN Registration Service item from your cart and keep an eye on our social media accounts. We will provide an update when we have a fresh batch of ISBNs available.') , 'error');
                 }
-                $query = 'select a.id, a.post_title from %i a where a.post_type = %s and a.post_status = %s and a.post_author = %d order by a.post_title';
-                $products = $wpdb->get_results($wpdb->prepare($query, $this->posts_table, 'product', 'publish', $userId), ARRAY_A);
+                $query = 'select posts.id, posts.post_title 
+                from %i posts 
+                join %i tr on posts.id = tr.object_id
+                join %i terms on tr.term_taxonomy_id = terms.term_id
+                join %i tt on terms.term_id = tt.term_id
+                where posts.post_type = "product" 
+                and posts.post_status = "publish"
+                and posts.post_author = %d
+                and tt.taxonomy = "product_cat"
+                and terms.name in ("E-Books", "Audiobooks")
+                order by posts.post_title';
+                $products = $wpdb->get_results($wpdb->prepare($query, $this->posts_table, $this->term_relationships_table, $this->terms_table, $this->term_taxonomy_table, $userId), ARRAY_A);
                 $productsArr = [];
                 for($i = 0; $i < count($products); $i++){
                     $productsArr[$products[$i]['id']] = $products[$i]['post_title'];
