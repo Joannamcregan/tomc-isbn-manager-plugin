@@ -141,7 +141,7 @@ class TOMCBookISBNPlugin {
                 and posts.post_status = "publish"
                 and posts.post_author = %d
                 and tt.taxonomy = "product_cat"
-                and terms.name in ("E-Books", "Audiobooks")
+                and terms.name in ("E-Books", "Audiobooks", "Paperback Books", "Hardcover Books")
                 order by posts.post_title';
                 $products = $wpdb->get_results($wpdb->prepare($query, $this->posts_table, $this->term_relationships_table, $this->terms_table, $this->term_taxonomy_table, $userId), ARRAY_A);
                 $productsArr = [];
