@@ -704,8 +704,6 @@ class TOMCBookISBNPlugin {
             if (!$_POST['tomc_isbn_status']) wc_add_notice(__("You must enter your book's publication status if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_target_audience']) wc_add_notice(__("You must enter your book's target audience if you are purchasing an ISBN registration service. ") , 'error');
             if (!$_POST['tomc_isbn_book_price']) wc_add_notice(__("You must enter your book's current price if you are purchasing an ISBN registration service. ") , 'error');
-        } else {
-            wc_add_notice(__("returning " . $cart_contains_ISBN) , 'error');
         }
     }
 
