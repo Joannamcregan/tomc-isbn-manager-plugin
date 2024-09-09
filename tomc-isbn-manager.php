@@ -35,7 +35,7 @@ class TOMCBookISBNPlugin {
         add_action('woocommerce_checkout_process', array($this, 'validateIsbnInfo'));
         add_action('woocommerce_checkout_update_order_meta', array($this, 'isbnInfoUpdateMeta'));
         add_action('woocommerce_payment_complete', array($this, 'assignIsbn'));
-        // add_action('woocommerce_thankyou', array($this, 'showIsbn'));
+        add_action('woocommerce_thankyou', array($this, 'showIsbn'));
     }	
 
     function registerScripts(){
