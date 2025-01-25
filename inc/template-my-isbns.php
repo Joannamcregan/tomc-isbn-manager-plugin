@@ -12,7 +12,7 @@ get_header();
     <div class="banner"><h1 class="centered-text">My ISBNs</h1></div>
     <br>
     <div class="generic-content half-screen">
-        <p class="centered-text"><strong>Get a free ISBN</strong> when you <a href="<?php echo esc_url(site_url('/product/isbn'));?>">purchase our ISBN registration service<a>.</p>
+        <p class="centered-text"><strong>Get a free ISBN</strong> when you <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">purchase our ISBN registration service<a>.</p>
     <?php if (is_user_logged_in()){
         if (in_array( 'dc_vendor', (array) $user->roles ) ){
             $query = 'select isbnnumbers.isbn, titlemeta.meta_value as title
