@@ -33,10 +33,10 @@ if (is_user_logged_in()){
             </div>
         </main>
     <?php } else {
-        ?><p class="centered-text half-screen">Only logged in admin can access ISBN Registration records. If you're an author looking for your personal ISBN Registration records, please contact us by email.</p>
+        ?><p class="centered-text half-screen">Only logged in admin can access ISBN registration records. If you're an author looking for your personal ISBN Registration records, please contact us by email.</p>
     <?php }
 } else {
-    ?><p class="centered-text">Only logged in admin can access ISBN Registration records.</p>
+    ?><p class="centered-text">Only logged in admin can access ISBN registration records.</p>
 <?php }
 get_footer();
 ?>

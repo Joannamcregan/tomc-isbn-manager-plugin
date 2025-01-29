@@ -123,7 +123,8 @@ class TOMCBookISBNPlugin {
         $user = wp_get_current_user();
         $cart = WC()->cart->get_cart();
         $now = date('Y-m-d H:i:s');
-        $userId = get_current_user_id();  
+        // $userId = get_current_user_id();  
+        $userId = $user->ID;
         foreach( $cart as $cart_item_key => $cart_item ){  
             $item = $cart_item['data'];
             if ($item->get_name() == 'ISBN'){
@@ -690,7 +691,7 @@ class TOMCBookISBNPlugin {
                 $query = 'select isbn from %i where assignedproductid = %d';
                 $existingIsbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $_POST['tomc_isbn_product']), ARRAY_A);
                 if (($existingIsbn) && count($existingIsbn) > 0){
-                    wc_add_notice(__('Our records indicate you have already obtained an ISBN for this product. ') , 'error');
+                    wc_add_notice(__('Our records indicate you have already obtained an ISBN registration for this product. ') , 'error');
                 }
             }
             if (!$_POST['tomc_isbn_title']) wc_add_notice(__('You must enter a book title if you are purchasing an ISBN registration service. ') , 'error');
@@ -852,7 +853,7 @@ class TOMCBookISBNPlugin {
                 $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $order_id), ARRAY_A);
                 if (($isbn) && count($isbn) > 0){
                     ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
-                    <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN dashboard</a>.</p>
+                    <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN registration dashboard</a>.</p>
                 <?php }
                 break;
             }
