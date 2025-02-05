@@ -13,8 +13,10 @@ class TOMCBookISBNPlugin {
     function __construct() {
         global $wpdb;         
         $this->charset = $wpdb->get_charset_collate();
-        $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
+        $this->isbn_fields_table = $wpdb->prefix . "tomc_isbn_fields";
+        $this->isbn_field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
         $this->isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
+        $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
         $this->postmeta_table = $wpdb->prefix . "postmeta";
@@ -31,9 +33,9 @@ class TOMCBookISBNPlugin {
         add_action('init', array($this, 'registerScripts'));
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
-        add_action('woocommerce_after_order_notes', array($this, 'isbnInfoFields'));
-        add_action('woocommerce_checkout_process', array($this, 'validateIsbnInfo'));
-        add_action('woocommerce_checkout_update_order_meta', array($this, 'isbnInfoUpdateMeta'));
+        // add_action('woocommerce_after_order_notes', array($this, 'isbnInfoFields'));
+        // add_action('woocommerce_checkout_process', array($this, 'validateIsbnInfo'));
+        // add_action('woocommerce_checkout_update_order_meta', array($this, 'isbnInfoUpdateMeta'));
         add_action('woocommerce_payment_complete', array($this, 'assignIsbn'));
         add_action('woocommerce_thankyou', array($this, 'showIsbn'));
     }	
@@ -63,7 +65,7 @@ class TOMCBookISBNPlugin {
 
     function addMyISBNsPage() {
         $isbns_page = array(
-            'post_title' => 'My ISBNs',
+            'post_title' => 'My ISBN Registrations',
             'post_content' => '',
             'post_status' => 'publish',
             'post_author' => 0,
@@ -80,23 +82,48 @@ class TOMCBookISBNPlugin {
             isbn varchar(20) NOT NULL,
             addeddate datetime NOT NULL,
             addedby bigint(20) unsigned NOT NULL,
-            assignedproductid bigint(20) unsigned NULL,
-            shoporderid bigint(20) unsigned NULL,
+            assignedto bigint(20) unsigned NULL,
             assigneddate datetime NULL,
+            shoporderid bigint(20) unsigned NOT NULL,
+            submittedDate datetime NULL,
             UNIQUE (isbn),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (assignedto) REFERENCES $this->users_table(id),
             FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id)
+        ) $this->charset;");
+
+        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_fields_table (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            fieldName varchar(30) NOT NULL,
+            fieldText varchar(200) NOT NULL,
+            displayOrder int(3) NOT NULL,
+            addedby bigint(20) unsigned NOT NULL,
+            addeddate datetime NOT NULL,
+            PRIMARY KEY  (id),
+            FOREIGN KEY  (addedby) REFERENCES $this->users_table(id)
+        ) $this->charset;");
+
+        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_field_values_table (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            isbnid bigint(20) unsigned NOT NULL,
+            fieldid bigint(20) unsigned NOT NULL,
+            fieldvalue varchar(200),
+            addedby bigint(20) unsigned NOT NULL,
+            addeddate datetime NOT NULL,
+            PRIMARY KEY  (id),
+            FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
+            FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
+            FOREIGN KEY  (fieldid) REFERENCES $this->isbn_fields_table(id)
         ) $this->charset;");
         
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_records_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            shoporderid bigint(20) unsigned NULL,
+            isbnid bigint(20) unsigned NOT NULL,
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
             PRIMARY KEY  (id),
-            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
@@ -104,7 +131,7 @@ class TOMCBookISBNPlugin {
             $this->addISBNRecordsPage();
         }
 
-        if (post_exists('My ISBNs', '', '', 'page', 'publish') == ''){
+        if (post_exists('My ISBN Registrations', '', '', 'page', 'publish') == ''){
             $this->addMyISBNsPage();
         }
     }
@@ -112,7 +139,7 @@ class TOMCBookISBNPlugin {
     function loadTemplate($template){
         if (is_page('isbn-records')){
             return plugin_dir_path(__FILE__) . 'inc/template-isbn-records.php';
-        } else if (is_page('my-isbns')){
+        } else if (is_page('my-isbn-registrations')){
             return plugin_dir_path(__FILE__) . 'inc/template-my-isbns.php';
         }  else
         return $template;
@@ -682,7 +709,7 @@ class TOMCBookISBNPlugin {
         $cart_contains_ISBN = false;
         foreach( $cart as $cart_item_key => $cart_item ){  
             $item = $cart_item['data'];
-            if ($item->get_name() == 'ISBN'){
+            if ($item->get_name() == 'ISBN Registration'){
                 $cart_contains_ISBN = true;
             } 
         }
@@ -789,55 +816,26 @@ class TOMCBookISBNPlugin {
         }    
     }
 
+    //fix this
     function assignIsbn($order_id){
         global $wpdb;
         $order = wc_get_order($order_id);
         $items = $order->get_items();
+        $user = wp_get_current_user();
+        $userId = $user->ID;
         foreach($items as $item){
-            if ($item->get_name() == 'ISBN'){
-                $query = 'select isbn from %i where assignedproductid is null and shoporderid is null and assigneddate is null order by addeddate limit 1';
+            if ($item->get_name() == 'ISBN Registration'){
+                $query = 'select isbn from %i where assignedto is null and assigneddate is null and shoporderid is null order by addeddate limit 1';
                 $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
-                if (($_POST['tomc_isbn_product']) && $_POST['tomc_isbn_product'] > 0){
-                    $isbn_product = $_POST['tomc_isbn_product'];
-                    $wpdb->update($this->isbn_numbers_table,  
-                    array(
-                        'assigneddate' => date('Y-m-d H:i:s'),
-                        'assignedproductid' => $isbn_product,
-                        'shoporderid' => $order_id
-                    ), 
-                    array(
-                        'ISBN' => $isbn[0]['isbn']
-                    ));
-                } else {
-                    $wpdb->update($this->isbn_numbers_table,  
-                    array(
-                        'assigneddate' => date('Y-m-d H:i:s'),
-                        'shoporderid' => $order_id
-                    ), 
-                    array(
-                        'ISBN' => $isbn[0]['isbn']
-                    ));
-                }
-                $query = "select meta_id from %i where meta_key = '_mvx_gtin_code' and post_id = %d";
-                $gtin = $wpdb->get_results($wpdb->prepare($query, $this->postmeta_table, $isbn_product), ARRAY_A);
-                if (($gtin) && count($gtin) > 0){
-                    for($i = 0; $i < count($gtin); $i++){
-                        $wpdb->update($this->postmeta_table,  
-                        array(
-                            'meta_value' => $isbn[0]['isbn']
-                        ), 
-                        array(
-                            'meta_id' => $gtin[$i]['meta_id']
-                        ));
-                    }
-                } else {
-                    $record = [];
-                    $record['post_id'] = $isbn_product;
-                    $record['meta_key'] = '_mvx_gtin_code';
-                    $record['meta_value'] = $isbn[0]['isbn'];
-                    $wpdb->insert($this->postmeta_table, $record);
-                }
-                break;
+                $wpdb->update($this->isbn_numbers_table,  
+                array(
+                    'assigneddate' => date('Y-m-d H:i:s'),
+                    'assignedto' => $userId,
+                    'shoporderid' => $order_id
+                ), 
+                array(
+                    'ISBN' => $isbn[0]['isbn']
+                ));
             }
         }
     }
@@ -847,13 +845,17 @@ class TOMCBookISBNPlugin {
         $isbn_product;
         $order = wc_get_order($order_id);
         $items = $order->get_items();
+        $user = wp_get_current_user();
+        $userId = $user->ID;
         foreach($items as $item){
-            if ($item->get_name() == 'ISBN'){
-                $query = 'select isbn from %i where shoporderid = %d order by assigneddate desc limit 1';
-                $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $order_id), ARRAY_A);
+            if ($item->get_name() == 'ISBN Registration'){
+                $query = 'select isbn from %i where shoporderid = %d and assignedto = %d order by assigneddate desc';
+                $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table, $order_id, $userId), ARRAY_A);
                 if (($isbn) && count($isbn) > 0){
-                    ?><h2>Your new ISBN is <?php echo $isbn[0]['isbn'] ?>.</h2>
-                    <p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN registration dashboard</a>.</p>
+                    for ($i = 0; $i < count($isbn); $i++){
+                        ?><h2>Your new ISBN is <?php echo $isbn[$i]['isbn'] ?>.</h2>
+                    <?php }
+                    ?><p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN registration dashboard</a>.</p>
                 <?php }
                 break;
             }
