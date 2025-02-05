@@ -84,7 +84,7 @@ class TOMCBookISBNPlugin {
             addedby bigint(20) unsigned NOT NULL,
             assignedto bigint(20) unsigned NULL,
             assigneddate datetime NULL,
-            shoporderid bigint(20) unsigned NOT NULL,
+            shoporderid bigint(20) unsigned,
             submittedDate datetime NULL,
             UNIQUE (isbn),
             PRIMARY KEY  (id),
