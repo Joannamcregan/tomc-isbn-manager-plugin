@@ -110,12 +110,10 @@ class TOMCBookISBNPlugin {
             rejectionnote varchar(300),
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
-            assignedproductid bigint(20) unsigned,
             PRIMARY KEY  (id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
             FOREIGN KEY  (rejectedby) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
+            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){
