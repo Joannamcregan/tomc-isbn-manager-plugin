@@ -68,11 +68,22 @@
 }
 .tomc-purple-isbn-field{
     background: rgba(76, 5, 72, 0.05);
-    padding: 10px;
+    padding: 10px 20px 20px 20px;
     border-radius: 15px;
 }
 .tomc-plain-isbn-field{
-    padding: 0 10px;
+    padding: 10px 20px 20px 20px;
+}
+
+.add-isbn-info-button{
+    background-color: #4c0548;
+    color: white;
+    font-size: 16;
+    border-radius: 35px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    width: fit-content;
 }
 .tomc-isbn-submit{
     margin: 30px auto 50px auto;

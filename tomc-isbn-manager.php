@@ -147,7 +147,21 @@ class TOMCBookISBNPlugin {
             if ($item->get_name() == 'ISBN Registration'){
                 $query = 'select isbn from %i where assignedto is null and assigneddate is null and shoporderid is null order by addeddate limit 1';
                 $item_count = $item['qty'];
-                for($i = 0; $i < $item_count; $i++) {
+                if ($item_count){
+                    for($i = 0; $i < $item_count; $i++) {
+                        $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
+                        $wpdb->update($this->isbn_numbers_table,  
+                        array(
+                            'assigneddate' => date('Y-m-d H:i:s'),
+                            'assignedto' => $userId,
+                            'shoporderid' => $order_id
+                        ), 
+                        array(
+                            'ISBN' => $isbn[0]['isbn']
+                        ));
+                    }
+                    break;
+                } else {
                     $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
                     $wpdb->update($this->isbn_numbers_table,  
                     array(
@@ -159,7 +173,7 @@ class TOMCBookISBNPlugin {
                         'ISBN' => $isbn[0]['isbn']
                     ));
                 }
-                break;
+                
             }
         }
     }
