@@ -16,7 +16,7 @@ $user = wp_get_current_user();
 get_header();
 if (is_user_logged_in()){
     if (in_array( 'administrator', (array) $user->roles ) ){
-        ?><main class="tomc-blue-purple-tie-dye">
+        ?><main>
             <div id="tomc-isbn-unfiled-records-section">
                 <div id="tomc-isbn-unfiled-records-banner">
                     <h1>Unfiled Records</h1>

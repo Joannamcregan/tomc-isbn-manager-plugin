@@ -104,16 +104,18 @@ class TOMCBookISBNPlugin {
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_records_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             isbnid bigint(20) unsigned NOT NULL,
-            submittedDate datetime NULL,
+            submittedDate datetime NOT NULL,
             rejecteddate datetime NULL,
             rejectedby bigint(20) unsigned NULL,
-            rejectionnote varchar(300) NULL,
+            rejectionnote varchar(300),
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
+            assignedproductid bigint(20) unsigned,
             PRIMARY KEY  (id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
             FOREIGN KEY  (rejectedby) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
+            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id),
+            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
         ) $this->charset;");
 
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){
