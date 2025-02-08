@@ -14,7 +14,13 @@ class ISBNRegistrations{
         this.subtitleField = $('#isbn-info--book-subtitle');
         this.firstGenreDropdown = $('#isbn-info--first-genre');
         this.contributorsSection1 = $('#isbn-contributors-section-1');
-        this.contributorsYes1 = $('#isbn-contributors--yes-1')
+        this.contributorsYes1 = $('#isbn-contributors--yes-1');
+        this.contributorsSection2 = $('#isbn-contributors-section-2');
+        this.contributorsYes2 = $('#isbn-contributors--yes-2');
+        this.contributorsSection3 = $('#isbn-contributors-section-3');
+        this.contributorsYes3 = $('#isbn-contributors--yes-3');
+        this.contributorsSection4 = $('#isbn-contributors-section-4');
+        this.contributorsYes4 = $('#isbn-contributors--yes-4');
         this.events();
     }
     events(){
@@ -24,11 +30,32 @@ class ISBNRegistrations{
             $('.isbn-info--format-section').addClass('hidden');
             $('#isbn-info--section-' + $(e.target).val()).removeClass('hidden');
         })
-        this.contributorsYes.on('change', (e)=>{
+        this.contributorsYes1.on('change', (e)=>{
             if ($(e.target).prop("checked", true)){
-                this.contributorsSection.removeClass('hidden');
+                this.contributorsSection1.removeClass('hidden');
             } else {
-                this.contributorsSection.addClass('hidden');
+                this.contributorsSection1.addClass('hidden');
+            }
+        })
+        this.contributorsYes2.on('change', (e)=>{
+            if ($(e.target).prop("checked", true)){
+                this.contributorsSection2.removeClass('hidden');
+            } else {
+                this.contributorsSection2.addClass('hidden');
+            }
+        })
+        this.contributorsYes3.on('change', (e)=>{
+            if ($(e.target).prop("checked", true)){
+                this.contributorsSection3.removeClass('hidden');
+            } else {
+                this.contributorsSection3.addClass('hidden');
+            }
+        })
+        this.contributorsYes4.on('change', (e)=>{
+            if ($(e.target).prop("checked", true)){
+                this.contributorsSection4.removeClass('hidden');
+            } else {
+                this.contributorsSection4.addClass('hidden');
             }
         })
     }
