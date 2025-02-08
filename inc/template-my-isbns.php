@@ -2,7 +2,6 @@
 $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
 $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
 $isbn_field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
-$posts_table = $wpdb->prefix . "posts";
 $user = wp_get_current_user();
 $userid = $user->ID;
 
@@ -23,9 +22,9 @@ get_header();
                 ?><h2 class="centered-text">Unsubmitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
-                        ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                        ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
                     <?php } else {
-                        ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                        ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
                     <?php }                    
                     ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                     <span class="add-isbn-info-button">add info</span>
@@ -33,14 +32,13 @@ get_header();
                 <?php }
             }
 
-            $query = 'select numbers.isbn, products.post_title, records.submitteddate
+            $query = 'select numbers.isbn, records.submitteddate
             from %i numbers
             join %i records on numbers.id = records.isbnid
             and records.rejecteddate is null
             and records.processeddate is null
-            join %i products on numbers.assignedproductid = products.id
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
@@ -61,7 +59,48 @@ get_header();
     ?></div>
 
     <div class="search-overlay" id="tomc-isbn-edit-info-overlay">
-            <h2 class="centered-text">Edit Info for ISBN </h2>
+        <i class="fa fa-window-close search-overlay__close" id="isbn-info-overlay__close" aria-label="close overlay"></i>
+        <br>
+        <h2 class="centered-text">Edit Info for ISBN </h2>
+        <label for="isbn-info--book-title" required>Book Title</label>
+        <input type="text" id="isbn-info--book-title" />
+        <br><br>
+        <label for="isbn-info--book-subtitle">Subtitle (optional)</label>
+        <input type="text" id="isbn-info--book-subtitle" />
+        <br><br>
+        <label for="isbn-info--book-description">Description (up to 350 words)</label>
+        <br>
+        <input type="textarea" id="isbn-info--book-description" required />
+        <br><br>
+        <label for="isbn-info--book-medium" required>Medium</label>
+        <select id="isbn-info--book-medium">
+            <option id="isbn-info--book-medium--audio">Audio</option>
+            <option id="isbn-info--book-medium--ebook">E-book</option>
+            <option id="isbn-info--book-medium--print">Print</option>
+        </select>
+        <br><br>
+        <div id="isbn-info--section-Audio" class="isbn-info--format-section">
+            <label for="isbn-info--audio-section--format">Format</label>
+            <select id="isbn-info--audio-section--format">
+                <option>Digital File</option>
+                <option>CD</option>
+                <option>DVD</option>
+            </select>
+        </div>
+        <div class="hidden isbn-info--format-section" id="isbn-info--section-E-book">
+            <label for="isbn-info--ebook-section--format">Format</label>
+            <select id="isbn-info--ebook-section--format">
+                <option>Digital Online</option>
+                <option>Digital File</option>
+            </select>
+        </div>
+        <div class="hidden isbn-info--format-section" id="isbn-info--section-Print">
+            <label for="isbn-info--print-section--format">Format</label>
+            <select id="isbn-info--print-section--format">
+                <option>Hardback</option>
+                <option>Paperback</option>
+            </select>
+        </div>
     </div>
 </main>
 

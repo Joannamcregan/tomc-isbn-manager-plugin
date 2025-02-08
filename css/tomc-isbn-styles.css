@@ -138,3 +138,17 @@
         font-size: 28;
     }
 }
+#tomc-isbn-edit-info-overlay input[type="text"]{
+    width: 200px;
+    border-radius: 20px;
+}
+#tomc-isbn-edit-info-overlay input[type="textarea"]{
+    width: 280px;
+    min-height: 100px;
+    border-radius: 10px;
+}
+#tomc-isbn-edit-info-overlay select{
+    width: 180px;
+    border-radius: 10px;
+    padding: 3px;
+}

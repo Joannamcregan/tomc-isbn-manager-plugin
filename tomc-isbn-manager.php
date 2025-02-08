@@ -93,7 +93,7 @@ class TOMCBookISBNPlugin {
             isbnid bigint(20) unsigned NOT NULL,
             fieldid bigint(20) unsigned NOT NULL,
             fieldlabel varchar(100) NOT NULL,
-            fieldvalue varchar(2000),
+            fieldvalue varchar(4000),
             addedby bigint(20) unsigned NOT NULL,
             addeddate datetime NOT NULL,
             PRIMARY KEY  (id),
