@@ -94,6 +94,7 @@ class TOMCBookISBNPlugin {
             fieldvalue varchar(4000),
             addedby bigint(20) unsigned NOT NULL,
             addeddate datetime NOT NULL,
+            displayOrder tinyint(100),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id)
@@ -103,14 +104,10 @@ class TOMCBookISBNPlugin {
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             isbnid bigint(20) unsigned NOT NULL,
             submittedDate datetime NOT NULL,
-            rejecteddate datetime NULL,
-            rejectedby bigint(20) unsigned NULL,
-            rejectionnote varchar(300),
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
             PRIMARY KEY  (id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
-            FOREIGN KEY  (rejectedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 

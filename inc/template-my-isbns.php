@@ -41,7 +41,6 @@ get_header();
             $query = 'select numbers.isbn, records.submitteddate
             from %i numbers
             join %i records on numbers.id = records.isbnid
-            and records.rejecteddate is null
             and records.processeddate is null
             where numbers.assignedto = %d';
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $userid), ARRAY_A);
@@ -126,6 +125,7 @@ get_header();
                 <option>Paperback</option>
             </select>
         </div>
+        <br><br>
         <label for="isbn-info--first-genre" required>First Genre</label>
         <select id="isbn-info--first-genre">
             <option>Agriculture</option>
@@ -214,6 +214,353 @@ get_header();
             <option>Wit and Humor</option>
             <option>World History</option>
         </select>
+        <br><br>
+        <label for="isbn-info--second-genre" required>Second Genre (optional)</label>
+        <select id="isbn-info--second-genre">
+            <option>Agriculture</option>
+            <option>Architecture</option>
+            <option>Art</option>
+            <option>Astrology</option>
+            <option> Bible_Commentaries</option>
+            <option>Biography</option>
+            <option>Business</option>
+            <option>Children’s Fiction</option>
+            <option>Collectors and Collecting</option>
+            <option>Computer Software</option>
+            <option>Computers</option>
+            <option>Cooking</option>
+            <option>Crime</option>
+            <option>Curiosities and Wonders</option>
+            <option>Drama (Dramatic Works By One Author)</option>
+            <option>Drama_Collections</option>
+            <option>Drama_History and Criticism</option>
+            <option>Economics</option>
+            <option>Education</option>
+            <option>Family</option>
+            <option>Fiction_Action and Adventure</option>
+            <option>Fiction_Erotica</option>
+            <option>Fiction_Espionage</option>
+            <option> Fiction_Fantasy_General</option>
+            <option> Fiction_Gay</option>
+            <option> Fiction_General</option>
+            <option> Fiction_Historical</option>
+            <option>Fiction_Horror</option>
+            <option>Fiction_Mystery and Detective_General</option>
+            <option>Fiction_Psychological</option>
+            <option>Fiction_Religious</option>
+            <option> Fiction_Romance_General</option>
+            <option>Fiction_Science Fiction_General</option>
+            <option>Fiction_Short Stories (single author)</option>
+            <option> Fiction_Suspense</option>
+            <option>Fiction_Thrillers</option>
+            <option>Fiction_Visionary and Metaphysical</option>
+            <option>Fiction_War and Military</option>
+            <option>Fiction_Westerns</option>
+            <option>Finance, Personal</option>
+            <option>Games</option>
+            <option>Gardening</option>
+            <option>Genealogy</option>
+            <option>Great Britain_History</option>
+            <option>Handicraft</option>
+            <option>Health</option>
+            <option>Interior Decoration</option>
+            <option>Internet</option>
+            <option>Interpersonal Relations</option>
+            <option>Language and Languages_Study and Teaching</option>
+            <option>Language Arts</option>
+            <option>Law</option>
+            <option>Literature_Collections</option>
+            <option>Literature_History and Criticism</option>
+            <option>Mathematics</option>
+            <option>Medicine</option>
+            <option>Military Art and Science</option>
+            <option>Mind and Body</option>
+            <option>Music</option>
+            <option>Nature</option>
+            <option>Nutrition</option>
+            <option>Parenting</option>
+            <option>Performing Arts</option>
+            <option>Pets</option>
+            <option>Philosophy</option>
+            <option>Photography</option>
+            <option>Physical Fitness</option>
+            <option>Physics</option>
+            <option>Poetry (Poetic Works by One Author)</option>
+            <option>Poetry_Collections</option>
+            <option>Poetry_History and Criticism</option>
+            <option>Political Science</option>
+            <option>Psychology</option>
+            <option>Reference Books</option>
+            <option>Religion</option>
+            <option>Science</option>
+            <option>Self-Help Techniques</option>
+            <option>Social Sciences</option>
+            <option>Spirituality</option>
+            <option>Sports</option>
+            <option>Technology</option>
+            <option>Transportation</option>
+            <option>Travel</option>
+            <option>Wit and Humor</option>
+            <option>World History</option>
+        </select>
+        <br><br>
+        <label for="isbn-contributor--name-0">Your name</label>
+        <input type="text" id="isbn-contributor--name-0" />
+        <br><br>
+        <label for="isbn-contributor--bio-0">Your bio</label>
+        <input type="textarea" id="isbn-contributor--bio-0" />
+        <br><br>
+        <label for="isbn-contributor-function-0" required>Your function</label>
+        <select id="isbn-contributor-function-0">
+                <option>author</option>
+                <option>editor</option>
+                <option>illustrator</option>
+                <option>various roles</option>
+                <option>abridged by</option>
+                <option>adapted by</option>
+                <option>afterward by</option>
+                <option>animated by</option>
+                <option>annotations by</option>
+                <option>appendix by</option>
+                <option>arranged by</option>
+                <option>artist</option>
+                <option>as told by</option>
+                <option>as told to</option>
+                <option>assisted by</option>
+                <option>associated editor</option>
+                <option>based on a work by</option>
+                <option>book and lyrics by</option>
+                <option>by (photographer)</option>
+                <option>characters by</option>
+                <option>colorist (comic)</option>
+                <option>comic script by</option>
+                <option>commentaries by</option>
+                <option>compiled by</option>
+                <option>composed by</option>
+                <option>concept by</option>
+                <option>conducted by</option>
+                <option>continued by</option>
+                <option>contribution by</option>
+                <option>cover design by</option>
+                <option>curated by</option>
+                <option>demonstrated by</option>
+                <option>designed by</option>
+                <option>directed by</option>
+                <option>drawings by</option>
+                <option>edited and translated by</option>
+                <option>editor-in-chief</option>
+                <option>editorial board member</option>
+                <option>editorial coordinator</option>
+                <option>engineer</option>
+                <option>epilogue by</option>
+                <option>executive producer</option>
+                <option>experiments by</option>
+                <option>featuring</option>
+                <option>filmed by</option>
+                <option>featuring</option>
+                <option>footnotes by</option>
+                <option>foreward by</option>
+                <option>general editor</option>
+                <option>guest editor</option>
+                <option>historical advisor</option>
+                <option>index by</option>
+                <option>inked or colored by</option>
+                <option>inker (comics)</option>
+                <option>instructed by</option>
+                <option>instrumental soloist</option>
+                <option>interviewed by</option>
+                <option>interviewee</option>
+                <option>interviewer</option>
+                <option>intro and notes by</option>
+                <option>introduction by</option>
+                <option>letterer (comics)</option>
+                <option>libretto by</option>
+                <option>literary editor</option>
+                <option>lyrics by</option>
+                <option>managing editor</option>
+                <option>maps by</option>
+                <option>memoir by</option>
+                <option>moderated by</option>
+                <option>music by</option>
+                <option>narrated by</option>
+                <option>non-text materials selected by</option>
+                <option>notes by</option>
+                <option>original author</option>
+                <option>original editor</option>
+                <option>other</option>
+                <option>other adaptation by</option>
+                <option>other direction by</option>
+                <option>other primary creator</option>
+                <option>other recording by</option>
+                <option>other compilation by</option>
+                <option>performed by</option>
+                <option>performed by musical group</option>
+                <option>photographer</option>
+                <option>pop-ups by</option>
+                <option>preface by</option>
+                <option>preliminary work by</option>
+                <option>prepared for publication by</option>
+                <option>presented by</option>
+                <option>produced by</option>
+                <option>prologue by</option>
+                <option>read by</option>
+                <option>research by</option>
+                <option>retold by</option>
+                <option>reviewed by</option>
+                <option>revised by</option>
+                <option>scientific editor</option>
+                <option>score by</option>
+                <option>screenplay by</option>
+                <option>selected by</option>
+                <option>series edited by</option>
+                <option>software by</option>
+                <option>speaker</option>
+                <option>summary by</option>
+                <option>supplement by</option>
+                <option>technical editor</option>
+                <option>text by</option>
+                <option>thesis advisor or supervisor</option>
+                <option>thesis examiner</option>
+                <option>transcribed by</option>
+                <option>translated with commentary by</option>
+                <option>translator</option>
+                <option>voice by</option>
+                <option>volume editor</option>
+        </select>
+        <br><br>
+        <span>Do you want to add another contributor?</span>
+        <br>
+        <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--yes-1"/>
+        <label for="isbn-contributors--yes-1">yes</label>
+        <br>
+        <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--no-1" checked/>
+        <label for="isbn-contributors--no-1">no</label>
+        <br><br>
+        <div class="hidden" id="isbn-contributors-section-1">
+            <label for="isbn-contributor--name-1">Contributor name</label>
+            <input type="text" id="isbn-contributor--name-1" />
+            <br><br>
+            <label for="isbn-contributor--bio-1">Contributor bio</label>
+            <input type="textarea" id="isbn-contributor--bio-1" />
+            <br><br>
+            <label for="isbn-contributor-function-0" required>Your function</label>
+            <select id="isbn-contributor-function-0">
+                    <option>author</option>
+                    <option>editor</option>
+                    <option>illustrator</option>
+                    <option>various roles</option>
+                    <option>abridged by</option>
+                    <option>adapted by</option>
+                    <option>afterward by</option>
+                    <option>animated by</option>
+                    <option>annotations by</option>
+                    <option>appendix by</option>
+                    <option>arranged by</option>
+                    <option>artist</option>
+                    <option>as told by</option>
+                    <option>as told to</option>
+                    <option>assisted by</option>
+                    <option>associated editor</option>
+                    <option>based on a work by</option>
+                    <option>book and lyrics by</option>
+                    <option>by (photographer)</option>
+                    <option>characters by</option>
+                    <option>colorist (comic)</option>
+                    <option>comic script by</option>
+                    <option>commentaries by</option>
+                    <option>compiled by</option>
+                    <option>composed by</option>
+                    <option>concept by</option>
+                    <option>conducted by</option>
+                    <option>continued by</option>
+                    <option>contribution by</option>
+                    <option>cover design by</option>
+                    <option>curated by</option>
+                    <option>demonstrated by</option>
+                    <option>designed by</option>
+                    <option>directed by</option>
+                    <option>drawings by</option>
+                    <option>edited and translated by</option>
+                    <option>editor-in-chief</option>
+                    <option>editorial board member</option>
+                    <option>editorial coordinator</option>
+                    <option>engineer</option>
+                    <option>epilogue by</option>
+                    <option>executive producer</option>
+                    <option>experiments by</option>
+                    <option>featuring</option>
+                    <option>filmed by</option>
+                    <option>featuring</option>
+                    <option>footnotes by</option>
+                    <option>foreward by</option>
+                    <option>general editor</option>
+                    <option>guest editor</option>
+                    <option>historical advisor</option>
+                    <option>index by</option>
+                    <option>inked or colored by</option>
+                    <option>inker (comics)</option>
+                    <option>instructed by</option>
+                    <option>instrumental soloist</option>
+                    <option>interviewed by</option>
+                    <option>interviewee</option>
+                    <option>interviewer</option>
+                    <option>intro and notes by</option>
+                    <option>introduction by</option>
+                    <option>letterer (comics)</option>
+                    <option>libretto by</option>
+                    <option>literary editor</option>
+                    <option>lyrics by</option>
+                    <option>managing editor</option>
+                    <option>maps by</option>
+                    <option>memoir by</option>
+                    <option>moderated by</option>
+                    <option>music by</option>
+                    <option>narrated by</option>
+                    <option>non-text materials selected by</option>
+                    <option>notes by</option>
+                    <option>original author</option>
+                    <option>original editor</option>
+                    <option>other</option>
+                    <option>other adaptation by</option>
+                    <option>other direction by</option>
+                    <option>other primary creator</option>
+                    <option>other recording by</option>
+                    <option>other compilation by</option>
+                    <option>performed by</option>
+                    <option>performed by musical group</option>
+                    <option>photographer</option>
+                    <option>pop-ups by</option>
+                    <option>preface by</option>
+                    <option>preliminary work by</option>
+                    <option>prepared for publication by</option>
+                    <option>presented by</option>
+                    <option>produced by</option>
+                    <option>prologue by</option>
+                    <option>read by</option>
+                    <option>research by</option>
+                    <option>retold by</option>
+                    <option>reviewed by</option>
+                    <option>revised by</option>
+                    <option>scientific editor</option>
+                    <option>score by</option>
+                    <option>screenplay by</option>
+                    <option>selected by</option>
+                    <option>series edited by</option>
+                    <option>software by</option>
+                    <option>speaker</option>
+                    <option>summary by</option>
+                    <option>supplement by</option>
+                    <option>technical editor</option>
+                    <option>text by</option>
+                    <option>thesis advisor or supervisor</option>
+                    <option>thesis examiner</option>
+                    <option>transcribed by</option>
+                    <option>translated with commentary by</option>
+                    <option>translator</option>
+                    <option>voice by</option>
+                    <option>volume editor</option>
+            </select>
+        </div>
     </div>
 </main>
 

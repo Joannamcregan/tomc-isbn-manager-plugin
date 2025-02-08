@@ -53,8 +53,7 @@ function getUnfiledRecords(){
         join %i numbers on records.isbnid = numbers.id
         join %i fieldvalues on fieldvalues.isbnid = numbers.id
         
-        where records.rejecteddate is null
-        and records.submitteddate is not null
+        where records.submitteddate is not null
         order by records.submitteddate';
         $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $isbn_numbers_table, $postmeta_table, $posts_table, $users_table, $postmeta_table, $isbn_records_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table, $postmeta_table), ARRAY_A);
         return $results;
@@ -91,5 +90,3 @@ function getFiledRecords(){
 //also need route to edit field values
 
 //also need route to submit isbn info for filing
-
-//also need route to resubmit info for rejected filings
