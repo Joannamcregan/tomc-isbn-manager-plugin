@@ -3,6 +3,12 @@ $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
 $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
 $isbn_field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
 $user = wp_get_current_user();
+$posts_table = $wpdb->prefix . "posts";
+$terms_table = $wpdb->prefix . "terms";
+$term_relationships_table = $wpdb->prefix . "term_relationships";
+$term_taxonomy_table = $wpdb->prefix . "term_taxonomy";
+$book_products_table = $wpdb->prefix . "tomc_book_products";
+$books_table = $wpdb->prefix . "tomc_books";
 $userid = $user->ID;
 
 get_header();
@@ -62,6 +68,25 @@ get_header();
         <i class="fa fa-window-close search-overlay__close" id="isbn-info-overlay__close" aria-label="close overlay"></i>
         <br>
         <h2 class="centered-text">Edit Info for ISBN </h2>
+        <label for="isbn-info--assigned-product" required>Assigned Product</label>
+        <select id="isbn-info--assigned-product">
+            <?php $query="select posts.id as image_url, posts.post_title, terms.name as termname, numbers.assignedproductid
+            from %i posts
+            left join %i numbers on posts.id = numbers.assignedproductid
+            join %i tr on posts.id = tr.object_id
+            join %i terms on tr.term_taxonomy_id = terms.term_id
+            join %i tt on tr.term_taxonomy_id = tt.term_taxonomy_id
+            and tt.taxonomy = 'product_cat'
+            where posts.post_type='product'
+            and posts.post_author = %d";
+            $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $isbn_numbers_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $userid), ARRAY_A);
+            for ($i= 0; $i < count($results); $i++){
+                ?><option >
+                <?php echo $results[$i]['post_title'] . ' (categorized in ' . $results[$i]['termname'] . ')';
+                ?><option>
+            <?php }
+        ?></select>
+        <br><br>
         <label for="isbn-info--book-title" required>Book Title</label>
         <input type="text" id="isbn-info--book-title" />
         <br><br>
@@ -101,6 +126,7 @@ get_header();
                 <option>Paperback</option>
             </select>
         </div>
+
     </div>
 </main>
 

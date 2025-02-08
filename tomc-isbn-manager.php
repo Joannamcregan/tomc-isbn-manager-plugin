@@ -18,10 +18,6 @@ class TOMCBookISBNPlugin {
         $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
-        $this->postmeta_table = $wpdb->prefix . "postmeta";
-        $this->term_relationships_table = $wpdb->prefix . "term_relationships";
-        $this->terms_table = $wpdb->prefix . "terms";
-        $this->term_taxonomy_table = $wpdb->prefix . "term_taxonomy";
 
         wp_localize_script('tomc-isbn-js', 'tomcBookorgData', array(
             'root_url' => get_site_url()
@@ -81,11 +77,13 @@ class TOMCBookISBNPlugin {
             assignedto bigint(20) unsigned NULL,
             assigneddate datetime NULL,
             shoporderid bigint(20) unsigned,
+            assignedproductid bigint(20) unsigned,
             UNIQUE (isbn),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (assignedto) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id)
+            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id),
+            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
         ) $this->charset;");
 
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_field_values_table (
