@@ -141,14 +141,23 @@
 #tomc-isbn-edit-info-overlay input[type="text"]{
     width: 200px;
     border-radius: 20px;
+    display: block;
+}
+#tomc-isbn-edit-info-overlay input[type="date"]{
+    width: 200px;
+    border-radius: 20px;
+    padding: 3px;
+    display: block;
 }
 #tomc-isbn-edit-info-overlay input[type="textarea"]{
     width: 280px;
     min-height: 100px;
     border-radius: 10px;
+    display: block;
 }
 #tomc-isbn-edit-info-overlay select{
-    width: 180px;
+    width: 280px;
     border-radius: 10px;
     padding: 3px;
+    display: block;
 }

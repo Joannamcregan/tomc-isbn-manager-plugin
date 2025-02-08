@@ -568,6 +568,7 @@ get_header();
             <br>
             <input type="radio" name="isbn-contributors-radio-2" id="isbn-contributors--no-2" class="isbn-radio-no" data-section="2" checked/>
             <label for="isbn-contributors--no-2">no</label>
+            <br><br>
         </div>
         <div class="hidden isbn-contributors-section" id="isbn-contributors-section-2">
             <label for="isbn-contributor--name-2">Contributor name</label>
@@ -701,6 +702,7 @@ get_header();
             <br>
             <input type="radio" name="isbn-contributors-radio-3" id="isbn-contributors--no-3" class="isbn-radio-no" data-section="3" checked/>
             <label for="isbn-contributors--no-3">no</label>
+            <br><br>
         </div>
         <div class="hidden isbn-contributors-section" id="isbn-contributors-section-3">
             <label for="isbn-contributor--name-3">Contributor name</label>
@@ -834,6 +836,7 @@ get_header();
             <br>
             <input type="radio" name="isbn-contributors-radio-4" id="isbn-contributors--no-4" class="isbn-radio-no" data-section="4" checked/>
             <label for="isbn-contributors--no-4">no</label>
+            <br><br>
         </div>
         <div class="hidden isbn-contributors-section" id="isbn-contributors-section-4">
             <label for="isbn-contributor--name-4">Contributor name</label>
@@ -959,7 +962,68 @@ get_header();
                 <option>voice by</option>
                 <option>volume editor</option>
             </select>
+            <br><br>
         </div>
+        <label for="isbn-info--publication-date">Publication date </label>
+        <input type="date" id="isbn-info--publication-date" required />
+        <label for="isbn-info--status">Title Status</label>
+        <select id="isbn-info--status" required>
+            <option selected>active record</option>
+            <option>forthcoming</option>
+            <option>import to order</option>
+            <option>inactive</option>
+            <option>on demand</option>
+            <option>out of stock</option>
+            <option>out of print indefinitely</option>
+            <option>postponed</option>
+            <option>publication canceled</option>
+            <option>recalled</option>
+            <option>remaindered</option>
+            <option>temporarily withdrawn from sale</option>
+            <option>unknown</option>
+            <option>unspecified</option>
+            <option>withdrawn</option>
+        </select>
+        <label for="isbn-info--target-audience">Target audience (note: for adult fiction, select "trade")</label>
+        <select id="isbn-info--target-audience" required>
+            <option>adult education</option>
+            <option>college audience</option>
+            <option>elementary/high school</option>
+            <option>english as a second language</option>
+            <option>family</option>
+            <option>juvenile audience</option>
+            <option>lower secondary education</option>
+            <option>pre-primary education</option>
+            <option>scholarly & professional</option>
+            <option>second language teaching</option>
+            <option selected>trade</option>
+            <option>upper secondary education</option>
+            <option>young adult audience</option>
+        </select>
+        <br><br>
+        <label for="isbn-info--price">Book price</label>
+        <input type="text" id="isbn-info--price" required />
+        <br><br>
+        <label for="isbn-info--language">Language (optional)</label>
+        <input type="text" id="isbn-info--language" />
+        <br><br>
+        <label for="isbn-info--copyright">Copyright year (optional)</label>
+        <input type="text" id="isbn-info--copyright" />
+        <br><br>
+        <label for="isbn-info--control">Library of Congress control number (optional)</label>
+        <input type="text" id="isbn-info--control" />
+        <br><br>
+        <label for="isbn-info--translated-title">Translated title (optional)</label>
+        <input type="text" id="isbn-info--translated-title" />
+        <br><br>
+        <label for="isbn-info--book-size">Format details (book size) (optional)</label>
+        <input type="text" id="isbn-info--book-size" />
+        <br><br>
+        <label for="isbn-info--number-pages">Number of pages (optional)</label>
+        <input type="text" id="isbn-info--number-pages" />
+        <br><br>
+        <label for="isbn-info--number-illustations">Number of illustrations (optional)</label>
+        <input type="text" id="isbn-info--number-illustrations" />
     </div>
 </main>
 
