@@ -126,7 +126,94 @@ get_header();
                 <option>Paperback</option>
             </select>
         </div>
-
+        <label for="isbn-info--first-genre" required>First Genre</label>
+        <select id="isbn-info--first-genre">
+            <option>Agriculture</option>
+            <option>Architecture</option>
+            <option>Art</option>
+            <option>Astrology</option>
+            <option> Bible_Commentaries</option>
+            <option>Biography</option>
+            <option>Business</option>
+            <option>Children’s Fiction</option>
+            <option>Collectors and Collecting</option>
+            <option>Computer Software</option>
+            <option>Computers</option>
+            <option>Cooking</option>
+            <option>Crime</option>
+            <option>Curiosities and Wonders</option>
+            <option>Drama (Dramatic Works By One Author)</option>
+            <option>Drama_Collections</option>
+            <option>Drama_History and Criticism</option>
+            <option>Economics</option>
+            <option>Education</option>
+            <option>Family</option>
+            <option>Fiction_Action and Adventure</option>
+            <option>Fiction_Erotica</option>
+            <option>Fiction_Espionage</option>
+            <option> Fiction_Fantasy_General</option>
+            <option> Fiction_Gay</option>
+            <option> Fiction_General</option>
+            <option> Fiction_Historical</option>
+            <option>Fiction_Horror</option>
+            <option>Fiction_Mystery and Detective_General</option>
+            <option>Fiction_Psychological</option>
+            <option>Fiction_Religious</option>
+            <option> Fiction_Romance_General</option>
+            <option>Fiction_Science Fiction_General</option>
+            <option>Fiction_Short Stories (single author)</option>
+            <option> Fiction_Suspense</option>
+            <option>Fiction_Thrillers</option>
+            <option>Fiction_Visionary and Metaphysical</option>
+            <option>Fiction_War and Military</option>
+            <option>Fiction_Westerns</option>
+            <option>Finance, Personal</option>
+            <option>Games</option>
+            <option>Gardening</option>
+            <option>Genealogy</option>
+            <option>Great Britain_History</option>
+            <option>Handicraft</option>
+            <option>Health</option>
+            <option>Interior Decoration</option>
+            <option>Internet</option>
+            <option>Interpersonal Relations</option>
+            <option>Language and Languages_Study and Teaching</option>
+            <option>Language Arts</option>
+            <option>Law</option>
+            <option> Literature_Collections</option>
+            <option>Literature_History and Criticism</option>
+            <option>Mathematics</option>
+            <option>Medicine</option>
+            <option>Military Art and Science</option>
+            <option>Mind and Body</option>
+            <option>Music</option>
+            <option>Nature</option>
+            <option>Nutrition</option>
+            <option>Parenting</option>
+            <option>Performing Arts</option>
+            <option>Pets</option>
+            <option>Philosophy</option>
+            <option>Photography</option>
+            <option>Physical Fitness</option>
+            <option>Physics</option>
+            <option>Poetry (Poetic Works by One Author)</option>
+            <option>Poetry_Collections</option>
+            <option>Poetry_History and Criticism</option>
+            <option>Political Science</option>
+            <option>Psychology</option>
+            <option>Reference Books</option>
+            <option>Religion</option>
+            <option>Science</option>
+            <option>Self-Help Techniques</option>
+            <option>Social Sciences</option>
+            <option>Spirituality</option>
+            <option>Sports</option>
+            <option>Technology</option>
+            <option>Transportation</option>
+            <option>Travel</option>
+            <option>Wit and Humor</option>
+            <option>World History</option>
+        </select>
     </div>
 </main>
 
