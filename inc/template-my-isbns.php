@@ -430,13 +430,13 @@ get_header();
         <br><br>
         <span>Do you want to add another contributor?</span>
         <br>
-        <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--yes-1"/>
+        <input type="radio" name="isbn-contributors-radio-1" id="isbn-contributors--yes-1" class="isbn-radio-yes" data-section="1"/>
         <label for="isbn-contributors--yes-1">yes</label>
         <br>
-        <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--no-1" checked/>
+        <input type="radio" name="isbn-contributors-radio-1" id="isbn-contributors--no-1"  class="isbn-radio-no" data-section="1"checked/>
         <label for="isbn-contributors--no-1">no</label>
         <br><br>
-        <div class="hidden" id="isbn-contributors-section-1">
+        <div class="hidden isbn-contributors-section" id="isbn-contributors-section-1">
             <label for="isbn-contributor--name-1">Contributor name</label>
             <input type="text" id="isbn-contributor--name-1" />
             <br><br>
@@ -563,13 +563,13 @@ get_header();
             <br><br>
             <span>Do you want to add another contributor?</span>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--yes-2"/>
+            <input type="radio" name="isbn-contributors-radio-2" id="isbn-contributors--yes-2" class="isbn-radio-yes" data-section="2"/>
             <label for="isbn-contributors--yes-2">yes</label>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--no-2" checked/>
+            <input type="radio" name="isbn-contributors-radio-2" id="isbn-contributors--no-2" class="isbn-radio-no" data-section="2" checked/>
             <label for="isbn-contributors--no-2">no</label>
         </div>
-        <div class="hidden" id="isbn-contributors-section-2">
+        <div class="hidden isbn-contributors-section" id="isbn-contributors-section-2">
             <label for="isbn-contributor--name-2">Contributor name</label>
             <input type="text" id="isbn-contributor--name-2" />
             <br><br>
@@ -696,13 +696,13 @@ get_header();
             <br><br>
             <span>Do you want to add another contributor?</span>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--yes-3"/>
+            <input type="radio" name="isbn-contributors-radio-3" id="isbn-contributors--yes-3" class="isbn-radio-yes" data-section="3"/>
             <label for="isbn-contributors--yes-3">yes</label>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--no-3" checked/>
+            <input type="radio" name="isbn-contributors-radio-3" id="isbn-contributors--no-3" class="isbn-radio-no" data-section="3" checked/>
             <label for="isbn-contributors--no-3">no</label>
         </div>
-        <div class="hidden" id="isbn-contributors-section-3">
+        <div class="hidden isbn-contributors-section" id="isbn-contributors-section-3">
             <label for="isbn-contributor--name-3">Contributor name</label>
             <input type="text" id="isbn-contributor--name-3" />
             <br><br>
@@ -829,13 +829,13 @@ get_header();
             <br><br>
             <span>Do you want to add another contributor?</span>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--yes-4"/>
+            <input type="radio" name="isbn-contributors-radio-4" id="isbn-contributors--yes-4" class="isbn-radio-yes" data-section="4"/>
             <label for="isbn-contributors--yes-4">yes</label>
             <br>
-            <input type="radio" name="isbn-contributors-radio" id="isbn-contributors--no-4" checked/>
+            <input type="radio" name="isbn-contributors-radio-4" id="isbn-contributors--no-4" class="isbn-radio-no" data-section="4" checked/>
             <label for="isbn-contributors--no-4">no</label>
         </div>
-        <div class="hidden" id="isbn-contributors-section-4">
+        <div class="hidden isbn-contributors-section" id="isbn-contributors-section-4">
             <label for="isbn-contributor--name-4">Contributor name</label>
             <input type="text" id="isbn-contributor--name-4" />
             <br><br>
