@@ -17,7 +17,7 @@ get_header();
     <div class="banner"><h1 class="centered-text banner-heading-28">My ISBN Registrations</h1></div>
     <br>
     <div class="generic-content half-screen">
-        <p class="centered-text"><strong>Get a free ISBN</strong> when you <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">purchase our ISBN registration service</a>.</p>
+        <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p>
         <?php if (is_user_logged_in()){
             $query = 'select numbers.isbn
             from %i numbers
@@ -36,7 +36,7 @@ get_header();
                     <span class="add-isbn-info-button">add info</span>
                     </div>
                 <?php }
-            }
+            } 
 
             $query = 'select numbers.isbn, records.submitteddate
             from %i numbers
@@ -71,7 +71,8 @@ get_header();
             <div class="isbn-info-overlay-column">
                 <label for="isbn-info--assigned-product" required>Assigned product</label>
                 <select id="isbn-info--assigned-product">
-                    <?php $query="select posts.id as image_url, posts.post_title, terms.name as termname, numbers.assignedproductid
+                    <option data-productid=0></option>
+                    <?php $query="select posts.id, posts.post_title, terms.name as termname, numbers.assignedproductid
                     from %i posts
                     left join %i numbers on posts.id = numbers.assignedproductid
                     join %i tr on posts.id = tr.object_id
@@ -82,9 +83,9 @@ get_header();
                     and posts.post_author = %d";
                     $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $isbn_numbers_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $userid), ARRAY_A);
                     for ($i= 0; $i < count($results); $i++){
-                        ?><option >
+                        ?><option data-productid="<?php echo $results[$i]['id']; ?>">
                         <?php echo $results[$i]['post_title'] . ' (categorized in ' . $results[$i]['termname'] . ')';
-                        ?><option>
+                        ?></option>
                     <?php }
                 ?></select>
                 <br><br>

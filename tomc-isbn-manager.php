@@ -7,7 +7,7 @@
 */
 
 if( ! defined('ABSPATH') ) exit;
-// require_once plugin_dir_path(__FILE__) . 'inc/tomc-isbn-route.php';
+require_once plugin_dir_path(__FILE__) . 'inc/tomc-isbn-route.php';
 
 class TOMCBookISBNPlugin {
     function __construct() {
@@ -94,7 +94,7 @@ class TOMCBookISBNPlugin {
             fieldvalue varchar(4000),
             addedby bigint(20) unsigned NOT NULL,
             addeddate datetime NOT NULL,
-            displayOrder bigint(20) unsigned,
+            displayOrder tinyint(100),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id)
@@ -186,7 +186,7 @@ class TOMCBookISBNPlugin {
                     for ($i = 0; $i < count($isbn); $i++){
                         ?><h2>Your new ISBN is <?php echo $isbn[$i]['isbn'] ?>.</h2>
                     <?php }
-                    ?><p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbns'));?>">ISBN registration dashboard</a>.</p>
+                    ?><p>You can view all ISBNs you've obtained through TOMC, as well as their current registration status, by visiting the <a href="<?php echo esc_url(site_url('/my-isbn-registrations'));?>">ISBN registration dashboard</a>.</p>
                 <?php }
                 break;
             }
