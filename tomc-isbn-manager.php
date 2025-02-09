@@ -94,7 +94,7 @@ class TOMCBookISBNPlugin {
             fieldvalue varchar(4000),
             addedby bigint(20) unsigned NOT NULL,
             addeddate datetime NOT NULL,
-            displayOrder tinyint(100),
+            displayOrder bigint(20) unsigned,
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id)
