@@ -96,7 +96,7 @@ get_header();
                 <input type="text" id="isbn-info--book-subtitle" />
                 <br><br>
                 <label for="isbn-info--book-description">Description (up to 350 words)</label>
-                <input type="textarea" id="isbn-info--book-description" required />
+                <textarea id="isbn-info--book-description" required class="isbn-info--textarea"></textarea>
                 <br><br>
                 <label for="isbn-info--book-medium" required>Medium</label>
                 <select id="isbn-info--book-medium" class="isbn-info--format-select">
@@ -224,7 +224,7 @@ get_header();
                     <option>Architecture</option>
                     <option>Art</option>
                     <option>Astrology</option>
-                    <option> Bible_Commentaries</option>
+                    <option>Bible_Commentaries</option>
                     <option>Biography</option>
                     <option>Business</option>
                     <option>Children’s Fiction</option>
@@ -243,18 +243,18 @@ get_header();
                     <option>Fiction_Action and Adventure</option>
                     <option>Fiction_Erotica</option>
                     <option>Fiction_Espionage</option>
-                    <option> Fiction_Fantasy_General</option>
-                    <option> Fiction_Gay</option>
-                    <option> Fiction_General</option>
-                    <option> Fiction_Historical</option>
+                    <option>Fiction_Fantasy_General</option>
+                    <option>Fiction_Gay</option>
+                    <option>Fiction_General</option>
+                    <option>Fiction_Historical</option>
                     <option>Fiction_Horror</option>
                     <option>Fiction_Mystery and Detective_General</option>
                     <option>Fiction_Psychological</option>
                     <option>Fiction_Religious</option>
-                    <option> Fiction_Romance_General</option>
+                    <option>Fiction_Romance_General</option>
                     <option>Fiction_Science Fiction_General</option>
                     <option>Fiction_Short Stories (single author)</option>
-                    <option> Fiction_Suspense</option>
+                    <option>Fiction_Suspense</option>
                     <option>Fiction_Thrillers</option>
                     <option>Fiction_Visionary and Metaphysical</option>
                     <option>Fiction_War and Military</option>
@@ -310,7 +310,7 @@ get_header();
                 <input type="text" id="isbn-contributor--name-0" />
                 <br><br>
                 <label for="isbn-contributor--bio-0">Your bio</label>
-                <input type="textarea" id="isbn-contributor--bio-0" />
+                <textarea id="isbn-contributor--bio-0" class="isbn-info--textarea"></textarea>
                 <br><br>
                 <label for="isbn-contributor-function-0" required>Your function</label>
                 <select id="isbn-contributor-function-0">
@@ -447,7 +447,7 @@ get_header();
                     <input type="text" id="isbn-contributor--name-1" />
                     <br><br>
                     <label for="isbn-contributor--bio-1">Contributor bio</label>
-                    <input type="textarea" id="isbn-contributor--bio-1" />
+                    <textarea id="isbn-contributor--bio-1" class="isbn-info--textarea"></textarea>
                     <br><br>
                     <label for="isbn-contributor-function-1" required>Contributor function</label>
                     <select id="isbn-contributor-function-1">
@@ -583,7 +583,7 @@ get_header();
                     <input type="text" id="isbn-contributor--name-2" />
                     <br><br>
                     <label for="isbn-contributor--bio-2">Contributor bio</label>
-                    <input type="textarea" id="isbn-contributor--bio-2" />
+                    <textarea id="isbn-contributor--bio-2" class="isbn-info--textarea"></textarea>
                     <br><br>
                     <label for="isbn-contributor-function-2" required>Contributor function</label>
                     <select id="isbn-contributor-function-2">
@@ -719,7 +719,7 @@ get_header();
                     <input type="text" id="isbn-contributor--name-3" />
                     <br><br>
                     <label for="isbn-contributor--bio-3">Contributor bio</label>
-                    <input type="textarea" id="isbn-contributor--bio-3" />
+                    <textarea id="isbn-contributor--bio-3" class="isbn-info--textarea"></textarea>
                     <br><br>
                     <label for="isbn-contributor-function-3" required>Contributor function</label>
                     <select id="isbn-contributor-function-3">
@@ -855,7 +855,7 @@ get_header();
                     <input type="text" id="isbn-contributor--name-4" />
                     <br><br>
                     <label for="isbn-contributor--bio-4">Contributor bio</label>
-                    <input type="textarea" id="isbn-contributor--bio-4" />
+                    <textarea id="isbn-contributor--bio-4" class="isbn-info--textarea"></textarea>
                     <br><br>
                     <label for="isbn-contributor-function-4" required>Contributor function</label>
                     <select id="isbn-contributor-function-4">

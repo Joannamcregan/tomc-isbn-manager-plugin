@@ -195,11 +195,13 @@
     display: block;
     /* margin: auto; */
 }
-#tomc-isbn-edit-info-overlay input[type="textarea"]{
+.isbn-info--textarea{
     width: 280px;
     min-height: 100px;
     border-radius: 10px;
     display: block;
+    word-break: break-all;
+    padding: 3px;
     /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay select{
