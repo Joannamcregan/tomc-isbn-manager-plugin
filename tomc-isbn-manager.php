@@ -7,7 +7,7 @@
 */
 
 if( ! defined('ABSPATH') ) exit;
-require_once plugin_dir_path(__FILE__) . 'inc/tomc-isbn-route.php';
+// require_once plugin_dir_path(__FILE__) . 'inc/tomc-isbn-route.php';
 
 class TOMCBookISBNPlugin {
     function __construct() {
