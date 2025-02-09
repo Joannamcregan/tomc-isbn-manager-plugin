@@ -302,6 +302,69 @@ class ISBNRecords {
 
 /***/ }),
 
+/***/ "./src/modules/my-isbn-registations.js":
+/*!*********************************************!*\
+  !*** ./src/modules/my-isbn-registations.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+class ISBNRegistrations {
+  constructor() {
+    this.addInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-isbn-info-button');
+    this.isbnInfoOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-edit-info-overlay');
+    this.overlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info-overlay__close');
+    this.audioSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--audio-section');
+    this.ebookSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--ebook-section');
+    this.printSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section');
+    this.mediumSelect = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium');
+    this.assignedProductDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--assigned-product');
+    this.titleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-title');
+    this.subtitleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-subtitle');
+    this.firstGenreDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--first-genre');
+    this.contributorsSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-contributors-section');
+    this.radioYes = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-radio-yes');
+    this.radioNo = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-radio-no');
+    this.events();
+  }
+  events() {
+    this.addInfoButtons.on('click', this.showInfo.bind(this));
+    this.overlayCloseButton.on('click', this.closeOverlay.bind(this));
+    this.mediumSelect.on('change', e => {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-section').addClass('hidden');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val()).removeClass('hidden');
+    });
+    this.radioYes.on('change', e => {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).prop("checked", true)) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('section')).removeClass('hidden');
+      }
+    });
+    this.radioNo.on('change', e => {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).prop("checked", true)) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('section')).addClass('hidden');
+      }
+    });
+  }
+  showInfo(e) {
+    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+    this.isbnInfoOverlay.addClass('search-overlay--active');
+    this.isbnInfoOverlay.find('h2').append(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+  }
+  closeOverlay(e) {
+    this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
+    this.isbnInfoOverlay.removeClass('search-overlay--active');
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ISBNRegistrations);
+
+/***/ }),
+
 /***/ "jquery":
 /*!*************************!*\
   !*** external "jQuery" ***!
@@ -389,10 +452,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_ISBNInfoForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/ISBNInfoForm */ "./src/modules/ISBNInfoForm.js");
 /* harmony import */ var _modules_ISBNRecords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/ISBNRecords */ "./src/modules/ISBNRecords.js");
+/* harmony import */ var _modules_my_isbn_registations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/my-isbn-registations */ "./src/modules/my-isbn-registations.js");
+
 
 
 const isbnForm = new _modules_ISBNInfoForm__WEBPACK_IMPORTED_MODULE_0__["default"]();
 const isbnRecords = new _modules_ISBNRecords__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const isbnRegistrations = new _modules_my_isbn_registations__WEBPACK_IMPORTED_MODULE_2__["default"]();
 })();
 
 /******/ })()
