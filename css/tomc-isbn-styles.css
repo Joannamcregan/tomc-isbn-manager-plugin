@@ -139,54 +139,80 @@
     }
 }
 #tomc-isbn-edit-info-overlay-column-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: center;
-    align-items: start;
-    padding: 5px 0px 20px 5px;
+    display: block;
+    padding: 20px;
+    margin: 20px auto;
+    width: fit-content;
+    border-right: solid #f7c340 10px;
+    border-top: solid #f7c340 5px;
+    border-bottom: solid #f7c340 5px;
+    border-radius: 30px;
+}
+.isbn-info-overlay-column{
+    display: block;
+    min-width: 300px;
+    margin: 0 auto;
+    border-left: none;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-left: 20px;
+    border-left: solid #e44e2d 5px;
+    border-radius: 20px;
+}
+@media screen and (min-width: 870px){
+    #tomc-isbn-edit-info-overlay-column-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-items: center;
+        align-items: start;
+        padding: 20px;
+        border-left: none;
+        border-radius: 20px;
+    }
+    .isbn-info-overlay-column{
+        min-width: 300px;
+        margin: 0 20px;
+        padding-top: 10px;
+        padding-left: 20px;
+    }
 }
 #tomc-isbn-edit-info-overlay label{
-    text-align: center;
-    width: fit-content;
-    margin: auto;
+    /* text-align: center; */
+    /* width: fit-content; */
+    /* margin: auto; */
     display: block;
 }
 #tomc-isbn-edit-info-overlay input[type="text"]{
-    width: 200px;
+    width: 280px;
     border-radius: 20px;
     display: block;
-    margin: auto;
+    /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay input[type="date"]{
-    width: 200px;
+    width: 280px;
     border-radius: 20px;
     padding: 3px;
     display: block;
-    margin: auto;
+    /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay input[type="textarea"]{
     width: 280px;
     min-height: 100px;
     border-radius: 10px;
     display: block;
-    margin: auto;
+    /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay select{
     width: 280px;
     border-radius: 10px;
     padding: 3px;
     display: block;
-    margin: auto;
-    text-align: center;
-}
-.isbn-info-overlay-column{
-    display: inline-block;
-    min-width: 300px;
-    margin: 0 auto;
+    /* margin: auto; */
+    /* text-align: center; */
 }
 .isbn-radio-option{
     width: fit-content;
-    margin: 5px auto;
+    /* margin: 5px auto; */
 }
 .isbn-radio-label, .isbn-radio-yes, .isbn-radio-no{
     display: inline !important;
