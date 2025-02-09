@@ -12,10 +12,17 @@ class ISBNRegistrations{
         this.assignedProductDropdown = $('#isbn-info--assigned-product');
         this.titleField = $('#isbn-info--book-title');
         this.subtitleField = $('#isbn-info--book-subtitle');
+        this.descriptionField = $('#isbn-info--book-description');
         this.firstGenreDropdown = $('#isbn-info--first-genre');
         this.contributorsSection = $('.isbn-contributors-section');
         this.radioYes = $('.isbn-radio-yes');
         this.radioNo = $('.isbn-radio-no');
+        this.contributor0 = $('#isbn-contributor--name-0');
+        this.biography0 = $('#isbn-contributor--bio-0');
+        this.publicationDate = $('#isbn-info--publication-date');
+        this.statusSelect = $('#isbn-info--status');
+        this.priceField = $('#isbn-info--price');
+        this.languageField = $('#isbn-info--language');
         this.events();
     }
     events(){
@@ -39,8 +46,8 @@ class ISBNRegistrations{
     }
     autofill(e){
         let productId = $(e.target).find(":selected").data('productid');
-        console.log(productId);
         if (productId > 0){
+            $(e.target).addClass('contracting');
             $.ajax({
                 beforeSend: (xhr) => {
                     xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -51,19 +58,19 @@ class ISBNRegistrations{
                     'productId': productId
                 },
                 success: (response) => {
-                    console.log(response);
-                    // if (response.length > 0){
-                    //     this.title.val(response[0]['title']);
-                    //     this.subtitle.val(response[0]['subtitle']);
-                    //     this.description.val(response[0]['description']);
-                    //     this.format.val(response[0]['format']);
-                    //     this.contributor1.val(response[0]['contributor']);
-                    //     this.biography1.val(response[0]['biography']);
-                    //     this.publicationdate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
-                    //     this.status.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
-                    //     this.price.val('$' + response[0]['price']);
-                    //     this.language.val(response[0]['language']);
-                    // }
+                    $(e.target).removeClass('contracting');
+                    if (response.length > 0){
+                        this.titleField.val(response[0]['title']);
+                        this.subtitleField.val(response[0]['subtitle']);
+                        this.descriptionField.val(response[0]['description']);
+                        $('.isbn-info--format-select').val(response[0]['format']);
+                        this.contributor0.val(response[0]['contributor']);
+                        this.biography0.val(response[0]['biography']);
+                        // this.publicationDate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
+                        this.statusSelect.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
+                        this.priceField.val('$' + response[0]['price']);
+                        this.languageField.val(response[0]['language']);
+                    }
                 },
                 error: (response) => {
                     console.log(response);

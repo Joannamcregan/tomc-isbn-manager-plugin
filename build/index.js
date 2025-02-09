@@ -327,10 +327,17 @@ class ISBNRegistrations {
     this.assignedProductDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--assigned-product');
     this.titleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-title');
     this.subtitleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-subtitle');
+    this.descriptionField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-description');
     this.firstGenreDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--first-genre');
     this.contributorsSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-contributors-section');
     this.radioYes = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-radio-yes');
     this.radioNo = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-radio-no');
+    this.contributor0 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-0');
+    this.biography0 = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-0');
+    this.publicationDate = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--publication-date');
+    this.statusSelect = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--status');
+    this.priceField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--price');
+    this.languageField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--language');
     this.events();
   }
   events() {
@@ -354,8 +361,8 @@ class ISBNRegistrations {
   }
   autofill(e) {
     let productId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).find(":selected").data('productid');
-    console.log(productId);
     if (productId > 0) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -366,19 +373,19 @@ class ISBNRegistrations {
           'productId': productId
         },
         success: response => {
-          console.log(response);
-          // if (response.length > 0){
-          //     this.title.val(response[0]['title']);
-          //     this.subtitle.val(response[0]['subtitle']);
-          //     this.description.val(response[0]['description']);
-          //     this.format.val(response[0]['format']);
-          //     this.contributor1.val(response[0]['contributor']);
-          //     this.biography1.val(response[0]['biography']);
-          //     this.publicationdate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
-          //     this.status.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
-          //     this.price.val('$' + response[0]['price']);
-          //     this.language.val(response[0]['language']);
-          // }
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+          if (response.length > 0) {
+            this.titleField.val(response[0]['title']);
+            this.subtitleField.val(response[0]['subtitle']);
+            this.descriptionField.val(response[0]['description']);
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-select').val(response[0]['format']);
+            this.contributor0.val(response[0]['contributor']);
+            this.biography0.val(response[0]['biography']);
+            // this.publicationDate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
+            this.statusSelect.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
+            this.priceField.val('$' + response[0]['price']);
+            this.languageField.val(response[0]['language']);
+          }
         },
         error: response => {
           console.log(response);

@@ -99,7 +99,7 @@ get_header();
                 <input type="textarea" id="isbn-info--book-description" required />
                 <br><br>
                 <label for="isbn-info--book-medium" required>Medium</label>
-                <select id="isbn-info--book-medium">
+                <select id="isbn-info--book-medium" class="isbn-info--format-select">
                     <option id="isbn-info--book-medium--audio">Audio</option>
                     <option id="isbn-info--book-medium--ebook">E-book</option>
                     <option id="isbn-info--book-medium--print">Print</option>
@@ -107,7 +107,7 @@ get_header();
                 <br><br>
                 <div id="isbn-info--section-Audio" class="isbn-info--format-section">
                     <label for="isbn-info--audio-section--format">Format</label>
-                    <select id="isbn-info--audio-section--format">
+                    <select id="isbn-info--audio-section--format" class="isbn-info--format-select">
                         <option>Digital File</option>
                         <option>CD</option>
                         <option>DVD</option>
@@ -115,7 +115,7 @@ get_header();
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-E-book">
                     <label for="isbn-info--ebook-section--format">Format</label>
-                    <select id="isbn-info--ebook-section--format">
+                    <select id="isbn-info--ebook-section--format" class="isbn-info--format-select">
                         <option>Digital Online</option>
                         <option>Digital File</option>
                     </select>
@@ -134,7 +134,7 @@ get_header();
                     <option>Architecture</option>
                     <option>Art</option>
                     <option>Astrology</option>
-                    <option> Bible_Commentaries</option>
+                    <option>Bible_Commentaries</option>
                     <option>Biography</option>
                     <option>Business</option>
                     <option>Children’s Fiction</option>
@@ -153,18 +153,18 @@ get_header();
                     <option>Fiction_Action and Adventure</option>
                     <option>Fiction_Erotica</option>
                     <option>Fiction_Espionage</option>
-                    <option> Fiction_Fantasy_General</option>
-                    <option> Fiction_Gay</option>
-                    <option> Fiction_General</option>
-                    <option> Fiction_Historical</option>
+                    <option>Fiction_Fantasy_General</option>
+                    <option>Fiction_Gay</option>
+                    <option selected>Fiction_General</option>
+                    <option>Fiction_Historical</option>
                     <option>Fiction_Horror</option>
                     <option>Fiction_Mystery and Detective_General</option>
                     <option>Fiction_Psychological</option>
                     <option>Fiction_Religious</option>
-                    <option> Fiction_Romance_General</option>
+                    <option>Fiction_Romance_General</option>
                     <option>Fiction_Science Fiction_General</option>
                     <option>Fiction_Short Stories (single author)</option>
-                    <option> Fiction_Suspense</option>
+                    <option>Fiction_Suspense</option>
                     <option>Fiction_Thrillers</option>
                     <option>Fiction_Visionary and Metaphysical</option>
                     <option>Fiction_War and Military</option>
@@ -182,7 +182,7 @@ get_header();
                     <option>Language and Languages_Study and Teaching</option>
                     <option>Language Arts</option>
                     <option>Law</option>
-                    <option> Literature_Collections</option>
+                    <option>Literature_Collections</option>
                     <option>Literature_History and Criticism</option>
                     <option>Mathematics</option>
                     <option>Medicine</option>
@@ -219,6 +219,7 @@ get_header();
                 <br><br>
                 <label for="isbn-info--second-genre" required>Second genre (optional)</label>
                 <select id="isbn-info--second-genre">
+                    <option></option>
                     <option>Agriculture</option>
                     <option>Architecture</option>
                     <option>Art</option>
@@ -313,7 +314,7 @@ get_header();
                 <br><br>
                 <label for="isbn-contributor-function-0" required>Your function</label>
                 <select id="isbn-contributor-function-0">
-                    <option>author</option>
+                    <option selected>author</option>
                     <option>editor</option>
                     <option>illustrator</option>
                     <option>various roles</option>
@@ -1037,6 +1038,7 @@ get_header();
                 <br><br>
                 <label for="isbn-info--number-illustations">Number of illustrations (optional)</label>
                 <input type="text" id="isbn-info--number-illustrations" />
+                <br><br>
             </div>
         </div>        
     </div>
