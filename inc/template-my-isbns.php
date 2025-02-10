@@ -94,6 +94,7 @@ get_header();
                 <br><br>
                 <label for="isbn-info--book-subtitle">Subtitle (optional)</label>
                 <input type="text" id="isbn-info--book-subtitle" />
+                <p id="isbn-info--assigned-book-error" class="hidden red-text">Our records indicate this product has already been assigned an ISBN </p>
                 <br><br>
                 <label for="isbn-info--book-description">Description (up to 350 words)</label>
                 <textarea id="isbn-info--book-description" required class="isbn-info--textarea"></textarea>
@@ -430,7 +431,9 @@ get_header();
                     <option>volume editor</option>
                 </select>
                 <br><br>
-                <p class="centered-text">Do you want to add another contributor?</p>
+            </div>
+            <div class="isbn-info-overlay-column">      
+            <p>Do you want to add another contributor?</p>
                 <div class="isbn-radio-option">
                     <input type="radio" name="isbn-contributors-radio-1" id="isbn-contributors--yes-1" class="isbn-radio-yes" data-section="1"/>
                     <label for="isbn-contributors--yes-1" class="isbn-radio-label">yes</label>
@@ -439,9 +442,7 @@ get_header();
                     <input type="radio" name="isbn-contributors-radio-1" id="isbn-contributors--no-1"  class="isbn-radio-no" data-section="1"checked/>
                     <label for="isbn-contributors--no-1" class="isbn-radio-label">no</label>
                 </div>
-                <br><br>
-            </div>
-            <div class="isbn-info-overlay-column">                
+                <br><br>          
                 <div class="hidden isbn-contributors-section" id="isbn-contributors-section-1">
                     <label for="isbn-contributor--name-1">Contributor name</label>
                     <input type="text" id="isbn-contributor--name-1" />
@@ -1039,6 +1040,8 @@ get_header();
                 <label for="isbn-info--number-illustations">Number of illustrations (optional)</label>
                 <input type="text" id="isbn-info--number-illustrations" />
                 <br><br>
+                <div class="tomc-info--submission-errors"></div>
+                <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
             </div>
         </div>        
     </div>

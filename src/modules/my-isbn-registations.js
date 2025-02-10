@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $, { timers } from 'jquery';
 
 class ISBNRegistrations{
     constructor(){
@@ -10,6 +10,7 @@ class ISBNRegistrations{
         this.printSection = $('#isbn-info--print-section');
         this.mediumSelect = $('#isbn-info--book-medium');
         this.assignedProductDropdown = $('#isbn-info--assigned-product');
+        this.assignedProductError = $('#isbn-info--assigned-book-error');
         this.titleField = $('#isbn-info--book-title');
         this.subtitleField = $('#isbn-info--book-subtitle');
         this.descriptionField = $('#isbn-info--book-description');
@@ -23,6 +24,8 @@ class ISBNRegistrations{
         this.statusSelect = $('#isbn-info--status');
         this.priceField = $('#isbn-info--price');
         this.languageField = $('#isbn-info--language');
+        this.submissionErrorSection = $('#tomc-info--submission-errors');
+        this.submitButton = $('#isbn-info--submit');
         this.events();
     }
     events(){
@@ -43,6 +46,56 @@ class ISBNRegistrations{
             }
         })
         this.assignedProductDropdown.on('change', this.autofill.bind(this));
+        this.submitButton.on('click', this.submit.bind(this));
+    }
+    submit(){
+        if (this.assignedProductDropdown.val() != '' && this.titleField.val() != ''  
+        && this.descriptionField.val() != '' && this.contributor0.val() != '' && this.biography0 != ''
+        && this.mediumSelect.val() != '' && this.format.val() != '' && this.publicationDate.val() != '' && this.publicationDate.val() != 'mm/dd/yyyy'
+        && this.statusSelect.val() != '' && this.priceField != '' && this.assignedProductError.hasClass('hidden')){
+            console.log('good to go');
+        } else {
+            if (this.assignedProductDropdown.val() == ''){
+                let p = $('<p />').text('Choose a product to assign your ISBN.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.titleField.val() == ''){
+                let p = $('<p />').text('Enter a title.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.descriptionField.val() == ''){
+                let p = $('<p />').text('Enter a description.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.contributor0.val() == ''){
+                let p = $('<p />').text('Enter your name.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.biography0.val() == ''){
+                let p = $('<p />').text('Enter your biography.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.mediumSelect.val() == ''){
+                let p = $('<p />').text('Select a medium.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.format.val() == ''){
+                let p = $('<p />').text('Select a format.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.publicationDate.val() == ''){
+                let p = $('<p />').text('Enter a publication date.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.statusSelect.val() == ''){
+                let p = $('<p />').text('Select a status.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+            if (this.priceField.val() == ''){
+                let p = $('<p />').text('Enter a price.').addClass('red-text');
+                this.submissionErrorSection.append(p);
+            }
+        }
     }
     autofill(e){
         let productId = $(e.target).find(":selected").data('productid');
@@ -60,16 +113,38 @@ class ISBNRegistrations{
                 success: (response) => {
                     $(e.target).removeClass('contracting');
                     if (response.length > 0){
-                        this.titleField.val(response[0]['title']);
-                        this.subtitleField.val(response[0]['subtitle']);
-                        this.descriptionField.val(response[0]['description']);
-                        $('.isbn-info--format-select').val(response[0]['format']);
-                        this.contributor0.val(response[0]['contributor']);
-                        this.biography0.val(response[0]['biography']);
-                        // this.publicationDate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
-                        this.statusSelect.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
-                        this.priceField.val('$' + response[0]['price']);
-                        this.languageField.val(response[0]['language']);
+                        $(e.target).removeClass('contracting');
+                        this.assignedProductError.append(',' + response[0]['isbn'] + '.');
+                        this.assignedProductError.removeClass('hidden');
+                    } else {
+                        $.ajax({
+                            beforeSend: (xhr) => {
+                                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+                            },
+                            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/populateByProduct',
+                            type: 'GET',
+                            data: {
+                                'productId': productId
+                            },
+                            success: (response) => {
+                                $(e.target).removeClass('contracting');
+                                if (response.length > 0){
+                                    this.titleField.val(response[0]['title']);
+                                    this.subtitleField.val(response[0]['subtitle']);
+                                    this.descriptionField.val(response[0]['description']);
+                                    $('.isbn-info--format-select').val(response[0]['format']);
+                                    this.contributor0.val(response[0]['contributor']);
+                                    this.biography0.val(response[0]['biography']);
+                                    this.publicationDate.val(response[0]['publicationdate0'] ? response[0]['publicationdate0'] : response[0]['publicationdate1']);
+                                    this.statusSelect.val(response[0]['islive'] === 1 ? 'status_active' : 'status_forthcoming');
+                                    this.priceField.val('$' + response[0]['price']);
+                                    this.languageField.val(response[0]['language']);
+                                }
+                            },
+                            error: (response) => {
+                                console.log(response);
+                            }
+                        })
                     }
                 },
                 error: (response) => {

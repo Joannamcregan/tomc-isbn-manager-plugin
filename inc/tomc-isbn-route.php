@@ -19,6 +19,27 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'GET',
         'callback' => 'populateByProduct'
     ));
+    register_rest_route('tomcISBN/v1', 'checkAssignedProduct', array(
+        'methods' => 'GET',
+        'callback' => 'checkAssignedProduct'
+    ));
+}
+
+function checkAssignedProduct($data){
+    $productId = sanitize_text_field($data['productId']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
+        $query = 'select numbers.isbn
+        from %i numbers
+        where numbers.assignedproductid = %d';
+        $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $productId), ARRAY_A);
+        return $results;
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
 function populateByProduct($data){
@@ -44,8 +65,8 @@ function populateByProduct($data){
         producttypes.type_name as format,
         IFNULL(authorposts.post_title, users.display_name) as contributor,
         IFNULL(authorposts.post_content, usermeta.meta_value) as biography,
-        CONCAT(MONTH(books.createdate), "/", DAY(books.createdate), "/", YEAR(books.createdate)) as publicationdate0, 
-        CONCAT(MONTH(posts.post_date), "/", DAY(posts.post_date), "/", YEAR(posts.post_date)) as publicationdate1,
+        DATE(books.createdate) as publicationdate0,
+        DATE(posts.post_date) as publicationdate0,
         books.islive,
         postmeta.meta_value as price,
         languages.language_name as language

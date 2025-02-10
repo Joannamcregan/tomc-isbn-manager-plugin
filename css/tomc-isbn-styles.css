@@ -138,6 +138,9 @@
         font-size: 28;
     }
 }
+#tomc-isbn-edit-info-overlay{
+    width: 100%;
+}
 #tomc-isbn-edit-info-overlay-column-container{
     display: block;
     padding: 20px;
@@ -186,6 +189,7 @@
     width: 280px;
     border-radius: 20px;
     display: block;
+    padding: 3px;
     /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay input[type="date"]{
