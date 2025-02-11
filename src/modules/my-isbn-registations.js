@@ -49,49 +49,59 @@ class ISBNRegistrations{
         this.submitButton.on('click', this.submit.bind(this));
     }
     submit(){
-        if (this.assignedProductDropdown.val() != '' && this.titleField.val() != ''  
-        && this.descriptionField.val() != '' && this.contributor0.val() != '' && this.biography0 != ''
-        && this.mediumSelect.val() != '' && this.format.val() != '' && this.publicationDate.val() != '' && this.publicationDate.val() != 'mm/dd/yyyy'
-        && this.statusSelect.val() != '' && this.priceField != '' && this.assignedProductError.hasClass('hidden')){
-            console.log('good to go');
+        let assignedProduct = this.assignedProductDropdown.val();
+        let title = this.titleField.val();
+        let description = this.descriptionField.val();
+        let name0 = this.contributor0.val();
+        let bio0 = this.biography0.val();
+        let bookMedium = this.mediumSelect.val();
+        let bookFormat = this.format.val();
+        let pubDate = this.publicationDate.val();
+        let status = this.statusSelect.val();
+        let price = this.priceField.val();
+
+        if (assignedProduct != '' && title != ''  && description != '' && name0 != '' && bio0 != ''
+        && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy'
+        && status != '' && price != '' && this.assignedProductError.hasClass('hidden')){
+            
         } else {
-            if (this.assignedProductDropdown.val() == ''){
+            if (assignedProduct == ''){
                 let p = $('<p />').text('Choose a product to assign your ISBN.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.titleField.val() == ''){
+            if (title == ''){
                 let p = $('<p />').text('Enter a title.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.descriptionField.val() == ''){
+            if (description == ''){
                 let p = $('<p />').text('Enter a description.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.contributor0.val() == ''){
+            if (name0 == ''){
                 let p = $('<p />').text('Enter your name.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.biography0.val() == ''){
+            if (bio0 == ''){
                 let p = $('<p />').text('Enter your biography.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.mediumSelect.val() == ''){
+            if (bookMedium == ''){
                 let p = $('<p />').text('Select a medium.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.format.val() == ''){
+            if (bookFormat == ''){
                 let p = $('<p />').text('Select a format.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.publicationDate.val() == ''){
+            if (pubDate == ''){
                 let p = $('<p />').text('Enter a publication date.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.statusSelect.val() == ''){
+            if (status == ''){
                 let p = $('<p />').text('Select a status.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
-            if (this.priceField.val() == ''){
+            if (price == ''){
                 let p = $('<p />').text('Enter a price.').addClass('red-text');
                 this.submissionErrorSection.append(p);
             }
