@@ -363,64 +363,26 @@ class ISBNRegistrations {
     this.assignedProductDropdown.on('change', this.autofill.bind(this));
     this.submitButton.on('click', this.submit.bind(this));
   }
-  submit() {
+  submit(e) {
+    let fieldVals = [];
     let assignedProduct = this.assignedProductDropdown.val();
     let title = this.titleField.val();
     let description = this.descriptionField.val();
     let name0 = this.contributor0.val();
     let bio0 = this.biography0.val();
     let bookMedium = this.mediumSelect.val();
-    let bookFormat = this.format.val();
+    let bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-select').val();
     let pubDate = this.publicationDate.val();
     let status = this.statusSelect.val();
     let price = this.priceField.val();
-    if (assignedProduct != '' && title != '' && description != '' && name0 != '' && bio0 != '' && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' && status != '' && price != '' && this.assignedProductError.hasClass('hidden')) {} else {
-      if (assignedProduct == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Choose a product to assign your ISBN.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (title == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a title.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (description == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a description.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (name0 == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter your name.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (bio0 == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter your biography.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (bookMedium == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a medium.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (bookFormat == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a format.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (pubDate == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a publication date.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (status == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a status.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-      if (price == '') {
-        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a price.').addClass('red-text');
-        this.submissionErrorSection.append(p);
-      }
-    }
-  }
-  autofill(e) {
-    let productId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).find(":selected").data('productid');
-    if (productId > 0) {
+    if (assignedProduct != '' && title != '' && description != '' && name0 != '' && bio0 != '' && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' && status != '' && price != '' && this.assignedProductError.hasClass('hidden')) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+      this.submissionErrorSection.addClass('hidden');
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--assigned-product"]').text(),
+        value: this.assignedProductDropdown.find(':selected').data('productid')
+      });
+      console.log(fieldVals);
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -433,6 +395,104 @@ class ISBNRegistrations {
         success: response => {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
           if (response.length > 0) {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+            this.assignedProductError.append(',' + response[0]['isbn'] + '.');
+            this.assignedProductError.removeClass('hidden');
+          } else {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+              beforeSend: xhr => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+              },
+              url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues',
+              type: 'POST',
+              data: {
+                'productId': productId
+              },
+              success: response => {
+                jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+              },
+              error: response => {
+                console.log(response);
+              }
+            });
+          }
+        },
+        error: response => {
+          console.log(response);
+        }
+      });
+    } else {
+      this.submissionErrorSection.addClass('hidden');
+      if (assignedProduct == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Choose a product to assign your ISBN.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (title == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a title.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (description == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a description.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (name0 == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter your name.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (bio0 == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter your biography.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (bookMedium == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a medium.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (bookFormat == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a format.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (pubDate == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a publication date.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (status == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Select a status.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+      if (price == '') {
+        let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').text('Enter a price.').addClass('red-text centered-text');
+        this.submissionErrorSection.append(p);
+        this.submissionErrorSection.removeClass('hidden');
+      }
+    }
+  }
+  autofill(e) {
+    let productId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).find(":selected").data('productid');
+    if (productId > 0) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+      jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+        beforeSend: xhr => {
+          xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+        },
+        url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/checkAssignedProduct',
+        type: 'GET',
+        data: {
+          'productId': productId
+        },
+        success: response => {
+          console.log(response);
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+          if (response.length > 0) {
+            console.log(response);
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
             this.assignedProductError.append(',' + response[0]['isbn'] + '.');
             this.assignedProductError.removeClass('hidden');

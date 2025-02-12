@@ -1040,7 +1040,7 @@ get_header();
                 <label for="isbn-info--number-illustations">Number of illustrations (optional)</label>
                 <input type="text" id="isbn-info--number-illustrations" />
                 <br><br>
-                <div class="tomc-info--submission-errors"></div>
+                <div id="tomc-info--submission-errors"></div>
                 <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
             </div>
         </div>        

@@ -23,6 +23,14 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'GET',
         'callback' => 'checkAssignedProduct'
     ));
+    register_rest_route('tomcISBN/v1', 'saveFieldValues', array(
+        'methods' => 'GET',
+        'callback' => 'saveFieldValues'
+    ));
+}
+
+function saveFieldValues($data){
+    
 }
 
 function checkAssignedProduct($data){
