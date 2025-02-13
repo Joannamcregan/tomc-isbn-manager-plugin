@@ -399,6 +399,138 @@ class ISBNRegistrations {
         field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-description"]').text(),
         value: description
       });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-medium"]').text(),
+        value: bookMedium
+      });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-label').text(),
+        value: bookFormat
+      });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--first-genre"]').text(),
+        value: this.firstGenreDropdown.val()
+      });
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--second-genre').val() != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--second-genre"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--second-genre').val()
+        });
+      }
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--name-0"]').text(),
+        value: this.name0.val()
+      });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--bio-0"]').text(),
+        value: this.contributor0.val()
+      });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor-function-0"]').text(),
+        value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-0').val()
+      });
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--name-1"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--bio-1"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-1').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor-function-1"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-1').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--name-2"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--bio-2"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-2').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor-function-2"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-2').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--name-3"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--bio-3"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-3').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor-function-3"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-3').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--name-4"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor--bio-4"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-4').val()
+        });
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-contributor-function-4"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-4').val()
+        });
+      }
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--price"]').text(),
+        value: price
+      });
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--language') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--language"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--language').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--copyright') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--copyright"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--copyright').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--control') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--control"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--control').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--translated-title') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--translated-title"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--translated-title').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-size') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-size"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-size').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-pages') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--number-pages"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-pages').val()
+        });
+      }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustations') != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--number-illustations"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustations').val()
+        });
+      }
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);

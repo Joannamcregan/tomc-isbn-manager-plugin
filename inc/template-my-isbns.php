@@ -17,7 +17,8 @@ get_header();
     <div class="banner"><h1 class="centered-text banner-heading-28">My ISBN Registrations</h1></div>
     <br>
     <div class="generic-content half-screen">
-        <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p>
+        <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
+         <p class="centered-text">Free ISBNs, but Registration and Barcodes will cost you.</p>
         <?php if (is_user_logged_in()){
             $query = 'select numbers.isbn, numbers.id
             from %i numbers
@@ -26,6 +27,7 @@ get_header();
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Unsubmitted Registrations</h2>
+                <p class="centered-text">Creators are responsible for providing complete information and hitting Submit on each registration form. Creators who purchase ISBNs and do not complete the form, will not have their work registered with Bowker. Creators with more than five unsubmitted registrations will be barred from purchasing additional registrations until all outstanding ISBNs registration forms are complete.</p>
                 <?php for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
                         ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-isbnid="<?php echo $results[$i]['id']; ?>">
@@ -107,7 +109,7 @@ get_header();
                 </select>
                 <br><br>
                 <div id="isbn-info--section-Audio" class="isbn-info--format-section">
-                    <label for="isbn-info--audio-section--format">Format</label>
+                    <label for="isbn-info--audio-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--audio-section--format" class="isbn-info--format-select">
                         <option>Digital File</option>
                         <option>CD</option>
@@ -115,14 +117,14 @@ get_header();
                     </select>
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-E-book">
-                    <label for="isbn-info--ebook-section--format">Format</label>
+                    <label for="isbn-info--ebook-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--ebook-section--format" class="isbn-info--format-select">
                         <option>Digital Online</option>
                         <option>Digital File</option>
                     </select>
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-Print">
-                    <label for="isbn-info--print-section--format">Format</label>
+                    <label for="isbn-info--print-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--print-section--format">
                         <option>Hardback</option>
                         <option>Paperback</option>
