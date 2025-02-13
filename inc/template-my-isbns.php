@@ -19,7 +19,7 @@ get_header();
     <div class="generic-content half-screen">
         <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p>
         <?php if (is_user_logged_in()){
-            $query = 'select numbers.isbn
+            $query = 'select numbers.isbn, numbers.id
             from %i numbers
             where numbers.id not in (select isbnid from %i records)
             and numbers.assignedto = %d';
@@ -28,9 +28,9 @@ get_header();
                 ?><h2 class="centered-text">Unsubmitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
-                        ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                        ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-isbnid="<?php echo $results[$i]['id']; ?>">
                     <?php } else {
-                        ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                        ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-isbnid="<?php echo $results[$i]['id']; ?>">
                     <?php }                    
                     ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                     <span class="add-isbn-info-button">add info</span>

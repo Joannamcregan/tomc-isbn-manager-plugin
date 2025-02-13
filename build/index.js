@@ -317,6 +317,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class ISBNRegistrations {
   constructor() {
+    this.isbnid;
     this.addInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-isbn-info-button');
     this.isbnInfoOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-edit-info-overlay');
     this.overlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info-overlay__close');
@@ -365,6 +366,7 @@ class ISBNRegistrations {
   }
   submit(e) {
     let fieldVals = [];
+    let productId = this.assignedProductDropdown.find(':selected').data('productid');
     let assignedProduct = this.assignedProductDropdown.val();
     let title = this.titleField.val();
     let description = this.descriptionField.val();
@@ -377,48 +379,45 @@ class ISBNRegistrations {
     let price = this.priceField.val();
     if (assignedProduct != '' && title != '' && description != '' && name0 != '' && bio0 != '' && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' && status != '' && price != '' && this.assignedProductError.hasClass('hidden')) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+      this.overlayCloseButton.addClass('hidden'); //keep people from closing overlay while saving/submitting
       this.submissionErrorSection.addClass('hidden');
       fieldVals.push({
         field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--assigned-product"]').text(),
-        value: this.assignedProductDropdown.find(':selected').data('productid')
+        value: productId
       });
-      console.log(fieldVals);
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-title"]').text(),
+        value: title
+      });
+      if (this.subtitleField.val() != '') {
+        fieldVals.push({
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-subtitle"]').text(),
+          value: this.subtitleField.val()
+        });
+      }
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--book-description"]').text(),
+        value: description
+      });
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
         },
-        url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/populateByProduct',
+        url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues',
         type: 'GET',
         data: {
-          'productId': productId
+          'isbnid': this.isbnid,
+          'fieldVals': JSON.stringify(fieldVals)
         },
         success: response => {
+          this.overlayCloseButton.removeClass('hidden');
           jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-          if (response.length > 0) {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-            this.assignedProductError.append(',' + response[0]['isbn'] + '.');
-            this.assignedProductError.removeClass('hidden');
-          } else {
-            jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-              beforeSend: xhr => {
-                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
-              },
-              url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues',
-              type: 'POST',
-              data: {
-                'productId': productId
-              },
-              success: response => {
-                jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-              },
-              error: response => {
-                console.log(response);
-              }
-            });
-          }
+          console.log(response);
+          //update duplicates then save new field values, then mark submitted, then close
         },
         error: response => {
-          console.log(response);
+          this.overlayCloseButton.removeClass('hidden');
+          // console.log(response);
         }
       });
     } else {
@@ -489,10 +488,8 @@ class ISBNRegistrations {
           'productId': productId
         },
         success: response => {
-          console.log(response);
           jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
           if (response.length > 0) {
-            console.log(response);
             jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
             this.assignedProductError.append(',' + response[0]['isbn'] + '.');
             this.assignedProductError.removeClass('hidden');
@@ -534,9 +531,10 @@ class ISBNRegistrations {
     }
   }
   showInfo(e) {
-    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+    let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn');
+    this.isbnid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbnid');
     this.isbnInfoOverlay.addClass('search-overlay--active');
-    this.isbnInfoOverlay.find('h2').append(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+    this.isbnInfoOverlay.find('h2').append(isbn);
   }
   closeOverlay(e) {
     this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');

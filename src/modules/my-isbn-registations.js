@@ -2,6 +2,7 @@ import $, { timers } from 'jquery';
 
 class ISBNRegistrations{
     constructor(){
+        this.isbnid;
         this.addInfoButtons = $('.add-isbn-info-button');
         this.isbnInfoOverlay = $('#tomc-isbn-edit-info-overlay');
         this.overlayCloseButton = $('#isbn-info-overlay__close');
@@ -51,6 +52,7 @@ class ISBNRegistrations{
     submit(e){
         let fieldVals = [];
 
+        let productId = this.assignedProductDropdown.find(':selected').data('productid');
         let assignedProduct = this.assignedProductDropdown.val();
         let title = this.titleField.val();
         let description = this.descriptionField.val();
@@ -62,8 +64,6 @@ class ISBNRegistrations{
         let status = this.statusSelect.val();
         let price = this.priceField.val();
 
-        let productId = this.assignedProductDropdown.find(':selected').data('productid');
-
         if (assignedProduct != '' && title != ''  && description != '' && name0 != '' && bio0 != ''
         && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy'
         && status != '' && price != '' && this.assignedProductError.hasClass('hidden')){
@@ -71,28 +71,31 @@ class ISBNRegistrations{
             this.overlayCloseButton.addClass('hidden'); //keep people from closing overlay while saving/submitting
             this.submissionErrorSection.addClass('hidden');
             fieldVals.push({ field: $('label[for="isbn-info--assigned-product"]').text(), value: productId});
-            fieldVals.push({ field: $('label [for="isbn-info--book-title"]').text(), value: title});
+            fieldVals.push({ field: $('label[for="isbn-info--book-title"]').text(), value: title});
             if (this.subtitleField.val() != ''){
-                fieldVals.push({ field: $('label [for="isbn-info--book-subtitle"]').text(), value: this.subtitleField.val()})
+                fieldVals.push({ field: $('label[for="isbn-info--book-subtitle"]').text(), value: this.subtitleField.val()})
             }
-            fieldVals.push({ field: $('label [for="isbn-info--book-description"]').text(), value: description})
-            console.log(fieldVals);
-
+            fieldVals.push({ field: $('label[for="isbn-info--book-description"]').text(), value: description})
+            
             $.ajax({
                 beforeSend: (xhr) => {
                     xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
                 },
-                url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/populateByProduct',
+                url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues',
                 type: 'GET',
                 data: {
-                    'productId': productId
+                    'isbnid': this.isbnid,
+                    'fieldVals': JSON.stringify(fieldVals)
                 },
                 success: (response) => {
+                    this.overlayCloseButton.removeClass('hidden');
                     $(e.target).removeClass('contracting');
+                    console.log(response);
                     //update duplicates then save new field values, then mark submitted, then close
                 },
                 error: (response) => {
-                    console.log(response);
+                    this.overlayCloseButton.removeClass('hidden');
+                    // console.log(response);
                 }
             })
         } else {
@@ -163,10 +166,8 @@ class ISBNRegistrations{
                     'productId': productId
                 },
                 success: (response) => {
-                    console.log(response);
                     $(e.target).removeClass('contracting');
                     if (response.length > 0){
-                        console.log(response);
                         $(e.target).removeClass('contracting');
                         this.assignedProductError.append(',' + response[0]['isbn'] + '.');
                         this.assignedProductError.removeClass('hidden');
@@ -208,9 +209,10 @@ class ISBNRegistrations{
         }
     }
     showInfo(e){
-        console.log($(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+        let isbn = $(e.target).closest('.tomc-isbn-field-section').data('isbn');
+        this.isbnid = $(e.target).closest('.tomc-isbn-field-section').data('isbnid');
         this.isbnInfoOverlay.addClass('search-overlay--active');
-        this.isbnInfoOverlay.find('h2').append($(e.target).closest('.tomc-isbn-field-section').data('isbn'));
+        this.isbnInfoOverlay.find('h2').append(isbn);
     }
     closeOverlay(e){
         this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');

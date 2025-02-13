@@ -89,7 +89,6 @@ class TOMCBookISBNPlugin {
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_field_values_table (
             id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             isbnid bigint(20) unsigned NOT NULL,
-            fieldid bigint(20) unsigned NOT NULL,
             fieldlabel varchar(100) NOT NULL,
             fieldvalue varchar(4000),
             addedby bigint(20) unsigned NOT NULL,

@@ -30,7 +30,23 @@ function tomcIsbnRegisterRoute() {
 }
 
 function saveFieldValues($data){
-    
+    $fieldVals = json_decode(sanitize_text_field($data['fieldVals']), true);
+    $isbnid = sanitize_text_field($data['isbnid']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
+        $userId = $user->ID;
+        $query = 'insert into %i (isbnid, fieldlabel, fieldvalue, addedby, addeddate, displayOrder) values(%d, %s, %s, %d, now(), %d)';
+        for ($i=0; $i< count($fieldVals); $i++){
+            $wpdb->query($wpdb->prepare($query, $field_values_table, $isbnid, $fieldVals[$i]['field'], $fieldVals[$i]['value'], $userId, $i), ARRAY_A);
+        }
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
+    return $fieldVals;
 }
 
 function checkAssignedProduct($data){
@@ -105,7 +121,7 @@ function markRecordFiled($data){
     $recordId = sanitize_text_field($data['recordId']);
     $user = wp_get_current_user();
     if (is_user_logged_in() && (in_array( 'administrator', (array) $user->roles ) )){
-        $userId = get_current_user_id();
+        $userId = $user->ID;
         global $wpdb;
         $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $query = '';
