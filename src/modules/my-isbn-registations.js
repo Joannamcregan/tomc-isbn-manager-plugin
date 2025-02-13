@@ -64,9 +64,13 @@ class ISBNRegistrations{
         let status = this.statusSelect.val();
         let price = this.priceField.val();
 
+        this.submissionErrorSection.html('');
+
         if (assignedProduct != '' && title != ''  && description != '' && name0 != '' && bio0 != ''
-        && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy'
-        && status != '' && price != '' && this.assignedProductError.hasClass('hidden')){
+        && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' 
+        && status != '' && price != '' && this.assignedProductError.hasClass('hidden')
+        && assignedProduct != null && title != null && description != null && name0 != null && bio0 != null
+        && bookMedium != null && bookFormat != null && pubDate != null && status != null && price != null && price != '$null' && price != 'null'){
             $(e.target).addClass('contracting');
             this.overlayCloseButton.addClass('hidden'); //keep people from closing overlay while saving/submitting
             this.submissionErrorSection.addClass('hidden');
@@ -82,8 +86,8 @@ class ISBNRegistrations{
             if ($('#isbn-info--second-genre').val() != ''){
                 fieldVals.push({ field: $('label[for="isbn-info--second-genre"]').text(), value: $('#isbn-info--second-genre').val()});
             }
-            fieldVals.push({ field: $('label[for="isbn-contributor--name-0"]').text(), value: this.name0.val()});
-            fieldVals.push({ field: $('label[for="isbn-contributor--bio-0"]').text(), value: this.contributor0.val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor--name-0"]').text(), value: name0});
+            fieldVals.push({ field: $('label[for="isbn-contributor--bio-0"]').text(), value: bio0});
             fieldVals.push({ field: $('label[for="isbn-contributor-function-0"]').text(), value: $('#isbn-contributor-function-0').val()});
             if ($('#isbn-contributor--name-1') != ''){
                 fieldVals.push({ field: $('label[for="isbn-contributor--name-1"]').text(), value: $('#isbn-contributor--name-1').val()});
@@ -151,52 +155,52 @@ class ISBNRegistrations{
             })
         } else {
             this.submissionErrorSection.addClass('hidden');
-            if (assignedProduct == ''){
+            if (assignedProduct == '' || assignedProduct == null){
                 let p = $('<p />').text('Choose a product to assign your ISBN.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (title == ''){
+            if (title == '' || title == null){
                 let p = $('<p />').text('Enter a title.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (description == ''){
+            if (description == '' || description == null){
                 let p = $('<p />').text('Enter a description.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (name0 == ''){
+            if (name0 == '' || name0 == null){
                 let p = $('<p />').text('Enter your name.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (bio0 == ''){
+            if (bio0 == '' || bio0 == null){
                 let p = $('<p />').text('Enter your biography.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (bookMedium == ''){
+            if (bookMedium == '' || bookMedium == null){
                 let p = $('<p />').text('Select a medium.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (bookFormat == ''){
+            if (bookFormat == '' || bookFormat == null){
                 let p = $('<p />').text('Select a format.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (pubDate == ''){
+            if (pubDate == '' || pubDate == null){
                 let p = $('<p />').text('Enter a publication date.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (status == ''){
+            if (status == '' || status == null){
                 let p = $('<p />').text('Select a status.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
             }
-            if (price == ''){
+            if (price == '' || price == null || price == '$null' || price == 'null'){
                 let p = $('<p />').text('Enter a price.').addClass('red-text centered-text');
                 this.submissionErrorSection.append(p);
                 this.submissionErrorSection.removeClass('hidden');
