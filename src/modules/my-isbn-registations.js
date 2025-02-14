@@ -76,59 +76,59 @@ class ISBNRegistrations{
             this.submissionErrorSection.addClass('hidden');
             fieldVals.push({ field: $('label[for="isbn-info--assigned-product"]').text(), value: productId});
             fieldVals.push({ field: $('label[for="isbn-info--book-title"]').text(), value: title});
-            if (this.subtitleField.val() != ''){
+            if (this.subtitleField.val() != '' && this.subtitleField.val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--book-subtitle"]').text(), value: this.subtitleField.val()});
             }
             fieldVals.push({ field: $('label[for="isbn-info--book-description"]').text(), value: description});
             fieldVals.push({ field: $('label[for="isbn-info--book-medium"]').text(), value: bookMedium});
             fieldVals.push({ field: $('.isbn-info--format-label').text(), value: bookFormat});
             fieldVals.push({ field: $('label[for="isbn-info--first-genre"]').text(), value: this.firstGenreDropdown.val()});
-            if ($('#isbn-info--second-genre').val() != ''){
+            if ($('#isbn-info--second-genre').val() != '' && $('#isbn-info--second-genre').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--second-genre"]').text(), value: $('#isbn-info--second-genre').val()});
             }
             fieldVals.push({ field: $('label[for="isbn-contributor--name-0"]').text(), value: name0});
             fieldVals.push({ field: $('label[for="isbn-contributor--bio-0"]').text(), value: bio0});
             fieldVals.push({ field: $('label[for="isbn-contributor-function-0"]').text(), value: $('#isbn-contributor-function-0').val()});
-            if ($('#isbn-contributor--name-1') != ''){
+            if ($('#isbn-contributor--name-1') != '' && $('#isbn-contributor--name-1') != null){
                 fieldVals.push({ field: $('label[for="isbn-contributor--name-1"]').text(), value: $('#isbn-contributor--name-1').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor--bio-1"]').text(), value: $('#isbn-contributor--bio-1').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor-function-1"]').text(), value: $('#isbn-contributor-function-1').val()});
             }
-            if ($('#isbn-contributor--name-2') != ''){
+            if ($('#isbn-contributor--name-2') != '' && $('#isbn-contributor--name-2') != null){
                 fieldVals.push({ field: $('label[for="isbn-contributor--name-2"]').text(), value: $('#isbn-contributor--name-2').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor--bio-2"]').text(), value: $('#isbn-contributor--bio-2').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor-function-2"]').text(), value: $('#isbn-contributor-function-2').val()});
             }
-            if ($('#isbn-contributor--name-3') != ''){
+            if ($('#isbn-contributor--name-3') != '' && $('#isbn-contributor--name-3') != null){
                 fieldVals.push({ field: $('label[for="isbn-contributor--name-3"]').text(), value: $('#isbn-contributor--name-3').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor--bio-3"]').text(), value: $('#isbn-contributor--bio-3').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor-function-3"]').text(), value: $('#isbn-contributor-function-3').val()});
             }
-            if ($('#isbn-contributor--name-4') != ''){
+            if ($('#isbn-contributor--name-4') != '' && $('#isbn-contributor--name-4') != null){
                 fieldVals.push({ field: $('label[for="isbn-contributor--name-4"]').text(), value: $('#isbn-contributor--name-4').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor--bio-4"]').text(), value: $('#isbn-contributor--bio-4').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor-function-4"]').text(), value: $('#isbn-contributor-function-4').val()});
             }
             fieldVals.push({ field: $('label[for="isbn-info--price"]').text(), value: price});
-            if ($('#isbn-info--language') != ''){
+            if ($('#isbn-info--language').val() != '' && $('#isbn-info--language').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--language"]').text(), value: $('#isbn-info--language').val()});
             }
-            if ($('#isbn-info--copyright') != ''){
+            if ($('#isbn-info--copyright').val() != '' && $('#isbn-info--copyright').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--copyright"]').text(), value: $('#isbn-info--copyright').val()});
             }
-            if ($('#isbn-info--control') != ''){
+            if ($('#isbn-info--control').val() != '' && $('#isbn-info--control').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--control"]').text(), value: $('#isbn-info--control').val()});
             }
-            if ($('#isbn-info--translated-title') != ''){
+            if ($('#isbn-info--translated-title').val() != '' && $('#isbn-info--translated-title').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--translated-title"]').text(), value: $('#isbn-info--translated-title').val()});
             }
-            if ($('#isbn-info--book-size') != ''){
+            if ($('#isbn-info--book-size').val() != '' && $('#isbn-info--book-size').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--book-size"]').text(), value: $('#isbn-info--book-size').val()});
             }
-            if ($('#isbn-info--number-pages') != ''){
+            if ($('#isbn-info--number-pages').val() != '' && $('#isbn-info--number-pages').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--number-pages"]').text(), value: $('#isbn-info--number-pages').val()});
             }
-            if ($('#isbn-info--number-illustations') != ''){
+            if ($('#isbn-info--number-illustations').val() != '' && $('#isbn-info--number-illustations').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--number-illustations"]').text(), value: $('#isbn-info--number-illustations').val()});
             }
 
