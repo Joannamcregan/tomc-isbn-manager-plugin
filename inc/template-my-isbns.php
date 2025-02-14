@@ -111,7 +111,7 @@ get_header();
                 <div id="isbn-info--section-Audio" class="isbn-info--format-section">
                     <label for="isbn-info--audio-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--audio-section--format" class="isbn-info--format-select">
-                        <option>Digital File</option>
+                        <option selected>Digital File</option>
                         <option>CD</option>
                         <option>DVD</option>
                     </select>
@@ -120,7 +120,7 @@ get_header();
                     <label for="isbn-info--ebook-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--ebook-section--format" class="isbn-info--format-select">
                         <option>Digital Online</option>
-                        <option>Digital File</option>
+                        <option selected>Digital File</option>
                     </select>
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-Print">
@@ -983,9 +983,9 @@ get_header();
                 <input type="date" id="isbn-info--publication-date" required />
                 <br><br>
                 <label for="isbn-info--status">Title Status</label>
-                <select id="isbn-info--status" required>
-                    <option selected>active record</option>
-                    <option>forthcoming</option>
+                <select id="isbn-info--status">
+                    <option id="isbn-info--status-forthcoming">forthcoming</option>
+                    <option id="isbn-info--status-active" selected>active record</option>
                     <option>import to order</option>
                     <option>inactive</option>
                     <option>on demand</option>
