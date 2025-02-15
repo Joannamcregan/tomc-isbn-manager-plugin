@@ -536,8 +536,8 @@ class ISBNRegistrations {
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
         },
-        url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues',
-        type: 'GET',
+        url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveAndSubmitRecord',
+        type: 'POST',
         data: {
           'isbnid': this.isbnid,
           'fieldVals': JSON.stringify(fieldVals)
@@ -545,8 +545,6 @@ class ISBNRegistrations {
         success: response => {
           this.overlayCloseButton.removeClass('hidden');
           jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
-          console.log(response);
-          //update duplicates then save new field values, then mark submitted, then close
         },
         error: response => {
           this.overlayCloseButton.removeClass('hidden');

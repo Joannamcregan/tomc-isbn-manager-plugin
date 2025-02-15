@@ -204,8 +204,8 @@
     min-height: 100px;
     border-radius: 10px;
     display: block;
-    word-break: break-all;
     padding: 3px;
+    word-wrap: normal;
     /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay select{

@@ -24,9 +24,37 @@ function tomcIsbnRegisterRoute() {
         'callback' => 'checkAssignedProduct'
     ));
     register_rest_route('tomcISBN/v1', 'saveFieldValues', array(
-        'methods' => 'GET',
+        'methods' => 'POST',
         'callback' => 'saveFieldValues'
     ));
+    register_rest_route('tomcISBN/v1', 'saveAndSubmitRecord', array(
+        'methods' => 'POST',
+        'callback' => 'saveAndSubmitRecord'
+    ));
+}
+
+function saveAndSubmitRecord($data){
+    $fieldVals = json_decode(sanitize_text_field($data['fieldVals']), true);
+    $isbnid = sanitize_text_field($data['isbnid']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
+        $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
+        $userId = $user->ID;
+        $query = 'delete from %i where addedby = %d and isbnid = %d';
+        $wpdb->query($wpdb->prepare($query, $field_values_table, $userId, $isbnid), ARRAY_A);
+        $query = 'insert into %i (isbnid, fieldlabel, fieldvalue, addedby, addeddate, displayOrder) values(%d, %s, %s, %d, now(), %d)';
+        for ($i=0; $i< count($fieldVals); $i++){
+            $wpdb->query($wpdb->prepare($query, $field_values_table, $isbnid, $fieldVals[$i]['field'], $fieldVals[$i]['value'], $userId, $i), ARRAY_A);
+        }
+        $query = 'insert into %i (isbnid, submitteddate) values (%d, now())';
+        $wpdb->query($wpdb->prepare($query, $isbn_records_table, $isbnid), ARRAY_A);
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
 function saveFieldValues($data){
@@ -35,6 +63,7 @@ function saveFieldValues($data){
     $user = wp_get_current_user();
     if (is_user_logged_in()){
         global $wpdb;
+        $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
         $userId = $user->ID;
         $query = 'delete from %i where addedby = %d and isbnid = %d';
@@ -48,7 +77,6 @@ function saveFieldValues($data){
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
     }
-    return $fieldVals;
 }
 
 function checkAssignedProduct($data){
