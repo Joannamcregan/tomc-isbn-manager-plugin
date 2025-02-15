@@ -77,13 +77,11 @@ class TOMCBookISBNPlugin {
             assignedto bigint(20) unsigned NULL,
             assigneddate datetime NULL,
             shoporderid bigint(20) unsigned,
-            assignedproductid bigint(20) unsigned,
             UNIQUE (isbn),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (assignedto) REFERENCES $this->users_table(id),
-            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id),
-            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
+            FOREIGN KEY  (shoporderid) REFERENCES $this->posts_table(id)
         ) $this->charset;");
 
         dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_field_values_table (
@@ -105,9 +103,11 @@ class TOMCBookISBNPlugin {
             submittedDate datetime NOT NULL,
             processeddate datetime NULL,
             processedby bigint(20) unsigned NULL,
+            assignedproductid bigint(20) unsigned,
             PRIMARY KEY  (id),
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
-            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
+            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id),
+            FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
         ) $this->charset;");
 
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){

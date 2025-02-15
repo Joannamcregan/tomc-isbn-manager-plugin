@@ -42,8 +42,8 @@ function saveAndSubmitRecord($data){
         $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
         $userId = $user->ID;
-        $query = 'delete from %i where addedby = %d and isbnid = %d';
-        $wpdb->query($wpdb->prepare($query, $field_values_table, $userId, $isbnid), ARRAY_A);
+        $query = 'delete from %i where addedby = %d and isbnid = %d and isbnid not in (select isbnid from %i)';
+        $wpdb->query($wpdb->prepare($query, $field_values_table, $userId, $isbnid, $isbn_records_table), ARRAY_A);
         $query = 'insert into %i (isbnid, fieldlabel, fieldvalue, addedby, addeddate, displayOrder) values(%d, %s, %s, %d, now(), %d)';
         for ($i=0; $i< count($fieldVals); $i++){
             $wpdb->query($wpdb->prepare($query, $field_values_table, $isbnid, $fieldVals[$i]['field'], $fieldVals[$i]['value'], $userId, $i), ARRAY_A);
@@ -66,8 +66,8 @@ function saveFieldValues($data){
         $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
         $userId = $user->ID;
-        $query = 'delete from %i where addedby = %d and isbnid = %d';
-        $wpdb->query($wpdb->prepare($query, $field_values_table, $userId, $isbnid), ARRAY_A);
+        $query = 'delete from %i where addedby = %d and isbnid = %d and isbnid not in (select isbnid from %i)';
+        $wpdb->query($wpdb->prepare($query, $field_values_table, $userId, $isbnid, $isbn_records_table), ARRAY_A);
         $query = 'insert into %i (isbnid, fieldlabel, fieldvalue, addedby, addeddate, displayOrder) values(%d, %s, %s, %d, now(), %d)';
         for ($i=0; $i< count($fieldVals); $i++){
             $wpdb->query($wpdb->prepare($query, $field_values_table, $isbnid, $fieldVals[$i]['field'], $fieldVals[$i]['value'], $userId, $i), ARRAY_A);

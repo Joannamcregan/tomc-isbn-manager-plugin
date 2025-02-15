@@ -40,12 +40,13 @@ get_header();
                 <?php }
             } 
 
-            $query = 'select numbers.isbn, records.submitteddate
+            $query = 'select numbers.isbn, records.submitteddate, posts.post_title
             from %i numbers
             join %i records on numbers.id = records.isbnid
+            join %i posts on numbers.assignedproductid = posts.id
             and records.processeddate is null
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
@@ -74,16 +75,16 @@ get_header();
                 <label for="isbn-info--assigned-product" required>Assigned product</label>
                 <select id="isbn-info--assigned-product">
                     <option data-productid=0></option>
-                    <?php $query="select posts.id, posts.post_title, terms.name as termname, numbers.assignedproductid
+                    <?php $query="select posts.id, posts.post_title, terms.name as termname
                     from %i posts
-                    left join %i numbers on posts.id = numbers.assignedproductid
                     join %i tr on posts.id = tr.object_id
                     join %i terms on tr.term_taxonomy_id = terms.term_id
                     join %i tt on tr.term_taxonomy_id = tt.term_taxonomy_id
                     and tt.taxonomy = 'product_cat'
                     where posts.post_type='product'
-                    and posts.post_author = %d";
-                    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $isbn_numbers_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $userid), ARRAY_A);
+                    and posts.post_author = %d
+                    and posts.id not in (select assignedproductid from %i)";
+                    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $userid, $isbn_records_table), ARRAY_A);
                     for ($i= 0; $i < count($results); $i++){
                         ?><option data-productid="<?php echo $results[$i]['id']; ?>">
                         <?php echo $results[$i]['post_title'] . ' (categorized in ' . $results[$i]['termname'] . ')';
