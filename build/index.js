@@ -407,7 +407,7 @@ class ISBNRegistrations {
         value: bookMedium
       });
       fieldVals.push({
-        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-label').text(),
+        field: "format",
         value: bookFormat
       });
       fieldVals.push({
@@ -699,6 +699,25 @@ class ISBNRegistrations {
       },
       success: response => {
         console.log(response);
+        if (response.length > 0) {
+          for (let i = 0; i < response.length; i++) {
+            if (response[i]['fieldlabel'] == 'Assigned product') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('option[data-productid="' + response[i]['fieldvalue'] + '"]').attr('selected', 'selected');
+            } else if (response[i]['fieldlabel'] == 'Book Title') {
+              this.titleField.val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Subtitle (optional)') {
+              this.subtitleField.val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Description (up to 350 words)') {
+              this.descriptionField.val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Medium') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium option:contains("' + response[i]['fieldvalue'] + '")').attr('selected', 'selected');
+            } else if (response[i]['fieldlabel'] == 'Format') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-select').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'First genre') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--first-genre option[value="' + response[i]['fieldvalue'] + '"]').attr('selected', 'selected');
+            }
+          }
+        }
       },
       error: response => {
         console.log(response);

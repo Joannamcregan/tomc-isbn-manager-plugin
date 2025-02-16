@@ -192,7 +192,7 @@
     width: 280px;
     border-radius: 20px;
     display: block;
-    padding: 3px;
+    padding: 3px 5px;
     /* margin: auto; */
 }
 #tomc-isbn-edit-info-overlay input[type="date"]{
