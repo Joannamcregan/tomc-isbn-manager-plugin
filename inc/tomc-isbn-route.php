@@ -31,6 +31,31 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'POST',
         'callback' => 'saveAndSubmitRecord'
     ));
+    register_rest_route('tomcISBN/v1', 'getFieldValues', array(
+        'methods' => 'GET',
+        'callback' => 'getFieldValues'
+    ));
+}
+
+function getFieldValues($data){
+    $isbn = sanitize_text_field($data['isbn']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $isbn_numbers_table = $wpdb->prefix . "tomc_isbn_numbers";
+        $field_values_table = $wpdb->prefix . "tomc_isbn_field_values";
+        $userId = $user->ID;
+        $query = 'select fv.fieldlabel, fv.fieldvalue 
+        from %i numbers 
+        join %i fv on numbers.id = fv.isbnid 
+        where numbers.isbn = %d';
+        $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $field_values_table, $isbn), ARRAY_A);
+        return $results;
+        // return $wpdb->prepare($query, $isbn_numbers_table, $field_values_table, $isbn);
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
 function saveAndSubmitRecord($data){

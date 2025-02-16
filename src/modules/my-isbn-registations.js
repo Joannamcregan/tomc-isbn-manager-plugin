@@ -51,6 +51,7 @@ class ISBNRegistrations{
         this.submitButton.on('click', this.submit.bind(this));
         this.saveButton.on('click', this.submit.bind(this));
     }
+
     submit(e){
         let fieldVals = [];
 
@@ -288,6 +289,22 @@ class ISBNRegistrations{
         this.isbnid = $(e.target).closest('.tomc-isbn-field-section').data('isbnid');
         this.isbnInfoOverlay.addClass('search-overlay--active');
         this.isbnInfoOverlay.find('h2').append(isbn);
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFieldValues',
+            type: 'GET',
+            data: {
+                'isbn' : isbn
+            },
+            success: (response) => {
+                console.log(response);
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        })
     }
     closeOverlay(e){
         this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
