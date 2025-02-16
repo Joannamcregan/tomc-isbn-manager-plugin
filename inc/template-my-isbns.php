@@ -980,7 +980,7 @@ get_header();
                     </select>
                     <br><br>
                 </div>
-                <label for="isbn-info--publication-date">Publication date </label>
+                <label for="isbn-info--publication-date">Publication date</label>
                 <input type="date" id="isbn-info--publication-date" required />
                 <br><br>
                 <label for="isbn-info--status">Title Status</label>

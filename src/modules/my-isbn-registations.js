@@ -112,6 +112,9 @@ class ISBNRegistrations{
                 fieldVals.push({ field: $('label[for="isbn-contributor--bio-4"]').text(), value: $('#isbn-contributor--bio-4').val()});
                 fieldVals.push({ field: $('label[for="isbn-contributor-function-4"]').text(), value: $('#isbn-contributor-function-4').val()});
             }
+            fieldVals.push({ field: $('label[for="isbn-info--publication-date"]').text(), value: pubDate});
+            fieldVals.push({ field: $('label[for="isbn-info--status"]').text(), value: status});
+            fieldVals.push({ field: 'Target audience', value: $('#isbn-info--target-audience').val()})
             fieldVals.push({ field: $('label[for="isbn-info--price"]').text(), value: price});
             if ($('#isbn-info--language').val() != '' && $('#isbn-info--language').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--language"]').text(), value: $('#isbn-info--language').val()});
@@ -331,7 +334,7 @@ class ISBNRegistrations{
                         } else if (response[i]['fieldlabel'] == 'Your name'){
                             $('#isbn-contributor--name-0').val(response[i]['fieldvalue']);
                         } else if (response[i]['fieldlabel'] == 'Your bio'){
-                            $('#isbn-contributor--bio-0').val(response[i]['fieldvlaue']);
+                            $('#isbn-contributor--bio-0').val(response[i]['fieldvalue']);
                         } else if (response[i]['fieldlabel'] == 'Your function'){
                             $('#isbn-contributor-function-0 option').filter(function(){
                                 if ($(this).text() == response[i]['fieldvalue']){
@@ -340,11 +343,64 @@ class ISBNRegistrations{
                                 }
                             })
                         } else if (response[i]['fieldlabel'] == 'Contributor name 1'){
+                            $('#isbn-contributors--yes-1').attr('checked', true);
+                            $('#isbn-contributors-section-1').removeClass('hidden');
                             $('#isbn-contributor--name-1').val(response[i]['fieldvalue']);
                         } else if (response[i]['fieldlabel'] == 'Contributor bio 1'){
                             $('#isbn-contributor--bio-1').val(response[i]['fieldvalue']);
                         } else if (response[i]['fieldlabel'] == 'Contributor function 1'){
                             $('#isbn-contributor-function-1').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor name 2'){
+                            $('#isbn-contributors--yes-2').attr('checked', true);
+                            $('#isbn-contributors-section-2').removeClass('hidden');
+                            $('#isbn-contributor--name-2').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor bio 2'){
+                            $('#isbn-contributor--bio-2').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor function 2'){
+                            $('#isbn-contributor-function-2').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor name 3'){
+                            $('#isbn-contributors--yes-3').attr('checked', true);
+                            $('#isbn-contributors-section-3').removeClass('hidden');
+                            $('#isbn-contributor--name-3').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor bio 3'){
+                            $('#isbn-contributor--bio-3').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor function 3'){
+                            $('#isbn-contributor-function-3').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor name 4'){
+                            $('#isbn-contributors--yes-4').attr('checked', true);
+                            $('#isbn-contributors-section-4').removeClass('hidden');
+                            $('#isbn-contributor--name-4').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor bio 4'){
+                            $('#isbn-contributor--bio-4').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor function 4'){
+                            $('#isbn-contributor-function-4').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Publication date'){
+                            $('#isbn-info--publication-date').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Title Status'){
+                            $('#isbn-info--status option').filter(function(){
+                                if ($(this).text() == response[i]['fieldvalue']){
+                                    $(this).attr('selected', 'selected');
+                                    return false;
+                                }
+                            })
+                        } else if (response[i]['fieldlabel'] == 'Target audience'){
+                            $('#isbn-info--target-audience').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Book price'){
+                            $('#isbn-info--price').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Language (optional)'){
+                            $('#isbn-info--language').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Copyright year (optional)'){
+                            $('#isbn-info--copyright').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Library of Congress control number (optional)'){
+                            $('#isbn-info--control').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Translated title (optional)'){
+                            $('#isbn-info--translated-title').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Format details (book size) (optional)'){
+                            $('#isbn-info--book-size').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Number of pages (optional)'){
+                            $('#isbn-info--number-pages').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Number of illustrations (optional)'){
+                            $('#isbn-info--number-illustrations').val(response[i]['fieldvalue']);
                         }
                     }
                 }

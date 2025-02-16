@@ -489,6 +489,18 @@ class ISBNRegistrations {
         });
       }
       fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--publication-date"]').text(),
+        value: pubDate
+      });
+      fieldVals.push({
+        field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--status"]').text(),
+        value: status
+      });
+      fieldVals.push({
+        field: 'Target audience',
+        value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--target-audience').val()
+      });
+      fieldVals.push({
         field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--price"]').text(),
         value: price
       });
@@ -730,7 +742,7 @@ class ISBNRegistrations {
             } else if (response[i]['fieldlabel'] == 'Your name') {
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-0').val(response[i]['fieldvalue']);
             } else if (response[i]['fieldlabel'] == 'Your bio') {
-              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-0').val(response[i]['fieldvlaue']);
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-0').val(response[i]['fieldvalue']);
             } else if (response[i]['fieldlabel'] == 'Your function') {
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-0 option').filter(function () {
                 if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() == response[i]['fieldvalue']) {
@@ -739,11 +751,64 @@ class ISBNRegistrations {
                 }
               });
             } else if (response[i]['fieldlabel'] == 'Contributor name 1') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors--yes-1').attr('checked', true);
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-1').removeClass('hidden');
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1').val(response[i]['fieldvalue']);
             } else if (response[i]['fieldlabel'] == 'Contributor bio 1') {
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-1').val(response[i]['fieldvalue']);
             } else if (response[i]['fieldlabel'] == 'Contributor function 1') {
               jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-1').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor name 2') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors--yes-2').attr('checked', true);
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-2').removeClass('hidden');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor bio 2') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-2').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor function 2') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-2').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor name 3') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors--yes-3').attr('checked', true);
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-3').removeClass('hidden');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor bio 3') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-3').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor function 3') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-3').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor name 4') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors--yes-4').attr('checked', true);
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-4').removeClass('hidden');
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor bio 4') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-4').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Contributor function 4') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-4').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Publication date') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--publication-date').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Title Status') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--status option').filter(function () {
+                if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).text() == response[i]['fieldvalue']) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('selected', 'selected');
+                  return false;
+                }
+              });
+            } else if (response[i]['fieldlabel'] == 'Target audience') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--target-audience').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Book price') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--price').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Language (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--language').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Copyright year (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--copyright').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Library of Congress control number (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--control').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Translated title (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--translated-title').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Format details (book size) (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-size').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Number of pages (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-pages').val(response[i]['fieldvalue']);
+            } else if (response[i]['fieldlabel'] == 'Number of illustrations (optional)') {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val(response[i]['fieldvalue']);
             }
           }
         }
