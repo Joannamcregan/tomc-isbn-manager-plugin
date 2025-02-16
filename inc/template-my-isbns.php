@@ -103,7 +103,7 @@ get_header();
                 <textarea id="isbn-info--book-description" required class="isbn-info--textarea"></textarea>
                 <br><br>
                 <label for="isbn-info--book-medium" required>Medium</label>
-                <select id="isbn-info--book-medium" class="isbn-info--format-select">
+                <select id="isbn-info--book-medium">
                     <option id="isbn-info--book-medium--audio">Audio</option>
                     <option id="isbn-info--book-medium--ebook">E-book</option>
                     <option id="isbn-info--book-medium--print">Print</option>

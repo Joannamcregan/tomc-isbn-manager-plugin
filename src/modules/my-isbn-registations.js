@@ -62,7 +62,7 @@ class ISBNRegistrations{
         let name0 = this.contributor0.val();
         let bio0 = this.biography0.val();
         let bookMedium = this.mediumSelect.val();
-        let bookFormat = $('.isbn-info--format-select').val();
+        let bookFormat = $('select.isbn-info--format-select:visible option:selected').text();
         let pubDate = this.publicationDate.val();
         let status = this.statusSelect.val();
         let price = this.priceField.val();
@@ -84,7 +84,7 @@ class ISBNRegistrations{
             }
             fieldVals.push({ field: $('label[for="isbn-info--book-description"]').text(), value: description});
             fieldVals.push({ field: $('label[for="isbn-info--book-medium"]').text(), value: bookMedium});
-            fieldVals.push({ field: $('.isbn-info--format-label').text(), value: bookFormat});
+            fieldVals.push({ field: "format", value: bookFormat});
             fieldVals.push({ field: $('label[for="isbn-info--first-genre"]').text(), value: this.firstGenreDropdown.val()});
             if ($('#isbn-info--second-genre').val() != '' && $('#isbn-info--second-genre').val() != null){
                 fieldVals.push({ field: $('label[for="isbn-info--second-genre"]').text(), value: $('#isbn-info--second-genre').val()});
@@ -300,6 +300,54 @@ class ISBNRegistrations{
             },
             success: (response) => {
                 console.log(response);
+                if (response.length > 0){
+                    for (let i = 0; i < response.length; i++){
+                        if (response[i]['fieldlabel'] == 'Assigned product'){
+                            $('option[data-productid="'+ response[i]['fieldvalue'] +'"]').attr('selected', 'selected');
+                        } else if (response[i]['fieldlabel'] == 'Book Title'){
+                            this.titleField.val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Subtitle (optional)'){
+                            this.subtitleField.val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Description (up to 350 words)'){
+                            this.descriptionField.val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Medium'){
+                            $('#isbn-info--book-medium option:contains("'+ response[i]['fieldvalue'] +'")').attr('selected', 'selected');
+                        } else if (response[i]['fieldlabel'] == 'Format'){
+                            $('.isbn-info--format-select').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'First genre'){
+                            $('#isbn-info--first-genre option').filter(function(){
+                                if ($(this).text() == response[i]['fieldvalue']){
+                                    $(this).attr('selected', 'selected');
+                                    return false;
+                                }
+                            })
+                        } else if (response[i]['fieldlabel'] == 'Second genre (optional)'){
+                            $('#isbn-info--second-genre option').filter(function(){
+                                if ($(this).text() == response[i]['fieldvalue']){
+                                    $(this).attr('selected', 'selected');
+                                    return false;
+                                }
+                            })
+                        } else if (response[i]['fieldlabel'] == 'Your name'){
+                            $('#isbn-contributor--name-0').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Your bio'){
+                            $('#isbn-contributor--bio-0').val(response[i]['fieldvlaue']);
+                        } else if (response[i]['fieldlabel'] == 'Your function'){
+                            $('#isbn-contributor-function-0 option').filter(function(){
+                                if ($(this).text() == response[i]['fieldvalue']){
+                                    $(this).attr('selected', 'selected');
+                                    return false;
+                                }
+                            })
+                        } else if (response[i]['fieldlabel'] == 'Contributor name 1'){
+                            $('#isbn-contributor--name-1').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor bio 1'){
+                            $('#isbn-contributor--bio-1').val(response[i]['fieldvalue']);
+                        } else if (response[i]['fieldlabel'] == 'Contributor function 1'){
+                            $('#isbn-contributor-function-1').val(response[i]['fieldvalue']);
+                        }
+                    }
+                }
             },
             error: (response) => {
                 console.log(response);
@@ -307,6 +355,7 @@ class ISBNRegistrations{
         })
     }
     closeOverlay(e){
+        this.submit(e);
         this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
         this.isbnInfoOverlay.removeClass('search-overlay--active');
     }
