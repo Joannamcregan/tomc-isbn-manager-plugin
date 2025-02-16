@@ -73,6 +73,9 @@
 }
 .tomc-plain-isbn-field{
     padding: 10px 20px 20px 20px;
+    border: solid 5px rgba(76, 5, 72, 0.05);
+    
+    border-radius: 15px;
 }
 
 .add-isbn-info-button{

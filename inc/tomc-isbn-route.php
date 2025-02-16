@@ -36,6 +36,7 @@ function tomcIsbnRegisterRoute() {
 function saveAndSubmitRecord($data){
     $fieldVals = json_decode(sanitize_text_field($data['fieldVals']), true);
     $isbnid = sanitize_text_field($data['isbnid']);
+    $productid = sanitize_text_field($data['productid']);
     $user = wp_get_current_user();
     if (is_user_logged_in()){
         global $wpdb;
@@ -48,9 +49,10 @@ function saveAndSubmitRecord($data){
         for ($i=0; $i< count($fieldVals); $i++){
             $wpdb->query($wpdb->prepare($query, $field_values_table, $isbnid, $fieldVals[$i]['field'], $fieldVals[$i]['value'], $userId, $i), ARRAY_A);
         }
-        $query = 'insert into %i (isbnid, submitteddate) values (%d, now())';
-        $wpdb->query($wpdb->prepare($query, $isbn_records_table, $isbnid), ARRAY_A);
-        return 'success';
+        $query = 'insert into %i (isbnid, submitteddate, assignedproductid) values (%d, now(), %d)';
+        $wpdb->query($wpdb->prepare($query, $isbn_records_table, $isbnid, $productid), ARRAY_A);
+        // return 'success';
+        return $wpdb->prepare($query, $isbn_records_table, $isbnid, $productid);
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';

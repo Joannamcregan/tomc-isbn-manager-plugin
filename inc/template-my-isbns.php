@@ -40,10 +40,10 @@ get_header();
                 <?php }
             } 
 
-            $query = 'select numbers.isbn, records.submitteddate, posts.post_title
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title
             from %i numbers
             join %i records on numbers.id = records.isbnid
-            join %i posts on numbers.assignedproductid = posts.id
+            join %i posts on records.assignedproductid = posts.id
             and records.processeddate is null
             where numbers.assignedto = %d';
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
@@ -1044,6 +1044,7 @@ get_header();
                 <input type="text" id="isbn-info--number-illustrations" />
                 <br><br>
                 <div id="tomc-info--submission-errors"></div>
+                <button id="isbn-info--save" class="hollow-purple-button">Save and Close</button>
                 <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
             </div>
         </div>        

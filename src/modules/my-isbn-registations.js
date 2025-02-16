@@ -27,6 +27,7 @@ class ISBNRegistrations{
         this.languageField = $('#isbn-info--language');
         this.submissionErrorSection = $('#tomc-info--submission-errors');
         this.submitButton = $('#isbn-info--submit');
+        this.saveButton = $('#isbn-info--save');
         this.events();
     }
     events(){
@@ -48,6 +49,7 @@ class ISBNRegistrations{
         })
         this.assignedProductDropdown.on('change', this.autofill.bind(this));
         this.submitButton.on('click', this.submit.bind(this));
+        this.saveButton.on('click', this.submit.bind(this));
     }
     submit(e){
         let fieldVals = [];
@@ -136,19 +138,20 @@ class ISBNRegistrations{
                 beforeSend: (xhr) => {
                     xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
                 },
-                url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveAndSubmitRecord',
+                url: tomcBookorgData.root_url + $(e.target) == this.submitButton ? '/wp-json/tomcISBN/v1/saveAndSubmitRecord' : '/wp-json/tomcISBN/v1/saveFieldValues',
                 type: 'POST',
                 data: {
                     'isbnid': this.isbnid,
+                    'productid': productId,
                     'fieldVals': JSON.stringify(fieldVals)
                 },
                 success: (response) => {
                     this.overlayCloseButton.removeClass('hidden');
                     $(e.target).removeClass('contracting');
+                    location.reload(true);
                 },
                 error: (response) => {
                     this.overlayCloseButton.removeClass('hidden');
-                    // console.log(response);
                 }
             })
         } else {
@@ -235,7 +238,6 @@ class ISBNRegistrations{
                                 'productId': productId
                             },
                             success: (response) => {
-                                console.log(response);
                                 $(e.target).removeClass('contracting');
                                 if (response.length > 0){
                                     this.titleField.val(response[0]['title']);
