@@ -718,22 +718,28 @@ class ISBNRegistrations {
     this.contributor0.val('');
     this.biography0.val('');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-0--author').attr('selected', 'selected');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1').val();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-1').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-1').val('');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-1--author').attr('selected', 'selected');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-1').addClass('hidden');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2').val();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-2').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-2').val('');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-2--author').attr('selected', 'selected');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-2').addClass('hidden');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3').val();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-3').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-3').val('');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-3--author').attr('selected', 'selected');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-3').addClass('hidden');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4').val();
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-4').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-4').val('');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-4--author').attr('selected', 'selected');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-4').addClass('hidden');
+    this.radioNo.map(function () {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).prop('checked', true);
+    });
+    this.publicationDate.val('mm/dd/yyyy');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--status-active').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--target-audience--trade').attr('selected', 'selected');
     this.isbnInfoOverlay.removeClass('search-overlay--active');
   }
 }

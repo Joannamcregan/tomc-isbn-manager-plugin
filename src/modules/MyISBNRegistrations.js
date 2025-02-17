@@ -424,22 +424,28 @@ class ISBNRegistrations{
         this.contributor0.val('');
         this.biography0.val('');
         $('#isbn-contributor-function-0--author').attr('selected', 'selected');
-        $('#isbn-contributor--name-1').val();
-        $('#isbn-contributor--bio-1').val();
+        $('#isbn-contributor--name-1').val('');
+        $('#isbn-contributor--bio-1').val('');
         $('#isbn-contributor-function-1--author').attr('selected', 'selected');
         $('#isbn-contributors-section-1').addClass('hidden');
-        $('#isbn-contributor--name-2').val();
-        $('#isbn-contributor--bio-2').val();
+        $('#isbn-contributor--name-2').val('');
+        $('#isbn-contributor--bio-2').val('');
         $('#isbn-contributor-function-2--author').attr('selected', 'selected');
         $('#isbn-contributors-section-2').addClass('hidden');
-        $('#isbn-contributor--name-3').val();
-        $('#isbn-contributor--bio-3').val();
+        $('#isbn-contributor--name-3').val('');
+        $('#isbn-contributor--bio-3').val('');
         $('#isbn-contributor-function-3--author').attr('selected', 'selected');
         $('#isbn-contributors-section-3').addClass('hidden');
-        $('#isbn-contributor--name-4').val();
-        $('#isbn-contributor--bio-4').val();
+        $('#isbn-contributor--name-4').val('');
+        $('#isbn-contributor--bio-4').val('');
         $('#isbn-contributor-function-4--author').attr('selected', 'selected');
         $('#isbn-contributors-section-4').addClass('hidden');
+        this.radioNo.map(function(){
+            $(this).prop('checked', true);
+        });
+        this.publicationDate.val('mm/dd/yyyy');
+        $('#isbn-info--status-active').attr('selected', 'selected');
+        $('#isbn-info--target-audience--trade').attr('selected', 'selected');
 
         this.isbnInfoOverlay.removeClass('search-overlay--active');
     }

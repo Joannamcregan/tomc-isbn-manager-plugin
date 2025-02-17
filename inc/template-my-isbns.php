@@ -570,7 +570,7 @@ get_header();
                         <option>volume editor</option>
                     </select>
                     <br><br>
-                    <p class="centered-text">Do you want to add another contributor?</p>
+                    <p>Do you want to add another contributor?</p>
                     <div class="isbn-radio-option">
                         <input type="radio" name="isbn-contributors-radio-2" id="isbn-contributors--yes-2" class="isbn-radio-yes" data-section="2"/>
                         <label for="isbn-contributors--yes-2" class="isbn-radio-label">yes</label>
@@ -706,7 +706,7 @@ get_header();
                         <option>volume editor</option>
                     </select>
                     <br><br>
-                    <p class="centered-text">Do you want to add another contributor?</p>
+                    <p>Do you want to add another contributor?</p>
                     <div class="isbn-radio-option">
                         <input type="radio" name="isbn-contributors-radio-3" id="isbn-contributors--yes-3" class="isbn-radio-yes" data-section="3"/>
                         <label for="isbn-contributors--yes-3" class="isbn-radio-label">yes</label>
@@ -842,7 +842,7 @@ get_header();
                         <option>volume editor</option>
                     </select>
                     <br><br>
-                    <p class="centered-text">Do you want to add another contributor?</p>
+                    <p>Do you want to add another contributor?</p>
                     <div class="isbn-radio-option">
                         <input type="radio" name="isbn-contributors-radio-4" id="isbn-contributors--yes-4" class="isbn-radio-yes" data-section="4"/>
                         <label for="isbn-contributors--yes-4" class="isbn-radio-label">yes</label>
@@ -1013,7 +1013,7 @@ get_header();
                     <option>pre-primary education</option>
                     <option>scholarly & professional</option>
                     <option>second language teaching</option>
-                    <option selected>trade</option>
+                    <option id="isbn-info--target-audience--trade" selected>trade</option>
                     <option>upper secondary education</option>
                     <option>young adult audience</option>
                 </select>
