@@ -425,10 +425,10 @@ class ISBNRegistrations {
           value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-pages').val()
         });
       }
-      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustations').val() != '' && jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustations').val() != null) {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val() != '' && jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val() != null) {
         fieldVals.push({
-          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--number-illustations"]').text(),
-          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustations').val()
+          field: jquery__WEBPACK_IMPORTED_MODULE_0___default()('label[for="isbn-info--number-illustrations"]').text(),
+          value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val()
         });
       }
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
@@ -740,6 +740,14 @@ class ISBNRegistrations {
     this.publicationDate.val('mm/dd/yyyy');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--status-active').attr('selected', 'selected');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--target-audience--trade').attr('selected', 'selected');
+    this.priceField.val('');
+    this.languageField.val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--copyright').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--control').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--translated-title').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-size').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-pages').val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val('');
     this.isbnInfoOverlay.removeClass('search-overlay--active');
   }
 }

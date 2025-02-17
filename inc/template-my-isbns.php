@@ -103,8 +103,8 @@ get_header();
                 <br><br>
                 <label for="isbn-info--book-medium" required>Medium</label>
                 <select id="isbn-info--book-medium">
-                    <option id="isbn-info--book-medium--audio">Audio</option>
                     <option id="isbn-info--book-medium--ebook" selected>E-book</option>
+                    <option id="isbn-info--book-medium--audio">Audio</option>
                     <option id="isbn-info--book-medium--print">Print</option>
                 </select>
                 <br><br>
@@ -1039,7 +1039,7 @@ get_header();
                 <label for="isbn-info--number-pages">Number of pages (optional)</label>
                 <input type="text" id="isbn-info--number-pages" />
                 <br><br>
-                <label for="isbn-info--number-illustations">Number of illustrations (optional)</label>
+                <label for="isbn-info--number-illustrations">Number of illustrations (optional)</label>
                 <input type="text" id="isbn-info--number-illustrations" />
                 <br><br>
                 <div id="tomc-info--submission-errors"></div>
