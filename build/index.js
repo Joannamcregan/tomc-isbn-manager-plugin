@@ -97,19 +97,47 @@ __webpack_require__.r(__webpack_exports__);
 
 class ISBNRecords {
   constructor() {
-    this.getUnfiled = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-get-unfiled-records');
     this.getFiled = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-get-filed-records');
-    this.unfiledSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-unfiled-records-container');
     this.filedSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-filed-records-container');
+    this.showInfoButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.see-isbn-info-button');
+    this.overlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-overlay');
+    this.closeOverlayButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-overlay__close');
+    this.overlayContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view--container');
     this.events();
   }
   events() {
-    this.getUnfiled.on('click', this.getUnfiledRecords.bind(this));
-    this.getFiled.on('click', this.getFiledRecords.bind(this));
+    this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
+    this.showInfoButton.on('click', this.showInfo.bind(this));
   }
-  toggleHiddenFields(e) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('.tomc-isbn-record').children('.tomc-isbn-hidden-fields').toggleClass('hidden');
-    // console.log('hidden toggle called');
+  showInfo(e) {
+    let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('isbn');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+      },
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFieldValues',
+      type: 'GET',
+      data: {
+        'isbn': isbn
+      },
+      success: response => {
+        console.log(response);
+        this.overlay.find('h2').append(' ' + isbn);
+        this.overlay.addClass('search-overlay--active');
+        for (let i = 0; i < response.length; i++) {
+          let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass(i % 2 == 0 ? 'purple-field' : 'plain-field');
+          let strong = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<strong />').text(response[i]['fieldlabel'] + ': ');
+          p.append(strong);
+          let span = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').text(response[i]['fieldvalue']);
+          p.append(span);
+          this.overlayContainer.append(p);
+        }
+      },
+      failure: response => {
+        // console.log(response);
+      }
+    });
   }
   markCompleted(e) {
     var recordId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('.tomc-isbn-hidden-fields').parent('.tomc-isbn-record').data('isbn-product-id');
@@ -133,164 +161,15 @@ class ISBNRecords {
       }
     });
   }
-  getUnfiledRecords() {
+  getMoreFiledRecords() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
       },
-      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getUnfiledRecords',
-      type: 'GET',
-      success: response => {
-        // console.log(response);
-        if (response.length) {
-          for (let i = 0; i < response.length; i++) {
-            this.newDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('tomc-isbn-record').attr('data-isbn-product-id', response[i]['isbn_product_id']);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
-            this.newDiv.append(this.field);
-            this.hiddenSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('hidden tomc-isbn-hidden-fields');
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>ISBN:</strong> ' + response[i]['isbn']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Subtitle:</strong> ' + response[i]['subtitle']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Description:</strong> ' + response[i]['description']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Format:</strong> ' + response[i]['format']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>First Genre:</strong> ' + response[i]['first_genre']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Second Genre:</strong> ' + response[i]['second_genre']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Author Name:</strong> ' + response[i]['contributor1']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Author Biography:</strong> ' + response[i]['biography1']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Name:</strong> ' + response[i]['contributor2']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Function:</strong> ' + response[i]['function2']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Biography:</strong> ' + response[i]['biography2']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Name:</strong> ' + response[i]['contributor3']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Function:</strong> ' + response[i]['function3']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Biography:</strong> ' + response[i]['biography3']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Publication Date:</strong> ' + response[i]['publication_date']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Publication Status:</strong> ' + response[i]['status']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Target Audience:</strong> ' + response[i]['target_audience']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Current Price:</strong> ' + response[i]['book_price']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Language:</strong> ' + response[i]['book_language']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Copyright Year:</strong> ' + response[i]['copyright_year']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Library of Congress Control Number:</strong> ' + response[i]['control_number']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Translated Title:</strong> ' + response[i]['translated_title']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Number of Pages:</strong> ' + response[i]['number_of_pages']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Number of Illustrations:</strong> ' + response[i]['number_of_illustrations']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').html('mark as submitted').addClass('tomc-isbn-submit').on('click', this.markCompleted.bind(this));
-            this.hiddenSection.append(this.field);
-            this.newDiv.append(this.hiddenSection);
-            this.unfiledSection.append(this.newDiv);
-          }
-          this.getUnfiled.addClass('hidden');
-          this.getUnfiled.removeClass('block');
-        } else {
-          this.newDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('tomc-isbn-record');
-          this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass('centered-text tomc-book-options--cursor-pointer').html('No records found');
-          this.newDiv.append(this.field);
-          this.unfiledSection.append(this.newDiv);
-        }
-        this.getUnfiled.addClass('hidden');
-        this.getUnfiled.removeClass('block');
-      },
-      error: response => {
-        console.log(response);
-      }
-    });
-  }
-  getFiledRecords() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-      beforeSend: xhr => {
-        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
-      },
-      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFiledRecords',
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getMoreFiledRecords',
       type: 'GET',
       success: response => {
         console.log(response);
-        if (response.length) {
-          for (let i = 0; i < response.length; i++) {
-            this.newDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('tomc-isbn-record').attr('data-isbn-product-id', response[i]['isbn_product_id']);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<h2 />').addClass('centered-text tomc-book-options--cursor-pointer blue-text').html('<strong>Title:</strong> ' + response[i]['title']).on('click', this.toggleHiddenFields.bind(this));
-            this.newDiv.append(this.field);
-            this.hiddenSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('hidden tomc-isbn-hidden-fields');
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>ISBN:</strong> ' + response[i]['isbn']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Subtitle:</strong> ' + response[i]['subtitle']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Description:</strong> ' + response[i]['description']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Format:</strong> ' + response[i]['format']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>First Genre:</strong> ' + response[i]['first_genre']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Second Genre:</strong> ' + response[i]['second_genre']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Author Name:</strong> ' + response[i]['contributor1']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Author Biography:</strong> ' + response[i]['biography1']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Name:</strong> ' + response[i]['contributor2']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Function:</strong> ' + response[i]['function2']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Biography:</strong> ' + response[i]['biography2']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Name:</strong> ' + response[i]['contributor3']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Function:</strong> ' + response[i]['function3']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Contributor Biography:</strong> ' + response[i]['biography3']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Publication Date:</strong> ' + response[i]['publication_date']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Publication Status:</strong> ' + response[i]['status']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Target Audience:</strong> ' + response[i]['target_audience']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Current Price:</strong> ' + response[i]['book_price']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Language:</strong> ' + response[i]['book_language']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Copyright Year:</strong> ' + response[i]['copyright_year']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Library of Congress Control Number:</strong> ' + response[i]['control_number']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Translated Title:</strong> ' + response[i]['translated_title']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Number of Pages:</strong> ' + response[i]['number_of_pages']).addClass('tomc-plain-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').html('<strong>Number of Illustrations:</strong> ' + response[i]['number_of_illustrations']).addClass('tomc-purple-isbn-field');
-            this.hiddenSection.append(this.field);
-            this.newDiv.append(this.hiddenSection);
-            this.filedSection.append(this.newDiv);
-          }
-        } else {
-          this.newDiv = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div />').addClass('tomc-isbn-record');
-          this.field = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass('centered-text tomc-book-options--cursor-pointer').html('No records found');
-          this.newDiv.append(this.field);
-          this.filedSection.append(this.newDiv);
-        }
-        this.getFiled.addClass('hidden');
-        this.getFiled.removeClass('block');
       },
       error: response => {
         console.log(response);
@@ -302,10 +181,10 @@ class ISBNRecords {
 
 /***/ }),
 
-/***/ "./src/modules/my-isbn-registations.js":
-/*!*********************************************!*\
-  !*** ./src/modules/my-isbn-registations.js ***!
-  \*********************************************/
+/***/ "./src/modules/MyISBNRegistrations.js":
+/*!********************************************!*\
+  !*** ./src/modules/MyISBNRegistrations.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -915,13 +794,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_ISBNInfoForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/ISBNInfoForm */ "./src/modules/ISBNInfoForm.js");
 /* harmony import */ var _modules_ISBNRecords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/ISBNRecords */ "./src/modules/ISBNRecords.js");
-/* harmony import */ var _modules_my_isbn_registations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/my-isbn-registations */ "./src/modules/my-isbn-registations.js");
+/* harmony import */ var _modules_MyISBNRegistrations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/MyISBNRegistrations */ "./src/modules/MyISBNRegistrations.js");
 
 
 
 const isbnForm = new _modules_ISBNInfoForm__WEBPACK_IMPORTED_MODULE_0__["default"]();
 const isbnRecords = new _modules_ISBNRecords__WEBPACK_IMPORTED_MODULE_1__["default"]();
-const isbnRegistrations = new _modules_my_isbn_registations__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const isbnRegistrations = new _modules_MyISBNRegistrations__WEBPACK_IMPORTED_MODULE_2__["default"]();
 })();
 
 /******/ })()

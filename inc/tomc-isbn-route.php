@@ -35,6 +35,10 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'GET',
         'callback' => 'getFieldValues'
     ));
+    register_rest_route('tomcISBN/v1', 'getInfoByISBN', array(
+        'methods' => 'GET',
+        'callback' => 'getInfoByISBN'
+    ));
 }
 
 function getFieldValues($data){
