@@ -105,6 +105,7 @@ class ISBNRecords {
     this.overlayContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view--container');
     this.markFiledButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-mark-filed');
     this.events();
+    this.recordid;
   }
   events() {
     this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
@@ -113,8 +114,7 @@ class ISBNRecords {
   }
   showInfo(e) {
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('isbn');
-    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid'));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-mark-filed').data('recordid', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid'));
+    this.recordid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid');
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
@@ -126,7 +126,6 @@ class ISBNRecords {
         'isbn': isbn
       },
       success: response => {
-        console.log(response);
         this.overlay.find('h2').append(' ' + isbn);
         this.overlay.addClass('search-overlay--active');
         for (let i = 0; i < response.length; i++) {
@@ -144,7 +143,8 @@ class ISBNRecords {
     });
   }
   markCompleted(e) {
-    var recordId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid');
+    console.log(this.recordid);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -152,13 +152,10 @@ class ISBNRecords {
       url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markRecordFiled',
       type: 'POST',
       data: {
-        'recordId': recordId
+        'recordId': this.recordid
       },
       success: response => {
-        // console.log(response);
-        if (response > 0) {
-          location.reload(true);
-        }
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
       },
       failure: response => {
         // console.log(response);
@@ -177,12 +174,12 @@ class ISBNRecords {
         'shownCount': shownCount
       },
       success: response => {
-        console.log(response);
+        // console.log(response);
         shownCount += response.length;
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('count', shownCount);
       },
       error: response => {
-        console.log(response);
+        // console.log(response);
       }
     });
   }
@@ -215,7 +212,6 @@ class ISBNRegistrations {
     this.printSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section');
     this.mediumSelect = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium');
     this.assignedProductDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--assigned-product');
-    this.assignedProductError = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--assigned-book-error');
     this.titleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-title');
     this.subtitleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-subtitle');
     this.descriptionField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-description');
@@ -269,7 +265,7 @@ class ISBNRegistrations {
     let status = this.statusSelect.val();
     let price = this.priceField.val();
     this.submissionErrorSection.html('');
-    if (assignedProduct != '' && title != '' && description != '' && name0 != '' && bio0 != '' && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' && status != '' && price != '' && this.assignedProductError.hasClass('hidden') && assignedProduct != null && title != null && description != null && name0 != null && bio0 != null && bookMedium != null && bookFormat != null && pubDate != null && status != null && price != null && price != '$null' && price != 'null') {
+    if (assignedProduct != '' && title != '' && description != '' && name0 != '' && bio0 != '' && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' && status != '' && price != '' && assignedProduct != null && title != null && description != null && name0 != null && bio0 != null && bookMedium != null && bookFormat != null && pubDate != null && status != null && price != null && price != '$null' && price != 'null') {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
       this.overlayCloseButton.addClass('hidden'); //keep people from closing overlay while saving/submitting
       this.submissionErrorSection.addClass('hidden');
@@ -708,8 +704,36 @@ class ISBNRegistrations {
     });
   }
   closeOverlay(e) {
-    this.submit(e);
     this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
+    this.assignedProductDropdown.find('option[data-productid="0"]').attr('selected', 'selected');
+    this.titleField.val('');
+    this.subtitleField.val('');
+    this.descriptionField.val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--blank').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-E-book').removeClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-Audio').addClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-Print').addClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--first-genre--fiction-general').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--second-genre--blank').attr('selected', 'selected');
+    this.contributor0.val('');
+    this.biography0.val('');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-0--author').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-1').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-1').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-1--author').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-1').addClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-2').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-2').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-2--author').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-2').addClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-3').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-3').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-3--author').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-3').addClass('hidden');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--name-4').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor--bio-4').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributor-function-4--author').attr('selected', 'selected');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-contributors-section-4').addClass('hidden');
     this.isbnInfoOverlay.removeClass('search-overlay--active');
   }
 }

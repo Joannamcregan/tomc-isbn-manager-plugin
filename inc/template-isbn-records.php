@@ -23,17 +23,21 @@ if (is_user_logged_in()){
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
                     $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table), ARRAY_A);
-                    for ($i = 0; $i < count($results); $i++){
-                        if ($i % 2 == 0){
-                            ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
-                        <?php } else {
-                            ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
-                        <?php }                    
-                            ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
-                            <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                            <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
-                            <span class="see-isbn-info-button">see info</span>
-                        </div>
+                    if (count($results) > 0){
+                        for ($i = 0; $i < count($results); $i++){
+                            if ($i % 2 == 0){
+                                ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
+                            <?php } else {
+                                ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
+                            <?php }                    
+                                ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
+                                <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
+                                <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                                <span class="see-isbn-info-button">see info</span>
+                            </div>
+                        <?php }
+                    } else {
+                        ?><p class="centered-text">Yay! We're all caught up.</p>
                     <?php }
                 ?></div>
             </div>
@@ -45,6 +49,7 @@ if (is_user_logged_in()){
                     <?php $query =  'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
+                    join %i posts on records.assignedproductid = posts.id
                     where records.processeddate is not null
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
@@ -59,7 +64,6 @@ if (is_user_logged_in()){
                         <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                         <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                         <p><strong>Filed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
-                        <span class="see-isbn-info-button">see info</span>
                         </div>
                     <?php }
                 ?></div>

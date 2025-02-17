@@ -11,7 +11,6 @@ class ISBNRegistrations{
         this.printSection = $('#isbn-info--print-section');
         this.mediumSelect = $('#isbn-info--book-medium');
         this.assignedProductDropdown = $('#isbn-info--assigned-product');
-        this.assignedProductError = $('#isbn-info--assigned-book-error');
         this.titleField = $('#isbn-info--book-title');
         this.subtitleField = $('#isbn-info--book-subtitle');
         this.descriptionField = $('#isbn-info--book-description');
@@ -71,7 +70,7 @@ class ISBNRegistrations{
 
         if (assignedProduct != '' && title != ''  && description != '' && name0 != '' && bio0 != ''
         && bookMedium != '' && bookFormat != '' && pubDate != '' && pubDate != 'mm/dd/yyyy' 
-        && status != '' && price != '' && this.assignedProductError.hasClass('hidden')
+        && status != '' && price != '' 
         && assignedProduct != null && title != null && description != null && name0 != null && bio0 != null
         && bookMedium != null && bookFormat != null && pubDate != null && status != null && price != null && price != '$null' && price != 'null'){
             $(e.target).addClass('contracting');
@@ -411,8 +410,37 @@ class ISBNRegistrations{
         })
     }
     closeOverlay(e){
-        this.submit(e);
         this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
+        this.assignedProductDropdown.find('option[data-productid="0"]').attr('selected', 'selected');
+        this.titleField.val('');
+        this.subtitleField.val('');
+        this.descriptionField.val('');
+        $('#isbn-info--book-medium--blank').attr('selected', 'selected');
+        $('#isbn-info--section-E-book').removeClass('hidden');
+        $('#isbn-info--section-Audio').addClass('hidden');
+        $('#isbn-info--section-Print').addClass('hidden');
+        $('#isbn-info--first-genre--fiction-general').attr('selected', 'selected');
+        $('#isbn-info--second-genre--blank').attr('selected', 'selected');
+        this.contributor0.val('');
+        this.biography0.val('');
+        $('#isbn-contributor-function-0--author').attr('selected', 'selected');
+        $('#isbn-contributor--name-1').val();
+        $('#isbn-contributor--bio-1').val();
+        $('#isbn-contributor-function-1--author').attr('selected', 'selected');
+        $('#isbn-contributors-section-1').addClass('hidden');
+        $('#isbn-contributor--name-2').val();
+        $('#isbn-contributor--bio-2').val();
+        $('#isbn-contributor-function-2--author').attr('selected', 'selected');
+        $('#isbn-contributors-section-2').addClass('hidden');
+        $('#isbn-contributor--name-3').val();
+        $('#isbn-contributor--bio-3').val();
+        $('#isbn-contributor-function-3--author').attr('selected', 'selected');
+        $('#isbn-contributors-section-3').addClass('hidden');
+        $('#isbn-contributor--name-4').val();
+        $('#isbn-contributor--bio-4').val();
+        $('#isbn-contributor-function-4--author').attr('selected', 'selected');
+        $('#isbn-contributors-section-4').addClass('hidden');
+
         this.isbnInfoOverlay.removeClass('search-overlay--active');
     }
 }

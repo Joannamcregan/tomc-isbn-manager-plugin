@@ -97,7 +97,6 @@ get_header();
                 <br><br>
                 <label for="isbn-info--book-subtitle">Subtitle (optional)</label>
                 <input type="text" id="isbn-info--book-subtitle" />
-                <p id="isbn-info--assigned-book-error" class="hidden red-text">Our records indicate this product has already been assigned an ISBN </p>
                 <br><br>
                 <label for="isbn-info--book-description">Description (up to 350 words)</label>
                 <textarea id="isbn-info--book-description" required class="isbn-info--textarea"></textarea>
@@ -105,11 +104,11 @@ get_header();
                 <label for="isbn-info--book-medium" required>Medium</label>
                 <select id="isbn-info--book-medium">
                     <option id="isbn-info--book-medium--audio">Audio</option>
-                    <option id="isbn-info--book-medium--ebook">E-book</option>
+                    <option id="isbn-info--book-medium--ebook" selected>E-book</option>
                     <option id="isbn-info--book-medium--print">Print</option>
                 </select>
                 <br><br>
-                <div id="isbn-info--section-Audio" class="isbn-info--format-section">
+                <div id="isbn-info--section-Audio" class="hidden isbn-info--format-section">
                     <label for="isbn-info--audio-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--audio-section--format" class="isbn-info--format-select">
                         <option selected>Digital File</option>
@@ -117,7 +116,7 @@ get_header();
                         <option>DVD</option>
                     </select>
                 </div>
-                <div class="hidden isbn-info--format-section" id="isbn-info--section-E-book">
+                <div class="isbn-info--format-section" id="isbn-info--section-E-book">
                     <label for="isbn-info--ebook-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--ebook-section--format" class="isbn-info--format-select">
                         <option>Digital Online</option>
@@ -159,7 +158,7 @@ get_header();
                     <option>Fiction_Espionage</option>
                     <option>Fiction_Fantasy_General</option>
                     <option>Fiction_Gay</option>
-                    <option selected>Fiction_General</option>
+                    <option id="isbn-info--first-genre--fiction-general" selected>Fiction_General</option>
                     <option>Fiction_Historical</option>
                     <option>Fiction_Horror</option>
                     <option>Fiction_Mystery and Detective_General</option>
@@ -223,7 +222,7 @@ get_header();
                 <br><br>
                 <label for="isbn-info--second-genre" required>Second genre (optional)</label>
                 <select id="isbn-info--second-genre">
-                    <option></option>
+                    <option id="isbn-info--second-genre--blank"></option>
                     <option>Agriculture</option>
                     <option>Architecture</option>
                     <option>Art</option>
@@ -318,7 +317,7 @@ get_header();
                 <br><br>
                 <label for="isbn-contributor-function-0" required>Your function</label>
                 <select id="isbn-contributor-function-0">
-                    <option selected>author</option>
+                    <option id="isbn-contributor-function-0--author" selected>author</option>
                     <option>editor</option>
                     <option>illustrator</option>
                     <option>various roles</option>
@@ -455,7 +454,7 @@ get_header();
                     <br><br>
                     <label for="isbn-contributor-function-1" required>Contributor function</label>
                     <select id="isbn-contributor-function-1">
-                        <option>author</option>
+                        <option id="isbn-contributor-function-1--author" selected>author</option>
                         <option>editor</option>
                         <option>illustrator</option>
                         <option>various roles</option>
@@ -591,7 +590,7 @@ get_header();
                     <br><br>
                     <label for="isbn-contributor-function-2" required>Contributor function</label>
                     <select id="isbn-contributor-function-2">
-                        <option>author</option>
+                        <option id="isbn-contributor-function-2--author" selected>author</option>
                         <option>editor</option>
                         <option>illustrator</option>
                         <option>various roles</option>
@@ -727,7 +726,7 @@ get_header();
                     <br><br>
                     <label for="isbn-contributor-function-3" required>Contributor function</label>
                     <select id="isbn-contributor-function-3">
-                        <option>author</option>
+                        <option id="isbn-contributor-function-3--author" selected>author</option>
                         <option>editor</option>
                         <option>illustrator</option>
                         <option>various roles</option>
@@ -863,7 +862,7 @@ get_header();
                     <br><br>
                     <label for="isbn-contributor-function-4" required>Contributor function</label>
                     <select id="isbn-contributor-function-4">
-                        <option>author</option>
+                        <option id="isbn-contributor-function-4--author" selected>author</option>
                         <option>editor</option>
                         <option>illustrator</option>
                         <option>various roles</option>

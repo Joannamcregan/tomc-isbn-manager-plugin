@@ -10,6 +10,7 @@ class ISBNRecords{
         this.overlayContainer = $('#isbn-view--container');
         this.markFiledButton = $('#tomc-isbn-mark-filed');
         this.events();
+        this.recordid;
     }
 
     events(){
@@ -20,8 +21,7 @@ class ISBNRecords{
 
     showInfo(e){
         let isbn = $(e.target).parent('div').data('isbn');
-        console.log($(e.target).parent('div').data('recordid'));
-        $('#tomc-isbn-mark-filed').data('recordid', $(e.target).parent('div').data('recordid'));
+        this.recordid = $(e.target).parent('div').data('recordid');
         $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {
@@ -33,7 +33,6 @@ class ISBNRecords{
                 'isbn' : isbn
             },
             success: (response) => {
-                console.log(response);
                 this.overlay.find('h2').append(' ' + isbn);
                 this.overlay.addClass('search-overlay--active');
                 for (let i = 0; i < response.length; i++){
@@ -52,7 +51,8 @@ class ISBNRecords{
     }
 
     markCompleted(e){
-        var recordId = $(e.target).parent('div').data('recordid');
+        console.log(this.recordid);
+        $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
@@ -60,13 +60,10 @@ class ISBNRecords{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markRecordFiled',
             type: 'POST',
             data: {
-                'recordId' : recordId
+                'recordId' : this.recordid
             },
             success: (response) => {
-                // console.log(response);
-                if (response > 0){
-                    location.reload(true);
-                }
+                $(e.target).removeClass('contracting');
             },
             failure: (response) => {
                 // console.log(response);
@@ -86,12 +83,12 @@ class ISBNRecords{
                 'shownCount' : shownCount
             },
             success: (response) => {
-                console.log(response);
+                // console.log(response);
                 shownCount += response.length;
                 $(e.target).data('count', shownCount);
             },
             error: (response) => {
-                console.log(response);
+                // console.log(response);
             }
         })
     }
