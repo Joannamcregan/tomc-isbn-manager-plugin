@@ -177,13 +177,15 @@ function markRecordFiled($data){
     $recordId = sanitize_text_field($data['recordId']);
     $user = wp_get_current_user();
     if (is_user_logged_in() && (in_array( 'administrator', (array) $user->roles ) )){
+        global $wpdb;
         $userId = $user->ID;
+        $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $query = 'update %i
         set processeddate = now(),
         processedby = %d
         where id = %d';
         $wpdb->query($wpdb->prepare($query, $isbn_records_table, $userId, $recordId), ARRAY_A);
-        return $recordId;
+        return 'success';
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
