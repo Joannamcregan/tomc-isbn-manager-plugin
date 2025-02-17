@@ -42,10 +42,9 @@ if (is_user_logged_in()){
                     <h1>Filed Records</h1>
                 </div>
                 <div id="tomc-isbn-filed-records-container" class="generic-content">
-                    <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate
+                    <?php $query =  'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
-                    join %i fieldvals on numbers.id = fieldvals.isbnid
                     where records.processeddate is not null
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
@@ -64,7 +63,8 @@ if (is_user_logged_in()){
                         </div>
                     <?php }
                 ?></div>
-                <span id="tomc-isbn-get-filed-records" class="block">show older records</span>
+                <span id="tomc-isbn-get-filed-records" class="block" data-count=3>show older records</span> 
+                <!-- count = limit in query ^^^ -->
             </div>
 
             <div class="search-overlay" id="tomc-isbn-view-info-overlay">

@@ -74,15 +74,21 @@ class ISBNRecords{
         })
     }
 
-    getMoreFiledRecords(){
+    getMoreFiledRecords(e){
+        let shownCount = $(e.target).data('count');
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getMoreFiledRecords',
             type: 'GET',
+            data: {
+                'shownCount' : shownCount
+            },
             success: (response) => {
                 console.log(response);
+                shownCount += response.length;
+                $(e.target).data('count', shownCount);
             },
             error: (response) => {
                 console.log(response);

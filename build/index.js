@@ -165,15 +165,21 @@ class ISBNRecords {
       }
     });
   }
-  getMoreFiledRecords() {
+  getMoreFiledRecords(e) {
+    let shownCount = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('count');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
       },
       url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getMoreFiledRecords',
       type: 'GET',
+      data: {
+        'shownCount': shownCount
+      },
       success: response => {
         console.log(response);
+        shownCount += response.length;
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('count', shownCount);
       },
       error: response => {
         console.log(response);
