@@ -103,14 +103,18 @@ class ISBNRecords {
     this.overlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-overlay');
     this.closeOverlayButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-overlay__close');
     this.overlayContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view--container');
+    this.markFiledButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-mark-filed');
     this.events();
   }
   events() {
     this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
     this.showInfoButton.on('click', this.showInfo.bind(this));
+    this.markFiledButton.on('click', this.markCompleted.bind(this));
   }
   showInfo(e) {
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('isbn');
+    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid'));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-mark-filed').data('recordid', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid'));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
@@ -126,7 +130,7 @@ class ISBNRecords {
         this.overlay.find('h2').append(' ' + isbn);
         this.overlay.addClass('search-overlay--active');
         for (let i = 0; i < response.length; i++) {
-          let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass(i % 2 == 0 ? 'purple-field' : 'plain-field');
+          let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
           let strong = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<strong />').text(response[i]['fieldlabel'] + ': ');
           p.append(strong);
           let span = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').text(response[i]['fieldvalue']);
@@ -140,7 +144,7 @@ class ISBNRecords {
     });
   }
   markCompleted(e) {
-    var recordId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('.tomc-isbn-hidden-fields').parent('.tomc-isbn-record').data('isbn-product-id');
+    var recordId = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('recordid');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);

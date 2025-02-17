@@ -8,16 +8,20 @@ class ISBNRecords{
         this.overlay = $('#tomc-isbn-view-info-overlay');
         this.closeOverlayButton = $('#isbn-view-overlay__close');
         this.overlayContainer = $('#isbn-view--container');
+        this.markFiledButton = $('#tomc-isbn-mark-filed');
         this.events();
     }
 
     events(){
         this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
         this.showInfoButton.on('click', this.showInfo.bind(this));
+        this.markFiledButton.on('click', this.markCompleted.bind(this));
     }
 
     showInfo(e){
         let isbn = $(e.target).parent('div').data('isbn');
+        console.log($(e.target).parent('div').data('recordid'));
+        $('#tomc-isbn-mark-filed').data('recordid', $(e.target).parent('div').data('recordid'));
         $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {
@@ -33,7 +37,7 @@ class ISBNRecords{
                 this.overlay.find('h2').append(' ' + isbn);
                 this.overlay.addClass('search-overlay--active');
                 for (let i = 0; i < response.length; i++){
-                    let p = $('<p />').addClass(i % 2 == 0 ? 'purple-field' : 'plain-field');
+                    let p = $('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
                     let strong = $('<strong />').text(response[i]['fieldlabel'] + ': ');
                     p.append(strong);
                     let span = $('<span />').text(response[i]['fieldvalue']);
@@ -48,7 +52,7 @@ class ISBNRecords{
     }
 
     markCompleted(e){
-        var recordId = $(e.target).parent('.tomc-isbn-hidden-fields').parent('.tomc-isbn-record').data('isbn-product-id');
+        var recordId = $(e.target).parent('div').data('recordid');
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);

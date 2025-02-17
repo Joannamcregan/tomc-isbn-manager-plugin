@@ -77,7 +77,15 @@
     
     border-radius: 15px;
 }
-
+.tomc-purple-paragraph{
+    background: rgba(76, 5, 72, 0.02);
+    margin: 0px;
+    padding: 5px 0px;
+}
+.tomc-plain-paragraph{
+    margin: 0px;
+    padding: 5px 0px;
+}
 .add-isbn-info-button{
     background-color: #4c0548;
     color: white;
@@ -97,6 +105,17 @@
     cursor: pointer;
     display: block;
     width: fit-content;
+}
+#tomc-isbn-mark-filed{
+    background-color: #e44e2d;
+    color: white;
+    font-size: 16;
+    border-radius: 35px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    width: fit-content;
+    margin: 40px auto;
 }
 .tomc-isbn-submit{
     margin: 30px auto 50px auto;

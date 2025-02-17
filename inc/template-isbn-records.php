@@ -15,7 +15,7 @@ if (is_user_logged_in()){
                     <h1>Unfiled Records</h1>
                 </div>
                 <div id="tomc-isbn-unfiled-records-container" class="generic-content">
-                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate
+                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     left join %i posts on records.assignedproductid = posts.id
@@ -25,14 +25,14 @@ if (is_user_logged_in()){
                     $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table), ARRAY_A);
                     for ($i = 0; $i < count($results); $i++){
                         if ($i % 2 == 0){
-                            ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                            ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
                         <?php } else {
-                            ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>">
+                            ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
                         <?php }                    
-                        ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
-                        <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                        <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
-                        <span class="see-isbn-info-button">see info</span>
+                            ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
+                            <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
+                            <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                            <span class="see-isbn-info-button">see info</span>
                         </div>
                     <?php }
                 ?></div>
@@ -72,6 +72,7 @@ if (is_user_logged_in()){
                 <br>
                 <h2 class="centered-text">View Info for ISBN </h2>
                 <div id="isbn-view--container" class="generic-content"></div>
+                <span id="tomc-isbn-mark-filed">mark record complete</span>
             </div>
         </main>
     <?php } else {
