@@ -42,7 +42,6 @@ class ISBNForm{
                     'productId': productId
                 },
                 success: (response) => {
-                    console.log(response);
                     if (response.length > 0){
                         this.title.val(response[0]['title']);
                         this.subtitle.val(response[0]['subtitle']);
@@ -57,7 +56,7 @@ class ISBNForm{
                     }
                 },
                 error: (response) => {
-                    console.log(response);
+                    // console.log(response);
                 }
             })
         }

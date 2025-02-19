@@ -51,7 +51,6 @@ class ISBNRecords{
     }
 
     markCompleted(e){
-        console.log(this.recordid);
         $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {

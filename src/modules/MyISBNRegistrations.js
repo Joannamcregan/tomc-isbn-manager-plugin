@@ -275,13 +275,13 @@ class ISBNRegistrations{
                                 }
                             },
                             error: (response) => {
-                                console.log(response);
+                                // console.log(response);
                             }
                         })
                     }
                 },
                 error: (response) => {
-                    console.log(response);
+                    // console.log(response);
                 }
             })
         }
@@ -301,7 +301,6 @@ class ISBNRegistrations{
                 'isbn' : isbn
             },
             success: (response) => {
-                console.log(response);
                 if (response.length > 0){
                     for (let i = 0; i < response.length; i++){
                         if (response[i]['fieldlabel'] == 'Assigned product'){
@@ -405,7 +404,7 @@ class ISBNRegistrations{
                 }
             },
             error: (response) => {
-                console.log(response);
+                // console.log(response);
             }
         })
     }

@@ -57,7 +57,6 @@ class ISBNForm {
           'productId': productId
         },
         success: response => {
-          console.log(response);
           if (response.length > 0) {
             this.title.val(response[0]['title']);
             this.subtitle.val(response[0]['subtitle']);
@@ -72,7 +71,7 @@ class ISBNForm {
           }
         },
         error: response => {
-          console.log(response);
+          // console.log(response);
         }
       });
     }
@@ -143,7 +142,6 @@ class ISBNRecords {
     });
   }
   markCompleted(e) {
-    console.log(this.recordid);
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
@@ -569,13 +567,13 @@ class ISBNRegistrations {
                 }
               },
               error: response => {
-                console.log(response);
+                // console.log(response);
               }
             });
           }
         },
         error: response => {
-          console.log(response);
+          // console.log(response);
         }
       });
     }
@@ -595,7 +593,6 @@ class ISBNRegistrations {
         'isbn': isbn
       },
       success: response => {
-        console.log(response);
         if (response.length > 0) {
           for (let i = 0; i < response.length; i++) {
             if (response[i]['fieldlabel'] == 'Assigned product') {
@@ -699,7 +696,7 @@ class ISBNRegistrations {
         }
       },
       error: response => {
-        console.log(response);
+        // console.log(response);
       }
     });
   }
