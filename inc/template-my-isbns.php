@@ -61,6 +61,29 @@ get_header();
                     </div>
                 <?php }
             }
+
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title
+            from %i numbers
+            join %i records on numbers.id = records.isbnid
+            join %i posts on records.assignedproductid = posts.id
+            and records.processeddate is not null
+            where numbers.assignedto = %d';
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
+            if (($results) && count($results) > 0){
+                ?><h2 class="centered-text">Processed Registrations</h2>
+                <?php for ($i = 0; $i < count($results); $i++){
+                    if ($i % 2 == 0){
+                        ?><div class="tomc-purple-isbn-field">
+                    <?php } else {
+                        ?><div class="tomc-plain-isbn-field">
+                    <?php }                    
+                    ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
+                    <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
+                    <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                    <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
+                    </div>
+                <?php }
+            }
         } else {
             ?><p class="centered-text">Our ISBN Registration service is only available to logged-in vendors. <a href="<?php echo esc_url(site_url('/my-account'));?>">Login</a></p>
         <?php }
