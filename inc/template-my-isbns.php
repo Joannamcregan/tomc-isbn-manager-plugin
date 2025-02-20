@@ -19,6 +19,7 @@ get_header();
     <div class="generic-content half-screen">
         <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
          <p class="centered-text">Free ISBNs, but Registration and Barcodes will cost you.</p>
+         <p class="centered-text">Get yours <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">here</a>.</p>
         <?php if (is_user_logged_in()){
             $query = 'select numbers.isbn, numbers.id
             from %i numbers
