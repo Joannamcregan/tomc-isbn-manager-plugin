@@ -105,10 +105,13 @@ get_header();
                     join %i terms on tr.term_taxonomy_id = terms.term_id
                     join %i tt on tr.term_taxonomy_id = tt.term_taxonomy_id
                     and tt.taxonomy = 'product_cat'
+                    join %i bp on posts.id = bp.productid
+                    join %i books on bp.bookid = books.id
+                    and books.islive = 1
                     where posts.post_type='product'
                     and posts.post_author = %d
                     and posts.id not in (select assignedproductid from %i)";
-                    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $userid, $isbn_records_table), ARRAY_A);
+                    $results = $wpdb->get_results($wpdb->prepare($query, $posts_table, $term_relationships_table, $terms_table, $term_taxonomy_table, $book_products_table, $books_table, $userid, $isbn_records_table), ARRAY_A);
                     for ($i= 0; $i < count($results); $i++){
                         ?><option data-productid="<?php echo $results[$i]['id']; ?>">
                         <?php echo $results[$i]['post_title'] . ' (categorized in ' . $results[$i]['termname'] . ')';

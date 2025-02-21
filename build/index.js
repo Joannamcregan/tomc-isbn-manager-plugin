@@ -433,7 +433,7 @@ class ISBNRegistrations {
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
         },
-        url: tomcBookorgData.root_url + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target) == this.submitButton ? '/wp-json/tomcISBN/v1/saveAndSubmitRecord' : '/wp-json/tomcISBN/v1/saveFieldValues',
+        url: tomcBookorgData.root_url + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).text().includes('Submit') ? '/wp-json/tomcISBN/v1/saveAndSubmitRecord' : '/wp-json/tomcISBN/v1/saveFieldValues',
         type: 'POST',
         data: {
           'isbnid': this.isbnid,

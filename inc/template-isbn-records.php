@@ -3,6 +3,8 @@ $isbn_records_table = $wpdb->prefix . 'tomc_isbn_records';
 $isbn_field_values_table = $wpdb->prefix . 'tomc_isbn_field_values';
 $isbn_numbers_table = $wpdb->prefix . 'tomc_isbn_numbers';
 $posts_table = $wpdb->prefix . 'posts';
+$book_products_table = $wpdb->prefix . 'tomc_book_products';
+$books_table = $wpdb->prefix . 'tomc_books';
 $userid = get_current_user_id();
 $user = wp_get_current_user();
 
@@ -15,14 +17,16 @@ if (is_user_logged_in()){
                     <h1>Unfiled Records</h1>
                 </div>
                 <div id="tomc-isbn-unfiled-records-container" class="generic-content">
-                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid
+                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     left join %i posts on records.assignedproductid = posts.id
+                    left join %i bookproducts on records.assignedproductid = bookproducts.productid
+                    left join %i books on bookproducts.bookid = books.id
                     where records.processeddate is null
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
-                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table), ARRAY_A);
+                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $book_products_table, $books_table), ARRAY_A);
                     if (count($results) > 0){
                         for ($i = 0; $i < count($results); $i++){
                             if ($i % 2 == 0){
@@ -33,7 +37,7 @@ if (is_user_logged_in()){
                                 ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                                 <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                                 <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
-                                <span class="see-isbn-info-button">see info</span>
+                                <span class="see-isbn-info-button" data-image="<?php echo get_the_post_thumbnail_url($results[$i]['product_image_id']); ?>">see info</span>
                             </div>
                         <?php }
                     } else {
