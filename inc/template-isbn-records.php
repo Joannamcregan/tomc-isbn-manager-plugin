@@ -17,7 +17,7 @@ if (is_user_logged_in()){
                     <h1>Unfiled Records</h1>
                 </div>
                 <div id="tomc-isbn-unfiled-records-container" class="generic-content">
-                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id
+                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id, books.title
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     left join %i posts on records.assignedproductid = posts.id
@@ -37,7 +37,7 @@ if (is_user_logged_in()){
                                 ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                                 <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                                 <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
-                                <span class="see-isbn-info-button" data-image="<?php echo get_the_post_thumbnail_url($results[$i]['product_image_id']); ?>">see info</span>
+                                <span class="see-isbn-info-button" data-image="<?php echo get_the_post_thumbnail_url($results[$i]['product_image_id']); ?>" data-title="<?php echo $results[$i]['title']; ?>">see info</span>
                             </div>
                         <?php }
                     } else {

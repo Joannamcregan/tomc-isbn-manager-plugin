@@ -35,6 +35,8 @@ class ISBNRecords{
             success: (response) => {
                 this.overlay.find('h2').append(' ' + isbn);
                 this.overlay.addClass('search-overlay--active');
+                let img = $('<img />').attr('src', $(e.target).data('image')).attr('alt', 'cover for ' + $(e.target).data('title'));
+                this.overlayContainer.append(img);
                 for (let i = 0; i < response.length; i++){
                     let p = $('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
                     let strong = $('<strong />').text(response[i]['fieldlabel'] + ': ');

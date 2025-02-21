@@ -127,6 +127,8 @@ class ISBNRecords {
       success: response => {
         this.overlay.find('h2').append(' ' + isbn);
         this.overlay.addClass('search-overlay--active');
+        let img = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<img />').attr('src', jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('image')).attr('alt', 'cover for ' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('title'));
+        this.overlayContainer.append(img);
         for (let i = 0; i < response.length; i++) {
           let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
           let strong = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<strong />').text(response[i]['fieldlabel'] + ': ');

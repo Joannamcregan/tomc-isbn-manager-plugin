@@ -255,3 +255,9 @@
 .isbn-radio-label, .isbn-radio-yes, .isbn-radio-no{
     display: inline !important;
 }
+#isbn-view--container img{
+    max-width: 300px;
+    height: auto;
+    margin: auto;
+    display: block;
+}
