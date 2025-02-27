@@ -253,6 +253,7 @@ class ISBNRegistrations {
   }
   submit(e) {
     let fieldVals = [];
+    let path;
     let productId = this.assignedProductDropdown.find(':selected').data('productid');
     let assignedProduct = this.assignedProductDropdown.val();
     let title = this.titleField.val();
@@ -431,11 +432,16 @@ class ISBNRegistrations {
           value: jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--number-illustrations').val()
         });
       }
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).text().includes('Submit')) {
+        path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveAndSubmitRecord';
+      } else {
+        path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues';
+      }
       jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
         beforeSend: xhr => {
           xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
         },
-        url: tomcBookorgData.root_url + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).text().includes('Submit') ? '/wp-json/tomcISBN/v1/saveAndSubmitRecord' : '/wp-json/tomcISBN/v1/saveFieldValues',
+        url: path,
         type: 'POST',
         data: {
           'isbnid': this.isbnid,

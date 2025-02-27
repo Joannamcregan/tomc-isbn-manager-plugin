@@ -53,6 +53,7 @@ class ISBNRegistrations{
 
     submit(e){
         let fieldVals = [];
+        let path;
 
         let productId = this.assignedProductDropdown.find(':selected').data('productid');
         let assignedProduct = this.assignedProductDropdown.val();
@@ -137,11 +138,17 @@ class ISBNRegistrations{
                 fieldVals.push({ field: $('label[for="isbn-info--number-illustrations"]').text(), value: $('#isbn-info--number-illustrations').val()});
             }
 
+            if ($(e.target).text().includes('Submit')){
+                path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveAndSubmitRecord'
+            } else {
+                path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues'
+            }
+
             $.ajax({
                 beforeSend: (xhr) => {
                     xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
                 },
-                url: tomcBookorgData.root_url + $(e.target).text().includes('Submit') ? '/wp-json/tomcISBN/v1/saveAndSubmitRecord' : '/wp-json/tomcISBN/v1/saveFieldValues',
+                url: path,
                 type: 'POST',
                 data: {
                     'isbnid': this.isbnid,
