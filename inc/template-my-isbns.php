@@ -9,6 +9,8 @@ $term_relationships_table = $wpdb->prefix . "term_relationships";
 $term_taxonomy_table = $wpdb->prefix . "term_taxonomy";
 $book_products_table = $wpdb->prefix . "tomc_book_products";
 $books_table = $wpdb->prefix . "tomc_books";
+$order_items_table = $wpdb->prefix . 'woocommerce_order_items';
+$item_meta_table = $wpdb->prefix . 'woocommerce_order_itemmeta';
 $userid = $user->ID;
 
 get_header();
@@ -20,11 +22,14 @@ get_header();
         <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
          <p class="centered-text">Free ISBNs, but <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">Registration and Barcodes</a> will cost you.</p>
         <?php if (is_user_logged_in()){
-            $query = 'select numbers.isbn, numbers.id
+            $query = 'select numbers.isbn, numbers.id, itemmeta.meta_value
             from %i numbers
+            join %i orderitems on numbers.shoporderid = orderitems.order_id
+            left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+            and itemmeta.meta_key like "%Barcode%"
             where numbers.id not in (select isbnid from %i records)
             and numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $order_items_table, $item_meta_table, $isbn_records_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Unsubmitted Registrations</h2>
                 <p class="centered-text">Creators are responsible for providing complete information and hitting Submit on each registration form. Creators who purchase ISBNs and do not complete the form, will not have their work registered with Bowker. Creators with more than five unsubmitted registrations will be barred from purchasing additional registrations until all outstanding ISBNs registration forms are complete.</p>
@@ -35,18 +40,24 @@ get_header();
                         ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-isbnid="<?php echo $results[$i]['id']; ?>">
                     <?php }                    
                     ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <span class="add-isbn-info-button">add info</span>
+                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                        echo '<p><strong>**includes barcode**</strong></p>';
+                    }
+                    ?><span class="add-isbn-info-button">add info</span>
                     </div>
                 <?php }
             } 
 
-            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
-            and records.processeddate is null
+            and records.processeddate is null            
+            join %i orderitems on numbers.shoporderid = orderitems.order_id
+            left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+            and itemmeta.meta_key like "%Barcode%"
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
@@ -57,18 +68,24 @@ get_header();
                     <?php }                    
                     ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                     <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate'] ?></p>
+                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                        echo '<p><strong>**includes barcode**</strong></p>';
+                    }
+                    ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate'] ?></p>
                     </div>
                 <?php }
             }
 
-            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is not null
+            join %i orderitems on numbers.shoporderid = orderitems.order_id
+            left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+            and itemmeta.meta_key like "%Barcode%"
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Processed Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
@@ -79,7 +96,10 @@ get_header();
                     <?php }                    
                     ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                     <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                        echo '<p><strong>**includes barcode**</strong></p>';
+                    }
+                    ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                     <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
                     </div>
                 <?php }

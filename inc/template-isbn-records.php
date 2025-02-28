@@ -5,6 +5,8 @@ $isbn_numbers_table = $wpdb->prefix . 'tomc_isbn_numbers';
 $posts_table = $wpdb->prefix . 'posts';
 $book_products_table = $wpdb->prefix . 'tomc_book_products';
 $books_table = $wpdb->prefix . 'tomc_books';
+$order_items_table = $wpdb->prefix . 'woocommerce_order_items';
+$item_meta_table = $wpdb->prefix . 'woocommerce_order_itemmeta';
 $userid = get_current_user_id();
 $user = wp_get_current_user();
 
@@ -17,26 +19,33 @@ if (is_user_logged_in()){
                     <h1>Unfiled Records</h1>
                 </div>
                 <div id="tomc-isbn-unfiled-records-container" class="generic-content">
-                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id, books.title
+                <?php $query = 'select numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id, books.title, itemmeta.meta_value
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     left join %i posts on records.assignedproductid = posts.id
                     left join %i bookproducts on records.assignedproductid = bookproducts.productid
                     left join %i books on bookproducts.bookid = books.id
+                    join %i orderitems on numbers.shoporderid = orderitems.order_id
+                    left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+                    and itemmeta.meta_key = "Add Barcode (only for physical books)"
                     where records.processeddate is null
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
-                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $book_products_table, $books_table), ARRAY_A);
+                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $book_products_table, $books_table, $order_items_table, $item_meta_table), ARRAY_A);
                     if (count($results) > 0){
                         for ($i = 0; $i < count($results); $i++){
                             if ($i % 2 == 0){
                                 ?><div class="tomc-purple-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
                             <?php } else {
                                 ?><div class="tomc-plain-isbn-field" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-recordid="<?php echo $results[$i]['recordid']; ?>">
-                            <?php }                    
+                            <?php }    
                                 ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                                 <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                                <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                                <?php          
+                                if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                                    echo '<p><strong>**includes barcode**</strong></p>';
+                                }  
+                                ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                                 <span class="see-isbn-info-button" data-image="<?php echo get_the_post_thumbnail_url($results[$i]['product_image_id']); ?>" data-title="<?php echo $results[$i]['title']; ?>">see info</span>
                             </div>
                         <?php }
@@ -54,10 +63,13 @@ if (is_user_logged_in()){
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     join %i posts on records.assignedproductid = posts.id
+                    join %i orderitems on numbers.shoporderid = orderitems.order_id
+                    left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+                    and itemmeta.meta_key = "Add Barcode (only for physical books)"
                     where records.processeddate is not null
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
-                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table), ARRAY_A);
+                    $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table), ARRAY_A);
                     for ($i = 0; $i < count($results); $i++){
                         if ($i % 2 == 0){
                             ?><div class="tomc-purple-isbn-field">
