@@ -60,7 +60,6 @@ get_header();
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
-                <p class="centered-text"></p>
                 <?php for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
                         ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
