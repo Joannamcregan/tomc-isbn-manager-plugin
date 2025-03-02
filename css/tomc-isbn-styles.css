@@ -103,8 +103,19 @@
     border-radius: 35px;
     padding: 5px 10px;
     cursor: pointer;
-    display: block;
+    display: inline;
     width: fit-content;
+}
+.view-isbn-info-button{
+    background-color: #0c6980;
+    color: white;
+    font-size: 16;
+    border-radius: 35px;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: fit-content;
+    display: inline;
+    margin-right: 10px; 
 }
 .see-isbn-info-button{
     background-color: #0c6980;
@@ -113,8 +124,8 @@
     border-radius: 35px;
     padding: 5px 10px;
     cursor: pointer;
-    display: block;
     width: fit-content;
+    display: block;
 }
 #tomc-isbn-mark-filed{
     background-color: #e44e2d;

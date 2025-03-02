@@ -60,11 +60,12 @@ get_header();
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
+                <p class="centered-text"></p>
                 <?php for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
-                        ?><div class="tomc-purple-isbn-field">
+                        ?><div class="tomc-purple-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
                     <?php } else {
-                        ?><div class="tomc-plain-isbn-field">
+                        ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>">
                     <?php }                    
                     ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                     <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
@@ -72,6 +73,7 @@ get_header();
                         echo '<p><strong>**includes barcode**</strong></p>';
                     }
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate'] ?></p>
+                    <span class="view-isbn-info-button">view info</span>
                     <span class="unsubmit-isbn-button" data-record="<?php echo $results[$i]['recordid']; ?>">unsubmit</span>
                     </div>
                 <?php }
@@ -109,6 +111,13 @@ get_header();
             ?><p class="centered-text">Our ISBN Registration service is only available to logged-in vendors. <a href="<?php echo esc_url(site_url('/my-account'));?>">Login</a></p>
         <?php }
     ?></div>
+
+    <div class="search-overlay" id="tomc-isbn-view-info-overlay">
+    <i class="fa fa-window-close search-overlay__close" id="isbn-view-info-overlay__close" aria-label="close overlay"></i>
+        <br>
+        <h2 class="centered-text">View Info for ISBN </h2>
+        <div id="tomc-isbn-view-info-container" class="generic-content"></div>
+    </div>
 
     <div class="search-overlay" id="tomc-isbn-edit-info-overlay">
         <i class="fa fa-window-close search-overlay__close" id="isbn-info-overlay__close" aria-label="close overlay"></i>
@@ -1092,7 +1101,7 @@ get_header();
                 <div id="tomc-info--submission-errors"></div>
                 <button id="isbn-info--save" class="hollow-purple-button">Save and Close</button>
                 <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
-                <p>Double check the information you entered before you submit. If you need to change any of your ISBN registration info after it has been filed with Bowker, you will have to purchase our ISBN Registration Update service.</p>
+                <p>Before selecting Submit for Filing, double-check to ensure the information is correct. Are all names spelled properly? Is the publication date correct? Are all contributors named? Is the price/ page number / genre correct? Changes requested after ISBN information is filed with Bowker are subject to a second administrative fee.</p>
             </div>
         </div>        
     </div>

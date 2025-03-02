@@ -205,9 +205,13 @@ class ISBNRegistrations {
   constructor() {
     this.isbnid;
     this.addInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-isbn-info-button');
-    this.unsubmitButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.unsubmit-isbn-button');
+    this.seeInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.view-isbn-info-button');
+    this.unsubmitButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.unsubmit-isbn-button');
     this.isbnInfoOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-edit-info-overlay');
+    this.viewOnlyOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-overlay');
+    this.viewOnlyContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-container');
     this.overlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info-overlay__close');
+    this.viewOnlyCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-info-overlay__close');
     this.audioSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--audio-section');
     this.ebookSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--ebook-section');
     this.printSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section');
@@ -234,6 +238,7 @@ class ISBNRegistrations {
   events() {
     this.addInfoButtons.on('click', this.showInfo.bind(this));
     this.overlayCloseButton.on('click', this.closeOverlay.bind(this));
+    this.viewOnlyCloseButton.on('click', this.closeViewOnlyOverlay.bind(this));
     this.mediumSelect.on('change', e => {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-info--format-section').addClass('hidden');
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-' + jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).val()).removeClass('hidden');
@@ -251,7 +256,8 @@ class ISBNRegistrations {
     this.assignedProductDropdown.on('change', this.autofill.bind(this));
     this.submitButton.on('click', this.submit.bind(this));
     this.saveButton.on('click', this.submit.bind(this));
-    this.unsubmitButton.on('click', this.unsubmit.bind(this));
+    this.unsubmitButtons.on('click', this.unsubmit.bind(this));
+    this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
   }
   submit(e) {
     let fieldVals = [];
@@ -609,6 +615,36 @@ class ISBNRegistrations {
       });
     }
   }
+  showViewOnlyInfo(e) {
+    let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn');
+    this.viewOnlyOverlay.addClass('search-overlay--active');
+    this.viewOnlyOverlay.find('hid').append(isbn);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+      },
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFieldValues',
+      type: 'GET',
+      data: {
+        'isbn': isbn
+      },
+      success: response => {
+        if (response.length > 0) {
+          for (let i = 0; i < response.length; i++) {
+            let p = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
+            let strong = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<strong />').text(response[i]['fieldlabel'] + ': ');
+            p.append(strong);
+            let span = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<span />').text(response[i]['fieldvalue']);
+            p.append(span);
+            this.viewOnlyContainer.append(p);
+          }
+        }
+      },
+      error: response => {
+        // console.log(response);
+      }
+    });
+  }
   showInfo(e) {
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn');
     this.isbnid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbnid');
@@ -730,6 +766,11 @@ class ISBNRegistrations {
         // console.log(response);
       }
     });
+  }
+  closeViewOnlyOverlay(e) {
+    this.viewOnlyOverlay.find('h2').html('View Info for ISBN ');
+    this.viewOnlyOverlay.children('#tomc-isbn-view-info-container').html('');
+    this.viewOnlyOverlay.removeClass('search-overlay--active');
   }
   closeOverlay(e) {
     this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');

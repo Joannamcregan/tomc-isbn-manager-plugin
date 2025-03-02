@@ -4,9 +4,13 @@ class ISBNRegistrations{
     constructor(){
         this.isbnid;
         this.addInfoButtons = $('.add-isbn-info-button');
-        this.unsubmitButton = $('.unsubmit-isbn-button');
+        this.seeInfoButtons = $('.view-isbn-info-button');
+        this.unsubmitButtons = $('.unsubmit-isbn-button');
         this.isbnInfoOverlay = $('#tomc-isbn-edit-info-overlay');
+        this.viewOnlyOverlay = $('#tomc-isbn-view-info-overlay');
+        this.viewOnlyContainer = $('#tomc-isbn-view-info-container');
         this.overlayCloseButton = $('#isbn-info-overlay__close');
+        this.viewOnlyCloseButton = $('#isbn-view-info-overlay__close');
         this.audioSection = $('#isbn-info--audio-section');
         this.ebookSection = $('#isbn-info--ebook-section');
         this.printSection = $('#isbn-info--print-section');
@@ -33,6 +37,7 @@ class ISBNRegistrations{
     events(){
         this.addInfoButtons.on('click', this.showInfo.bind(this));
         this.overlayCloseButton.on('click', this.closeOverlay.bind(this));
+        this.viewOnlyCloseButton.on('click', this.closeViewOnlyOverlay.bind(this));
         this.mediumSelect.on('change', (e)=>{
             $('.isbn-info--format-section').addClass('hidden');
             $('#isbn-info--section-' + $(e.target).val()).removeClass('hidden');
@@ -50,7 +55,8 @@ class ISBNRegistrations{
         this.assignedProductDropdown.on('change', this.autofill.bind(this));
         this.submitButton.on('click', this.submit.bind(this));
         this.saveButton.on('click', this.submit.bind(this));
-        this.unsubmitButton.on('click', this.unsubmit.bind(this));
+        this.unsubmitButtons.on('click', this.unsubmit.bind(this));
+        this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
     }
 
     submit(e){
@@ -318,6 +324,38 @@ class ISBNRegistrations{
             })
         }
     }
+
+    showViewOnlyInfo(e){
+        let isbn = $(e.target).closest('.tomc-isbn-field-section').data('isbn');
+        this.viewOnlyOverlay.addClass('search-overlay--active');
+        this.viewOnlyOverlay.find('hid').append(isbn);
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/getFieldValues',
+            type: 'GET',
+            data: {
+                'isbn' : isbn
+            },
+            success: (response) => {
+                if (response.length > 0){
+                    for (let i = 0; i < response.length; i++){
+                        let p = $('<p />').addClass(i % 2 == 0 ? 'tomc-purple-paragraph' : 'tomc-plain-paragraph');
+                        let strong = $('<strong />').text(response[i]['fieldlabel'] + ': ');
+                        p.append(strong);
+                        let span = $('<span />').text(response[i]['fieldvalue']);
+                        p.append(span);
+                        this.viewOnlyContainer.append(p);
+                    }
+                }
+            },
+            error: (response) => {
+                // console.log(response);
+            }
+        })
+    }
+
     showInfo(e){
         let isbn = $(e.target).closest('.tomc-isbn-field-section').data('isbn');
         this.isbnid = $(e.target).closest('.tomc-isbn-field-section').data('isbnid');
@@ -440,6 +478,13 @@ class ISBNRegistrations{
             }
         })
     }
+
+    closeViewOnlyOverlay(e){
+        this.viewOnlyOverlay.find('h2').html('View Info for ISBN ');
+        this.viewOnlyOverlay.children('#tomc-isbn-view-info-container').html('');
+        this.viewOnlyOverlay.removeClass('search-overlay--active');
+    }
+
     closeOverlay(e){
         this.isbnInfoOverlay.find('h2').html('Add Info for ISBN ');
         this.assignedProductDropdown.find('option[data-productid="0"]').attr('selected', 'selected');
