@@ -4,6 +4,7 @@ class ISBNRegistrations{
     constructor(){
         this.isbnid;
         this.addInfoButtons = $('.add-isbn-info-button');
+        this.unsubmitButton = $('.unsubmit-isbn-button');
         this.isbnInfoOverlay = $('#tomc-isbn-edit-info-overlay');
         this.overlayCloseButton = $('#isbn-info-overlay__close');
         this.audioSection = $('#isbn-info--audio-section');
@@ -49,6 +50,7 @@ class ISBNRegistrations{
         this.assignedProductDropdown.on('change', this.autofill.bind(this));
         this.submitButton.on('click', this.submit.bind(this));
         this.saveButton.on('click', this.submit.bind(this));
+        this.unsubmitButton.on('click', this.unsubmit.bind(this));
     }
 
     submit(e){
@@ -218,6 +220,29 @@ class ISBNRegistrations{
             }
         }
     }
+
+    unsubmit(e){
+        let recordid = $(e.target).data('record');
+        $(e.target).addClass('contracting');
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/unsubmitRecord',
+            type: 'DELETE',
+            data: {
+                'recordid' : recordid
+            },
+            success: (response) => {
+                $(e.target).removeClass('contracting');
+                location.reload(true);
+            },
+            failure: (response) => {
+                // console.log(response);
+            }
+        })
+    }
+
     autofill(e){
         let productId = $(e.target).find(":selected").data('productid');
         if (productId > 0){

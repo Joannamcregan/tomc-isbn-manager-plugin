@@ -48,7 +48,7 @@ get_header();
                 <?php }
             } 
 
-            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value, records.id as recordid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
@@ -72,6 +72,7 @@ get_header();
                         echo '<p><strong>**includes barcode**</strong></p>';
                     }
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate'] ?></p>
+                    <span class="unsubmit-isbn-button" data-record="<?php echo $results[$i]['recordid']; ?>">unsubmit</span>
                     </div>
                 <?php }
             }
@@ -1091,6 +1092,7 @@ get_header();
                 <div id="tomc-info--submission-errors"></div>
                 <button id="isbn-info--save" class="hollow-purple-button">Save and Close</button>
                 <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
+                <p>Double check the information you entered before you submit. If you need to change any of your ISBN registration info after it has been filed with Bowker, you will have to purchase our ISBN Registration Update service.</p>
             </div>
         </div>        
     </div>

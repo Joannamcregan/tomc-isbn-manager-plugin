@@ -27,6 +27,10 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'POST',
         'callback' => 'saveAndSubmitRecord'
     ));
+    register_rest_route('tomcISBN/v1', 'unsubmitRecord', array(
+        'methods' => 'DELETE',
+        'callback' => 'unsubmitRecord'
+    ));
     register_rest_route('tomcISBN/v1', 'getFieldValues', array(
         'methods' => 'GET',
         'callback' => 'getFieldValues'
@@ -52,6 +56,22 @@ function getFieldValues($data){
         $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $field_values_table, $isbn), ARRAY_A);
         return $results;
         // return $wpdb->prepare($query, $isbn_numbers_table, $field_values_table, $isbn);
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
+}
+
+function unsubmitRecord($data){
+    $recordid = sanitize_text_field($data['recordid']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
+        $userId = $user->ID;
+        $query = 'delete from %i where id = %d';
+        $wpdb->query($wpdb->prepare($query, $isbn_records_table, $recordid), ARRAY_A);
+        return 'success';
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
