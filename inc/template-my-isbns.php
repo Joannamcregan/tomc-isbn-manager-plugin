@@ -1100,7 +1100,7 @@ get_header();
                 <div id="tomc-info--submission-errors"></div>
                 <button id="isbn-info--save" class="hollow-purple-button">Save and Close</button>
                 <button id="isbn-info--submit" class="blue-button">Submit for Filing</button>
-                <p>Before selecting Submit for Filing, double-check to ensure the information is correct. Are all names spelled properly? Is the publication date correct? Are all contributors named? Is the price/ page number / genre correct? Changes requested after ISBN information is filed with Bowker are subject to a second administrative fee.</p>
+                <p>Before selecting Submit for Filing, double-check to ensure the information is correct. Are all names spelled properly? Is the publication date correct? Are all contributors named? Is the price/ page number / genre correct? Changes requested after ISBN information is filed with Bowker are subject to a <a href="<?php echo esc_url(site_url('/product/isbn-registration-update-service/'));?>">second administrative fee</a>.</p>
             </div>
         </div>        
     </div>
