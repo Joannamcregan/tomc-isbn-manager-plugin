@@ -22,11 +22,11 @@ get_header();
         <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
          <p class="centered-text">Free ISBNs, but <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">Registration and Barcodes</a> will cost you.</p>
         <?php if (is_user_logged_in()){
-            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_value, itemmeta.meta_key
+            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_key
             from %i numbers
             join %i orderitems on numbers.shoporderid = orderitems.order_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
-            and itemmeta.meta_key like "%Barcode%"
+            and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.id not in (select isbnid from %i records)
             and numbers.assignedto = %d';
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $order_items_table, $item_meta_table, $isbn_records_table, $userid), ARRAY_A);
@@ -49,14 +49,16 @@ get_header();
                 echo var_dump($results);
             } 
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_key, records.id as recordid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is null            
             join %i orderitems on numbers.shoporderid = orderitems.order_id
+            left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
+            and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
@@ -78,14 +80,14 @@ get_header();
                 echo var_dump($results);
             }
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value, itemmeta.meta_key, numbers.id as isbnid, itemmeta.*
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_key, numbers.id as isbnid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is not null
             join %i orderitems on numbers.shoporderid = orderitems.order_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
-            and itemmeta.meta_key like "%Barcode%"
+            and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.assignedto = %d';
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
