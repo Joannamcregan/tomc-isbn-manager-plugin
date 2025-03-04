@@ -46,6 +46,7 @@ get_header();
                     ?><span class="add-isbn-info-button">add info</span>
                     </div>
                 <?php }
+                echo var_dump($results);
             } 
 
             $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value, records.id as recordid
@@ -76,6 +77,7 @@ get_header();
                     <span class="unsubmit-isbn-button" data-record="<?php echo $results[$i]['recordid']; ?>">unsubmit</span>
                     </div>
                 <?php }
+                echo var_dump($results);
             }
 
             $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value, numbers.id as isbnid
@@ -108,6 +110,7 @@ get_header();
                     <!-- put a subquery to check for updates here -->
                     </div>
                 <?php }
+                echo var_dump($results);
             }
         } else {
             ?><p class="centered-text">Our ISBN Registration service is only available to logged-in vendors. <a href="<?php echo esc_url(site_url('/my-account'));?>">Login</a></p>
