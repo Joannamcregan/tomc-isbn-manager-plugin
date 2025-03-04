@@ -56,7 +56,7 @@ get_header();
             and records.processeddate is null            
             join %i orderitems on numbers.shoporderid = orderitems.order_id
             where numbers.assignedto = %d';
-            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
+            $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
                 ?><h2 class="centered-text">Submitted Registrations</h2>
                 <?php for ($i = 0; $i < count($results); $i++){
