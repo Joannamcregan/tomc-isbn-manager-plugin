@@ -28,7 +28,7 @@ function tomcIsbnRegisterRoute() {
         'callback' => 'saveAndSubmitRecord'
     ));
     register_rest_route('tomcISBN/v1', 'unsubmitRecord', array(
-        'methods' => 'DELETE',
+        'methods' => 'POST',
         'callback' => 'unsubmitRecord'
     ));
     register_rest_route('tomcISBN/v1', 'getFieldValues', array(

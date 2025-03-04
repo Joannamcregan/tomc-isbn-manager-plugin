@@ -273,7 +273,7 @@ class ISBNRegistrations{
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
             },
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/unsubmitRecord',
-            type: 'DELETE',
+            type: 'POST',
             data: {
                 'recordid' : recordid
             },
