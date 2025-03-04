@@ -22,7 +22,7 @@ get_header();
         <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
          <p class="centered-text">Free ISBNs, but <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">Registration and Barcodes</a> will cost you.</p>
         <?php if (is_user_logged_in()){
-            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_value
+            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_value, itemmeta.meta_key
             from %i numbers
             join %i orderitems on numbers.shoporderid = orderitems.order_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
@@ -49,7 +49,7 @@ get_header();
                 echo var_dump($results);
             } 
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value, records.id as recordid
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value, itemmeta.meta_key, records.id as recordid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
@@ -80,7 +80,7 @@ get_header();
                 echo var_dump($results);
             }
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value, numbers.id as isbnid
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value, itemmeta.meta_key, numbers.id as isbnid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
