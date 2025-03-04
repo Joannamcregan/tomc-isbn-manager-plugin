@@ -49,7 +49,7 @@ get_header();
                 echo var_dump($results);
             } 
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_key, records.id as recordid
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_key, records.id as recordid, orderitems.*
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
