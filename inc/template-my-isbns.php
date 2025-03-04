@@ -22,9 +22,10 @@ get_header();
         <!-- <p class="centered-text"><strong>Get a free ISBN</strong> when you purchase our <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">ISBN registration service</a>.</p> -->
          <p class="centered-text">Free ISBNs, but <a href="<?php echo esc_url(site_url('/product/isbn-registration'));?>">Registration and Barcodes</a> will cost you.</p>
         <?php if (is_user_logged_in()){
-            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_key
+            $query = 'select distinct numbers.isbn, numbers.id, itemmeta.meta_key, orderitems.*, numbers.orderitemid
             from %i numbers
             join %i orderitems on numbers.shoporderid = orderitems.order_id
+            and numbers.orderitemid = orderitems.order_item_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
             and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.id not in (select isbnid from %i records)
@@ -40,7 +41,7 @@ get_header();
                         ?><div class="tomc-plain-isbn-field tomc-isbn-field-section" data-isbn="<?php echo $results[$i]['isbn']; ?>" data-isbnid="<?php echo $results[$i]['id']; ?>">
                     <?php }                    
                     ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                    <?php if ($results[$i]['meta_key'] == 'Add Barcode (only for physical books)'){
                         echo '<p><strong>**includes barcode**</strong></p>';
                     }
                     ?><span class="add-isbn-info-button">add info</span>
@@ -69,7 +70,7 @@ get_header();
                     <?php }                    
                     ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                     <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                    <?php if ($results[$i]['meta_key'] == 'Add Barcode (only for physical books)'){
                         echo '<p><strong>**includes barcode**</strong></p>';
                     }
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate'] ?></p>
@@ -100,7 +101,7 @@ get_header();
                     <?php }                    
                     ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                     <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <?php if ($results[$i]['meta_value'] == 'Add Barcode (only for physical books)'){
+                    <?php if ($results[$i]['meta_key'] == 'Add Barcode (only for physical books)'){
                         echo '<p><strong>**includes barcode**</strong></p>';
                     }
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>

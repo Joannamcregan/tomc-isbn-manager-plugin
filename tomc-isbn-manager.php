@@ -78,6 +78,7 @@ class TOMCBookISBNPlugin {
             assignedto bigint(20) unsigned NULL,
             assigneddate datetime NULL,
             shoporderid bigint(20) unsigned,
+            orderitemid bigint(20) unsigned,
             UNIQUE (isbn),
             PRIMARY KEY  (id),
             FOREIGN KEY  (addedby) REFERENCES $this->users_table(id),
@@ -148,10 +149,11 @@ class TOMCBookISBNPlugin {
         $items = $order->get_items();
         $user = wp_get_current_user();
         $userId = $user->ID;
-        foreach($items as $item){
+        foreach($order->get_items() as $item_id => $item){
             if ($item->get_name() == 'ISBN Registration'){
                 $query = 'select isbn from %i where assignedto is null and assigneddate is null and shoporderid is null order by addeddate limit 1';
                 $item_count = $item['qty'];
+                $itemid = $item_id;
                 if ($item_count){
                     for($i = 0; $i < $item_count; $i++) {
                         $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
@@ -159,13 +161,13 @@ class TOMCBookISBNPlugin {
                         array(
                             'assigneddate' => date('Y-m-d H:i:s'),
                             'assignedto' => $userId,
-                            'shoporderid' => $order_id
+                            'shoporderid' => $order_id,
+                            'orderitemid' => $itemid
                         ), 
                         array(
                             'ISBN' => $isbn[0]['isbn']
                         ));
                     }
-                    break;
                 } else {
                     $isbn = $wpdb->get_results($wpdb->prepare($query, $this->isbn_numbers_table), ARRAY_A);
                     $wpdb->update($this->isbn_numbers_table,  
