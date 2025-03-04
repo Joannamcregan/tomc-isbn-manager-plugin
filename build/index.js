@@ -280,7 +280,8 @@ class ISBNRegistrations {
         'updatenote': updatenote
       },
       success: response => {
-        console.log(response);
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+        location.reload(true);
       },
       error: response => {
         // console.log(response);
@@ -288,7 +289,6 @@ class ISBNRegistrations {
     });
   }
   openUpdateOverlay(e) {
-    console.log('called');
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('isbn');
     let isbnid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('isbnid');
     this.updateOverlay.addClass('search-overlay--active');

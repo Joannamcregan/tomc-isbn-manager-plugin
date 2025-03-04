@@ -54,11 +54,11 @@ function updateISBNInfo($data){
         $isbn_updates_table = $wpdb->prefix . "tomc_isbn_update_notes";
         $userId = $user->ID;
         $query = 'insert into %i
-        (isbnid, updatedate, updatetext) 
-        values (%d, now(), %d);';
+        (isbnid, updateddate, updatetext) 
+        values (%d, now(), %s);';
         $wpdb->query($wpdb->prepare($query, $isbn_updates_table, $isbnid, $updatenote), ARRAY_A);
-        
-        return 'success';
+        return $wpdb->prepare($query, $isbn_updates_table, $isbnid, $updatenote);
+        // return 'success';
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
