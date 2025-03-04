@@ -49,14 +49,12 @@ get_header();
                 echo var_dump($results);
             } 
 
-            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_value, itemmeta.meta_key, records.id as recordid, itemmeta.*
+            $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is null            
             join %i orderitems on numbers.shoporderid = orderitems.order_id
-            left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
-            and itemmeta.meta_key like "%Barcode%"
             where numbers.assignedto = %d';
             $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $order_items_table, $item_meta_table, $userid), ARRAY_A);
             if (($results) && count($results) > 0){
