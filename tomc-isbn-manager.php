@@ -18,6 +18,7 @@ class TOMCBookISBNPlugin {
         $this->isbn_records_table = $wpdb->prefix . "tomc_isbn_records";
         $this->users_table = $wpdb->prefix . "users";
         $this->posts_table = $wpdb->prefix . "posts";
+        $this->isbn_updates_table = $wpdb->prefix . "tomc_isbn_update_notes";
 
         wp_localize_script('tomc-isbn-js', 'tomcBookorgData', array(
             'root_url' => get_site_url()
@@ -108,6 +109,18 @@ class TOMCBookISBNPlugin {
             FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
             FOREIGN KEY  (processedby) REFERENCES $this->users_table(id),
             FOREIGN KEY  (assignedproductid) REFERENCES $this->posts_table(id)
+        ) $this->charset;");
+
+        dbDelta("CREATE TABLE IF NOT EXISTS $this->isbn_updates_table (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            isbnid bigint(20) unsigned NOT NULL,
+            updatedDate datetime NOT NULL,
+            processeddate datetime NULL,
+            processedby bigint(20) unsigned NULL,
+            updatetext varchar(4000),
+            PRIMARY KEY  (id),
+            FOREIGN KEY  (isbnid) REFERENCES $this->isbn_numbers_table(id),
+            FOREIGN KEY  (processedby) REFERENCES $this->users_table(id)
         ) $this->charset;");
 
         if (post_exists('ISBN Records', '', '', 'page', 'publish') == ''){

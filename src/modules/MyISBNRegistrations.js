@@ -6,6 +6,7 @@ class ISBNRegistrations{
         this.addInfoButtons = $('.add-isbn-info-button');
         this.seeInfoButtons = $('.view-isbn-info-button');
         this.unsubmitButtons = $('.unsubmit-isbn-button');
+        this.updateButtons = $('.update-isbn-buttons');
         this.isbnInfoOverlay = $('#tomc-isbn-edit-info-overlay');
         this.viewOnlyOverlay = $('#tomc-isbn-view-info-overlay');
         this.viewOnlyContainer = $('#tomc-isbn-view-info-container');
@@ -57,6 +58,28 @@ class ISBNRegistrations{
         this.saveButton.on('click', this.submit.bind(this));
         this.unsubmitButtons.on('click', this.unsubmit.bind(this));
         this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
+        this.updateButtons.on('click', this.updateInfo.bind(this));
+    }
+
+    updateInfo(e){
+        let isbnid = $(e.target).data('isbnid');
+        $(e.target).addClass('contracting');
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/updateISBNInfo',
+            type: 'POST',
+            data: {
+                'isbnid' : isbnid
+            },
+            success: (response) => {
+                console.log(response);
+            },
+            error: (response) => {
+                // console.log(response);
+            }
+        })
     }
 
     submit(e){

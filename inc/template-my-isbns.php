@@ -78,7 +78,7 @@ get_header();
                 <?php }
             }
 
-            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value
+            $query = 'select numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_value, numbers.id as isbnid
             from %i numbers
             join %i records on numbers.id = records.isbnid
             join %i posts on records.assignedproductid = posts.id
@@ -103,6 +103,9 @@ get_header();
                     }
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                     <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
+                    <span class="view-isbn-info-button">view info</span>
+                    <span class="update-isbn-button" data-isbnid="<?php echo $results[$i]['isbnid']; ?>">update</span>
+                    <!-- put a subquery to check for updates here -->
                     </div>
                 <?php }
             }
