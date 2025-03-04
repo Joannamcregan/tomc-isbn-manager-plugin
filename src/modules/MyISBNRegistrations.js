@@ -6,9 +6,11 @@ class ISBNRegistrations{
         this.addInfoButtons = $('.add-isbn-info-button');
         this.seeInfoButtons = $('.view-isbn-info-button');
         this.unsubmitButtons = $('.unsubmit-isbn-button');
-        this.updateButtons = $('.update-isbn-buttons');
+        this.updateButtons = $('.update-isbn-button');
         this.isbnInfoOverlay = $('#tomc-isbn-edit-info-overlay');
         this.viewOnlyOverlay = $('#tomc-isbn-view-info-overlay');
+        this.updateOverlay = $('#tomc-isbn-update-info-overlay');
+        this.updateOverlayCloseButton = $('#isbn-update-info-overlay__close');
         this.viewOnlyContainer = $('#tomc-isbn-view-info-container');
         this.overlayCloseButton = $('#isbn-info-overlay__close');
         this.viewOnlyCloseButton = $('#isbn-view-info-overlay__close');
@@ -33,6 +35,7 @@ class ISBNRegistrations{
         this.submissionErrorSection = $('#tomc-info--submission-errors');
         this.submitButton = $('#isbn-info--submit');
         this.saveButton = $('#isbn-info--save');
+        this.submitUpdateButton = $('#isbn-info--send-update');
         this.events();
     }
     events(){
@@ -58,11 +61,13 @@ class ISBNRegistrations{
         this.saveButton.on('click', this.submit.bind(this));
         this.unsubmitButtons.on('click', this.unsubmit.bind(this));
         this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
-        this.updateButtons.on('click', this.updateInfo.bind(this));
+        this.updateButtons.on('click', this.openUpdateOverlay.bind(this));
+        this.submitUpdateButton.on('click', this.updateInfo.bind(this));
     }
 
     updateInfo(e){
         let isbnid = $(e.target).data('isbnid');
+        let updatenote = $('#isbn-info--update-note').val();
         $(e.target).addClass('contracting');
         $.ajax({
             beforeSend: (xhr) => {
@@ -71,7 +76,8 @@ class ISBNRegistrations{
             url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/updateISBNInfo',
             type: 'POST',
             data: {
-                'isbnid' : isbnid
+                'isbnid' : isbnid,
+                'updatenote' : updatenote
             },
             success: (response) => {
                 console.log(response);
@@ -80,6 +86,15 @@ class ISBNRegistrations{
                 // console.log(response);
             }
         })
+    }
+
+    openUpdateOverlay(e){
+        console.log('called');
+        let isbn = $(e.target).data('isbn');
+        let isbnid = $(e.target).data('isbnid');
+        this.updateOverlay.addClass('search-overlay--active');
+        this.updateOverlay.find('h2').append(isbn);
+        this.submitUpdateButton.data('isbnid', isbnid);
     }
 
     submit(e){
@@ -351,7 +366,7 @@ class ISBNRegistrations{
     showViewOnlyInfo(e){
         let isbn = $(e.target).closest('.tomc-isbn-field-section').data('isbn');
         this.viewOnlyOverlay.addClass('search-overlay--active');
-        this.viewOnlyOverlay.find('hid').append(isbn);
+        this.viewOnlyOverlay.find('h2').append(isbn);
         $.ajax({
             beforeSend: (xhr) => {
                 xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);

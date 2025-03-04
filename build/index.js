@@ -207,8 +207,11 @@ class ISBNRegistrations {
     this.addInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.add-isbn-info-button');
     this.seeInfoButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.view-isbn-info-button');
     this.unsubmitButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.unsubmit-isbn-button');
+    this.updateButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.update-isbn-button');
     this.isbnInfoOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-edit-info-overlay');
     this.viewOnlyOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-overlay');
+    this.updateOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-update-info-overlay');
+    this.updateOverlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-update-info-overlay__close');
     this.viewOnlyContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-container');
     this.overlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info-overlay__close');
     this.viewOnlyCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-info-overlay__close');
@@ -233,6 +236,7 @@ class ISBNRegistrations {
     this.submissionErrorSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-info--submission-errors');
     this.submitButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--submit');
     this.saveButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--save');
+    this.submitUpdateButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--send-update');
     this.events();
   }
   events() {
@@ -258,6 +262,38 @@ class ISBNRegistrations {
     this.saveButton.on('click', this.submit.bind(this));
     this.unsubmitButtons.on('click', this.unsubmit.bind(this));
     this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
+    this.updateButtons.on('click', this.openUpdateOverlay.bind(this));
+    this.submitUpdateButton.on('click', this.updateInfo.bind(this));
+  }
+  updateInfo(e) {
+    let isbnid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('isbnid');
+    let updatenote = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--update-note').val();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+      },
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/updateISBNInfo',
+      type: 'POST',
+      data: {
+        'isbnid': isbnid,
+        'updatenote': updatenote
+      },
+      success: response => {
+        console.log(response);
+      },
+      error: response => {
+        // console.log(response);
+      }
+    });
+  }
+  openUpdateOverlay(e) {
+    console.log('called');
+    let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('isbn');
+    let isbnid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('isbnid');
+    this.updateOverlay.addClass('search-overlay--active');
+    this.updateOverlay.find('h2').append(isbn);
+    this.submitUpdateButton.data('isbnid', isbnid);
   }
   submit(e) {
     let fieldVals = [];
@@ -618,7 +654,7 @@ class ISBNRegistrations {
   showViewOnlyInfo(e) {
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('.tomc-isbn-field-section').data('isbn');
     this.viewOnlyOverlay.addClass('search-overlay--active');
-    this.viewOnlyOverlay.find('hid').append(isbn);
+    this.viewOnlyOverlay.find('h2').append(isbn);
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {
         xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);

@@ -104,7 +104,7 @@ get_header();
                     ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                     <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
                     <span class="view-isbn-info-button">view info</span>
-                    <span class="update-isbn-button" data-isbnid="<?php echo $results[$i]['isbnid']; ?>">update</span>
+                    <span class="update-isbn-button" data-isbnid="<?php echo $results[$i]['isbnid']; ?>" data-isbn="<?php echo $results[$i]['isbn']; ?>">update</span>
                     <!-- put a subquery to check for updates here -->
                     </div>
                 <?php }
@@ -119,6 +119,17 @@ get_header();
         <br>
         <h2 class="centered-text">View Info for ISBN </h2>
         <div id="tomc-isbn-view-info-container" class="generic-content"></div>
+    </div>
+
+    <div class="search-overlay" id="tomc-isbn-update-info-overlay">
+    <i class="fa fa-window-close search-overlay__close" id="isbn-update-info-overlay__close" aria-label="close overlay"></i>
+        <br>
+        <h2 class="centered-text">Update Info for ISBN </h2>
+        <div class="generic-content">
+            <p class="centered-text">Include the information that needs to be updated below.</p>
+            <textarea id="isbn-info--update-note" required></textarea>
+            <button id="isbn-info--send-update" class="blue-button">Submit Update</button>
+        </div>
     </div>
 
     <div class="search-overlay" id="tomc-isbn-edit-info-overlay">

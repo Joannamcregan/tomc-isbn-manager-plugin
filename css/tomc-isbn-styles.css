@@ -166,6 +166,15 @@
     width: fit-content;
     cursor: pointer;
 }
+#isbn-info--update-note{
+    width: 90%;
+    min-height: 100px;
+    border-radius: 10px;
+    display: block;
+    padding: 3px;
+    word-wrap: normal;
+    margin: 20px auto;
+}
 @media screen and (max-width: 480px){
     #tomc-isbn-unfiled-records-banner h1{
         font-size: 46;

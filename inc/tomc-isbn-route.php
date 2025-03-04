@@ -39,6 +39,30 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'GET',
         'callback' => 'getInfoByISBN'
     ));
+    register_rest_route('tomcISBN/v1', 'updateISBNInfo', array(
+        'methods' => 'POST',
+        'callback' => 'updateISBNInfo'
+    ));
+}
+
+function updateISBNInfo($data){
+    $isbnid = sanitize_text_field($data['isbnid']);
+    $updatenote = sanitize_text_field($data['updatenote']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in()){
+        global $wpdb;
+        $isbn_updates_table = $wpdb->prefix . "tomc_isbn_update_notes";
+        $userId = $user->ID;
+        $query = 'insert into %i
+        (isbnid, updatedate, updatetext) 
+        values (%d, now(), %d);';
+        $wpdb->query($wpdb->prepare($query, $isbn_updates_table, $isbnid, $updatenote), ARRAY_A);
+        
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
 }
 
 function getFieldValues($data){
@@ -96,8 +120,7 @@ function saveAndSubmitRecord($data){
         }
         $query = 'insert into %i (isbnid, submitteddate, assignedproductid) values (%d, now(), %d)';
         $wpdb->query($wpdb->prepare($query, $isbn_records_table, $isbnid, $productid), ARRAY_A);
-        // return 'success';
-        return $wpdb->prepare($query, $isbn_records_table, $isbnid, $productid);
+        return 'success';
     } else {
         wp_safe_redirect(site_url('/my-account'));
         return 'fail';
