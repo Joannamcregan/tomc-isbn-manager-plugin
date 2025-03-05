@@ -65,6 +65,7 @@ class ISBNRecords{
             },
             success: (response) => {
                 $(e.target).removeClass('contracting');
+                location.reload(true);
             },
             failure: (response) => {
                 // console.log(response);

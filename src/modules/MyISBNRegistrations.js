@@ -58,7 +58,7 @@ class ISBNRegistrations{
         })
         this.assignedProductDropdown.on('change', this.autofill.bind(this));
         this.submitButton.on('click', this.submit.bind(this));
-        this.saveButton.on('click', this.submit.bind(this));
+        this.saveButton.on('click', this.saveClose.bind(this));
         this.unsubmitButtons.on('click', this.unsubmit.bind(this));
         this.seeInfoButtons.on('click', this.showViewOnlyInfo.bind(this));
         this.updateButtons.on('click', this.openUpdateOverlay.bind(this));
@@ -99,7 +99,6 @@ class ISBNRegistrations{
 
     submit(e){
         let fieldVals = [];
-        let path;
 
         let productId = this.assignedProductDropdown.find(':selected').data('productid');
         let assignedProduct = this.assignedProductDropdown.val();
@@ -184,17 +183,11 @@ class ISBNRegistrations{
                 fieldVals.push({ field: $('label[for="isbn-info--number-illustrations"]').text(), value: $('#isbn-info--number-illustrations').val()});
             }
 
-            if ($(e.target).text().includes('Submit')){
-                path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveAndSubmitRecord'
-            } else {
-                path = tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/saveFieldValues'
-            }
-
             $.ajax({
                 beforeSend: (xhr) => {
                     xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
                 },
-                url: path,
+                url: '/wp-json/tomcISBN/v1/saveAndSubmitRecord',
                 type: 'POST',
                 data: {
                     'isbnid': this.isbnid,
@@ -263,6 +256,109 @@ class ISBNRegistrations{
                 this.submissionErrorSection.removeClass('hidden');
             }
         }
+    }
+
+    saveClose(e){
+        let fieldVals = [];
+
+        let productId = this.assignedProductDropdown.find(':selected').data('productid');
+        let title = this.titleField.val();
+        let description = this.descriptionField.val();
+        let name0 = this.contributor0.val();
+        let bio0 = this.biography0.val();
+        let bookMedium = this.mediumSelect.val();
+        let bookFormat = $('select.isbn-info--format-select:visible option:selected').text();
+        let pubDate = this.publicationDate.val();
+        let status = this.statusSelect.val();
+        let price = this.priceField.val();
+
+        this.submissionErrorSection.html('');
+
+        
+        $(e.target).addClass('contracting');
+        this.overlayCloseButton.addClass('hidden'); //keep people from closing overlay while saving/submitting
+        this.submissionErrorSection.addClass('hidden');
+        fieldVals.push({ field: $('label[for="isbn-info--assigned-product"]').text(), value: productId});
+        fieldVals.push({ field: $('label[for="isbn-info--book-title"]').text(), value: title});
+        if (this.subtitleField.val() != '' && this.subtitleField.val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--book-subtitle"]').text(), value: this.subtitleField.val()});
+        }
+        fieldVals.push({ field: $('label[for="isbn-info--book-description"]').text(), value: description});
+        fieldVals.push({ field: $('label[for="isbn-info--book-medium"]').text(), value: bookMedium});
+        fieldVals.push({ field: "format", value: bookFormat});
+        fieldVals.push({ field: $('label[for="isbn-info--first-genre"]').text(), value: this.firstGenreDropdown.val()});
+        if ($('#isbn-info--second-genre').val() != '' && $('#isbn-info--second-genre').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--second-genre"]').text(), value: $('#isbn-info--second-genre').val()});
+        }
+        fieldVals.push({ field: $('label[for="isbn-contributor--name-0"]').text(), value: name0});
+        fieldVals.push({ field: $('label[for="isbn-contributor--bio-0"]').text(), value: bio0});
+        fieldVals.push({ field: $('label[for="isbn-contributor-function-0"]').text(), value: $('#isbn-contributor-function-0').val()});
+        if ($('#isbn-contributor--name-1').val() != '' && $('#isbn-contributor--name-1').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-contributor--name-1"]').text() + ' 1', value: $('#isbn-contributor--name-1').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor--bio-1"]').text() + ' 1', value: $('#isbn-contributor--bio-1').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor-function-1"]').text() + ' 1', value: $('#isbn-contributor-function-1').val()});
+        }
+        if ($('#isbn-contributor--name-2').val() != '' && $('#isbn-contributor--name-2').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-contributor--name-2"]').text() + ' 2', value: $('#isbn-contributor--name-2').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor--bio-2"]').text() + ' 2', value: $('#isbn-contributor--bio-2').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor-function-2"]').text() + ' 2', value: $('#isbn-contributor-function-2').val()});
+        }
+        if ($('#isbn-contributor--name-3').val() != '' && $('#isbn-contributor--name-3').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-contributor--name-3"]').text() + ' 3', value: $('#isbn-contributor--name-3').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor--bio-3"]').text() + ' 3', value: $('#isbn-contributor--bio-3').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor-function-3"]').text() + ' 3', value: $('#isbn-contributor-function-3').val()});
+        }
+        if ($('#isbn-contributor--name-4').val() != '' && $('#isbn-contributor--name-4').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-contributor--name-4"]').text(), value: $('#isbn-contributor--name-4').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor--bio-4"]').text(), value: $('#isbn-contributor--bio-4').val()});
+            fieldVals.push({ field: $('label[for="isbn-contributor-function-4"]').text(), value: $('#isbn-contributor-function-4').val()});
+        }
+        fieldVals.push({ field: $('label[for="isbn-info--publication-date"]').text(), value: pubDate});
+        fieldVals.push({ field: $('label[for="isbn-info--status"]').text(), value: status});
+        fieldVals.push({ field: 'Target audience', value: $('#isbn-info--target-audience').val()})
+        fieldVals.push({ field: $('label[for="isbn-info--price"]').text(), value: price});
+        if ($('#isbn-info--language').val() != '' && $('#isbn-info--language').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--language"]').text(), value: $('#isbn-info--language').val()});
+        }
+        if ($('#isbn-info--copyright').val() != '' && $('#isbn-info--copyright').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--copyright"]').text(), value: $('#isbn-info--copyright').val()});
+        }
+        if ($('#isbn-info--control').val() != '' && $('#isbn-info--control').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--control"]').text(), value: $('#isbn-info--control').val()});
+        }
+        if ($('#isbn-info--translated-title').val() != '' && $('#isbn-info--translated-title').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--translated-title"]').text(), value: $('#isbn-info--translated-title').val()});
+        }
+        if ($('#isbn-info--book-size').val() != '' && $('#isbn-info--book-size').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--book-size"]').text(), value: $('#isbn-info--book-size').val()});
+        }
+        if ($('#isbn-info--number-pages').val() != '' && $('#isbn-info--number-pages').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--number-pages"]').text(), value: $('#isbn-info--number-pages').val()});
+        }
+        if ($('#isbn-info--number-illustrations').val() != '' && $('#isbn-info--number-illustrations').val() != null){
+            fieldVals.push({ field: $('label[for="isbn-info--number-illustrations"]').text(), value: $('#isbn-info--number-illustrations').val()});
+        }
+
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: '/wp-json/tomcISBN/v1/saveFieldValues',
+            type: 'POST',
+            data: {
+                'isbnid': this.isbnid,
+                'productid': productId,
+                'fieldVals': JSON.stringify(fieldVals)
+            },
+            success: (response) => {
+                this.overlayCloseButton.removeClass('hidden');
+                $(e.target).removeClass('contracting');
+                location.reload(true);
+            },
+            error: (response) => {
+                this.overlayCloseButton.removeClass('hidden');
+            }
+        })
     }
 
     unsubmit(e){

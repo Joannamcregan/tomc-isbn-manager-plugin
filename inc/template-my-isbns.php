@@ -47,7 +47,6 @@ get_header();
                     ?><span class="add-isbn-info-button">add info</span>
                     </div>
                 <?php }
-                echo var_dump($results);
             } 
 
             $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, posts.post_title, itemmeta.meta_key, records.id as recordid, orderitems.*
@@ -56,6 +55,7 @@ get_header();
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is null            
             join %i orderitems on numbers.shoporderid = orderitems.order_id
+            and numbers.orderitemid = orderitems.order_item_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
             and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.assignedto = %d';
@@ -78,7 +78,6 @@ get_header();
                     <span class="unsubmit-isbn-button" data-record="<?php echo $results[$i]['recordid']; ?>">unsubmit</span>
                     </div>
                 <?php }
-                echo var_dump($results);
             }
 
             $query = 'select distinct numbers.isbn, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, concat(month(records.processeddate), "/", day(records.processeddate), "/", year(records.processeddate)) as processeddate, posts.post_title, itemmeta.meta_key, numbers.id as isbnid
@@ -87,6 +86,7 @@ get_header();
             join %i posts on records.assignedproductid = posts.id
             and records.processeddate is not null
             join %i orderitems on numbers.shoporderid = orderitems.order_id
+            and numbers.orderitemid = orderitems.order_item_id
             left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
             and itemmeta.meta_key = "Add Barcode (only for physical books)"
             where numbers.assignedto = %d';
@@ -111,7 +111,6 @@ get_header();
                     <!-- put a subquery to check for updates here -->
                     </div>
                 <?php }
-                echo var_dump($results);
             }
         } else {
             ?><p class="centered-text">Our ISBN Registration service is only available to logged-in vendors. <a href="<?php echo esc_url(site_url('/my-account'));?>">Login</a></p>
@@ -130,7 +129,7 @@ get_header();
         <br>
         <h2 class="centered-text">Update Info for ISBN </h2>
         <div class="generic-content">
-            <p class="centered-text">Include the information that needs to be updated below.</p>
+            <p class="centered-text">Include field(s) and desired change(s) with as much detail as possible below.</p>
             <textarea id="isbn-info--update-note" required></textarea>
             <button id="isbn-info--send-update" class="blue-button">Submit Update</button>
         </div>

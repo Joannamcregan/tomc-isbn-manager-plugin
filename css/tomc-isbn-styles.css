@@ -20,6 +20,23 @@
     color: #eee2d4;
     text-shadow: 3px 3px #e44e2d;
 }
+#tomc-isbn-updated-records-banner{
+    width: 90%;
+    background: #893e43;
+    border-right: solid #602f32 5px;
+    border-bottom: solid #602f32 15px;
+    border-top: solid #602f32 5px;
+    border-radius: 0 35px 55px 25px;
+    padding: 20px 15px;
+}
+#tomc-isbn-updated-records-banner h1{
+    margin: 10px;
+    font-family: tankindred, serif;
+    font-size: 54;
+    font-weight: 300;
+    color: #eee2d4;
+    text-shadow: 3px 3px #e44e2d;
+}
 #tomc-isbn-filed-records-banner{
     width: 90%;
     background: #0c6980;

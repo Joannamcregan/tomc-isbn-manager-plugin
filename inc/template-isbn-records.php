@@ -26,6 +26,7 @@ if (is_user_logged_in()){
                     left join %i bookproducts on records.assignedproductid = bookproducts.productid
                     left join %i books on bookproducts.bookid = books.id
                     join %i orderitems on numbers.shoporderid = orderitems.order_id
+                    and numbers.orderitemid = orderitems.order_item_id
                     left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
                     and itemmeta.meta_key = "Add Barcode (only for physical books)"
                     where records.processeddate is null
@@ -64,6 +65,7 @@ if (is_user_logged_in()){
                     join %i records on numbers.id = records.isbnid
                     join %i posts on records.assignedproductid = posts.id
                     join %i orderitems on numbers.shoporderid = orderitems.order_id
+                    and numbers.orderitemid = orderitems.order_item_id
                     left join %i itemmeta on orderitems.order_item_id = itemmeta.order_item_id
                     and itemmeta.meta_key = "Add Barcode (only for physical books)"
                     where records.processeddate is not null
@@ -82,9 +84,18 @@ if (is_user_logged_in()){
                         <p><strong>Filed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
                         </div>
                     <?php }
-                ?></div>
-                <span id="tomc-isbn-get-filed-records" class="block" data-count=3>show older records</span> 
-                <!-- count = limit in query ^^^ -->
+                ?></div>                
+                <?php if (count($results) > 3){ //change to 30 after testing
+                    ?><span id="tomc-isbn-get-filed-records" class="block" data-count=3>show older records</span>
+                <?php }
+            ?></div>
+            <div id="tomc-isbn-filed-records-section">
+                <div id="tomc-isbn-updated-records-banner">
+                    <h1>Updated Records</h1>
+                </div>
+                <div id="tomc-isbn-updated-records-container" class="generic-content">
+                
+                </div>
             </div>
 
             <div class="search-overlay" id="tomc-isbn-view-info-overlay">
