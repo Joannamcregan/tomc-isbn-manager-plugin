@@ -96,12 +96,12 @@ if (is_user_logged_in()){
                     <h1>Updated Records</h1>
                 </div>
                 <div id="tomc-isbn-updated-records-container" class="generic-content">
-                <?php $query = 'select numbers.isbn, updates.updatenote, updates.submitteddate, users.user_email, users.display_name
+                <?php $query = 'select numbers.isbn, updates.updatetext, updates.updateddate, users.user_email, users.display_name
                 from %i numbers
                 join %i updates on numbers.id = updates.isbnid
                 join %i users on numbers.assignedto = users.id
                 where updates.processedby is null
-                order by updates.submitteddate desc;';
+                order by updates.updateddate desc;';
                 $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $updates_table, $users_table), ARRAY_A);
                 for ($i = 0; $i < count($results); $i++){
                     if ($i % 2 == 0){
@@ -110,10 +110,10 @@ if (is_user_logged_in()){
                         ?><div class="tomc-plain-isbn-field">
                     <?php }                    
                     ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                    <p><strong>Submitted on: </strong><?php echo $results[$i]['updateddate']; ?></p>
                     <p><strong>Author's Display Name: </strong><?php echo $results[$i]['display_name']; ?></p>
                     <p><strong>Author's Email: </strong><?php echo $results[$i]['user_email']; ?></p>
-                    <p><strong>Update Note: </strong><?php echo $results[$i]['updatenote']; ?></p>
+                    <p><strong>Update Note: </strong><?php echo $results[$i]['updatetext']; ?></p>
                     </div>
                 <?php }
                 ?></div>
