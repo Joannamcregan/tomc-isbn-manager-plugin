@@ -11,6 +11,7 @@ $book_products_table = $wpdb->prefix . "tomc_book_products";
 $books_table = $wpdb->prefix . "tomc_books";
 $order_items_table = $wpdb->prefix . 'woocommerce_order_items';
 $item_meta_table = $wpdb->prefix . 'woocommerce_order_itemmeta';
+$updates_table = $wpdb->prefix . 'tomc_isbn_update_notes';
 $userid = $user->ID;
 
 get_header();
@@ -99,16 +100,30 @@ get_header();
                     <?php } else {
                         ?><div class="tomc-plain-isbn-field">
                     <?php }                    
-                    ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
-                    <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                    <?php if ($results[$i]['meta_key'] == 'Add Barcode (only for physical books)'){
-                        echo '<p><strong>**includes barcode**</strong></p>';
-                    }
-                    ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
-                    <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
-                    <span class="view-isbn-info-button">view info</span>
-                    <span class="update-isbn-button" data-isbnid="<?php echo $results[$i]['isbnid']; ?>" data-isbn="<?php echo $results[$i]['isbn']; ?>">update</span>
-                    <!-- put a subquery to check for updates here -->
+                        ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
+                        <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
+                        <?php if ($results[$i]['meta_key'] == 'Add Barcode (only for physical books)'){
+                            echo '<p><strong>**includes barcode**</strong></p>';
+                        }
+                        ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                        <p><strong>Processed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
+                        <!-- put a subquery to check for updates here -->
+                        <?php $subquery = "select updates.updatetext, concat(month(updates.updateddate), '/', day(updates.updateddate), '/', year(updates.updateddate)) as updateddate, concat(month(updates.processeddate), '/', day(updates.processeddate), '/', year(updates.processeddate)) as processeddate
+                        from %i updates
+                        join %i numbers on updates.isbnid = numbers.id
+                        where numbers.isbn = %s";
+                        $subresults = $wpdb->get_results($wpdb->prepare($subquery, $updates_table, $isbn_numbers_table, $results[$i]['isbn']), ARRAY_A);
+                        if ($subresults){
+                            for ($j = 0; $j < count($subresults); $j++){
+                                ?><div class="my-isbn-update-info">
+                                <p><strong>Update requested </strong><?php echo $subresults[$j]['updateddate']; ?></p>
+                                <p><?php echo $subresults[$j]['processeddate'] == null ? '<strong>Update not yet processed</strong>' : '<strong>Update processed: </strong>' . $subresults[$j]['processeddate']; ?></p>
+                                <p><strong>Update note: </strong><?php echo $subresults[$j]['updatetext']; ?></p>
+                                </div>
+                            <?php }
+                        } 
+                        ?><span class="view-isbn-info-button">view info</span>
+                        <span class="update-isbn-button" data-isbnid="<?php echo $results[$i]['isbnid']; ?>" data-isbn="<?php echo $results[$i]['isbn']; ?>">update</span>
                     </div>
                 <?php }
             }

@@ -327,3 +327,9 @@
     margin: auto;
     display: block;
 }
+.my-isbn-update-info{
+    background: #fef5ee;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
