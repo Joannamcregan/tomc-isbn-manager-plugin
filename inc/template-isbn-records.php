@@ -7,6 +7,8 @@ $book_products_table = $wpdb->prefix . 'tomc_book_products';
 $books_table = $wpdb->prefix . 'tomc_books';
 $order_items_table = $wpdb->prefix . 'woocommerce_order_items';
 $item_meta_table = $wpdb->prefix . 'woocommerce_order_itemmeta';
+$updates_table = $wpdb->prefix . 'tomc_isbn_update_notes';
+$users_table = $wpdb->prefix . 'users';
 $userid = get_current_user_id();
 $user = wp_get_current_user();
 
@@ -94,8 +96,27 @@ if (is_user_logged_in()){
                     <h1>Updated Records</h1>
                 </div>
                 <div id="tomc-isbn-updated-records-container" class="generic-content">
-                
-                </div>
+                <?php $query = 'select numbers.isbn, updates.updatenote, updates.submitteddate, users.user_email, users.display_name
+                from %i numbers
+                join %i updates on numbers.id = updates.isbnid
+                join %i users on numbers.assignedto = users.id
+                where updates.processedby is null
+                order by updates.submitteddate desc;';
+                $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $updates_table, $users_table), ARRAY_A);
+                for ($i = 0; $i < count($results); $i++){
+                    if ($i % 2 == 0){
+                        ?><div class="tomc-purple-isbn-field">
+                    <?php } else {
+                        ?><div class="tomc-plain-isbn-field">
+                    <?php }                    
+                    ?><p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
+                    <p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
+                    <p><strong>Author's Display Name: </strong><?php echo $results[$i]['display_name']; ?></p>
+                    <p><strong>Author's Email: </strong><?php echo $results[$i]['user_email']; ?></p>
+                    <p><strong>Update Note: </strong><?php echo $results[$i]['updatenote']; ?></p>
+                    </div>
+                <?php }
+                ?></div>
             </div>
 
             <div class="search-overlay" id="tomc-isbn-view-info-overlay">
