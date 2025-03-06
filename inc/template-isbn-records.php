@@ -63,7 +63,7 @@ if (is_user_logged_in()){
                     <h1>Filed Records</h1>
                 </div>
                 <div id="tomc-isbn-filed-records-container" class="generic-content">
-                    <?php $query =  'select distinct numbers.isbn, posts.post_title, records.submitteddate, records.processeddate
+                    <?php $query =  'select distinct numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, itemmeta.meta_value
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     join %i posts on records.assignedproductid = posts.id
@@ -85,7 +85,9 @@ if (is_user_logged_in()){
                         <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
                         <?php if ($results[$i]['meta_value'] == 'Include Barcode (only for physical books)'){
                             echo '<p><strong>**includes barcode**</strong></p>';
-                        }  
+                        }  else {
+                            echo $results[$i]['meta_value'];
+                        }
                         ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                         <p><strong>Filed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
                         </div>
