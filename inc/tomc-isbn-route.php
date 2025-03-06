@@ -11,6 +11,10 @@ function tomcIsbnRegisterRoute() {
         'methods' => 'POST',
         'callback' => 'markRecordFiled'
     ));
+    register_rest_route('tomcISBN/v1', 'markUpdateProcessed', array(
+        'methods' => 'POST',
+        'callback' => 'markUpdateProcessed'
+    ));
     register_rest_route('tomcISBN/v1', 'populateByProduct', array(
         'methods' => 'GET',
         'callback' => 'populateByProduct'
@@ -228,6 +232,25 @@ function markRecordFiled($data){
         processedby = %d
         where id = %d';
         $wpdb->query($wpdb->prepare($query, $isbn_records_table, $userId, $recordId), ARRAY_A);
+        return 'success';
+    } else {
+        wp_safe_redirect(site_url('/my-account'));
+        return 'fail';
+    }
+}
+
+function markUpdateProcessed($data){
+    $updateid = sanitize_text_field($data['updateid']);
+    $user = wp_get_current_user();
+    if (is_user_logged_in() && (in_array( 'administrator', (array) $user->roles ) )){
+        global $wpdb;
+        $userId = $user->ID;
+        $updates_table = $wpdb->prefix . "tomc_isbn_update_notes";
+        $query = 'update %i
+        set processeddate = now(),
+        processedby = %d
+        where id = %d';
+        $wpdb->query($wpdb->prepare($query, $updates_table, $userId, $updateid), ARRAY_A);
         return 'success';
     } else {
         wp_safe_redirect(site_url('/my-account'));

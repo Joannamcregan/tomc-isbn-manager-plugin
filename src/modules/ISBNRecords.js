@@ -9,6 +9,7 @@ class ISBNRecords{
         this.closeOverlayButton = $('#isbn-view-overlay__close');
         this.overlayContainer = $('#isbn-view--container');
         this.markFiledButton = $('#tomc-isbn-mark-filed');
+        this.markUpdatedButtons = $('.isbn-updates--mark-processed')
         this.events();
         this.recordid;
     }
@@ -17,6 +18,29 @@ class ISBNRecords{
         this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
         this.showInfoButton.on('click', this.showInfo.bind(this));
         this.markFiledButton.on('click', this.markCompleted.bind(this));
+        this.markUpdatedButtons.on('click', this.markUpdateProcessed.bind(this));
+    }
+
+    markUpdateProcessed(e){
+        let updateid = $(e.target).data('updateid');
+        $(e.target).addClass('contracting');
+        $.ajax({
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+            },
+            url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markUpdateProcessed',
+            type: 'POST',
+            data: {
+                'updateid' : updateid
+            },
+            success: (response) => {
+                $(e.target).removeClass('contracting');
+                location.reload(true);
+            },
+            failure: (response) => {
+                // console.log(response);
+            }
+        })
     }
 
     showInfo(e){

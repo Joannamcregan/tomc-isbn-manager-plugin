@@ -103,6 +103,7 @@ class ISBNRecords {
     this.closeOverlayButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-overlay__close');
     this.overlayContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view--container');
     this.markFiledButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-mark-filed');
+    this.markUpdatedButtons = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.isbn-updates--mark-processed');
     this.events();
     this.recordid;
   }
@@ -110,6 +111,28 @@ class ISBNRecords {
     this.getFiled.on('click', this.getMoreFiledRecords.bind(this));
     this.showInfoButton.on('click', this.showInfo.bind(this));
     this.markFiledButton.on('click', this.markCompleted.bind(this));
+    this.markUpdatedButtons.on('click', this.markUpdateProcessed.bind(this));
+  }
+  markUpdateProcessed(e) {
+    let updateid = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('updateid');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).addClass('contracting');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', marketplaceData.nonce);
+      },
+      url: tomcBookorgData.root_url + '/wp-json/tomcISBN/v1/markUpdateProcessed',
+      type: 'POST',
+      data: {
+        'updateid': updateid
+      },
+      success: response => {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).removeClass('contracting');
+        location.reload(true);
+      },
+      failure: response => {
+        // console.log(response);
+      }
+    });
   }
   showInfo(e) {
     let isbn = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parent('div').data('isbn');
