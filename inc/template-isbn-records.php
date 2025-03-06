@@ -44,11 +44,9 @@ if (is_user_logged_in()){
                             <?php }    
                                 ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                                 <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                                <?php if ($results[$i]['meta_value'] == 'Include Barcode (only for physical books)'){
+                                <?php if ($results[$i]['meta_value'] == 'Include Barcode (for physical books only)'){
                                     echo '<p><strong>**includes barcode**</strong></p>';
-                                }  else {
-                                    echo $results[$i]['meta_value'];
-                                }
+                                } 
                                 ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                                 <span class="see-isbn-info-button" data-image="<?php echo get_the_post_thumbnail_url($results[$i]['product_image_id']); ?>" data-title="<?php echo $results[$i]['title']; ?>">see info</span>
                             </div>
@@ -83,11 +81,9 @@ if (is_user_logged_in()){
                         <?php }                    
                         ?><p><strong>Title: </strong><?php echo $results[$i]['post_title']; ?></p>
                         <p><strong>ISBN: </strong><?php echo $results[$i]['isbn']; ?></p>
-                        <?php if ($results[$i]['meta_value'] == 'Include Barcode (only for physical books)'){
+                        <?php if ($results[$i]['meta_value'] == 'Include Barcode (for physical books only)'){
                             echo '<p><strong>**includes barcode**</strong></p>';
-                        }  else {
-                            echo $results[$i]['meta_value'];
-                        }
+                        } 
                         ?><p><strong>Submitted on: </strong><?php echo $results[$i]['submitteddate']; ?></p>
                         <p><strong>Filed on: </strong><?php echo $results[$i]['processeddate']; ?></p>
                         </div>
