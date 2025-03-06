@@ -21,7 +21,7 @@ if (is_user_logged_in()){
                     <h1>Unfiled Records</h1>
                 </div>
                 <div id="tomc-isbn-unfiled-records-container" class="generic-content">
-                <?php $query = 'select distinct numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, records.id as recordid, books.product_image_id, books.title, itemmeta.meta_value
+                <?php $query = 'select distinct numbers.isbn, posts.post_title, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, records.processeddate, records.id as recordid, books.product_image_id, books.title, itemmeta.meta_value
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     left join %i posts on records.assignedproductid = posts.id
@@ -61,7 +61,7 @@ if (is_user_logged_in()){
                     <h1>Filed Records</h1>
                 </div>
                 <div id="tomc-isbn-filed-records-container" class="generic-content">
-                    <?php $query =  'select distinct numbers.isbn, posts.post_title, records.submitteddate, records.processeddate, itemmeta.meta_value
+                    <?php $query =  'select distinct numbers.isbn, posts.post_title, concat(month(records.submitteddate), "/", day(records.submitteddate), "/", year(records.submitteddate)) as submitteddate, records.processeddate, itemmeta.meta_value
                     from %i numbers
                     join %i records on numbers.id = records.isbnid
                     join %i posts on records.assignedproductid = posts.id
