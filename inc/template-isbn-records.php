@@ -35,7 +35,6 @@ if (is_user_logged_in()){
                     order by records.submitteddate desc
                     limit 3'; //change to 30 after testing
                     $results = $wpdb->get_results($wpdb->prepare($query, $isbn_numbers_table, $isbn_records_table, $posts_table, $book_products_table, $books_table, $order_items_table, $item_meta_table), ARRAY_A);
-                    echo var_dump($results);
                     if (count($results) > 0){
                         for ($i = 0; $i < count($results); $i++){
                             if ($i % 2 == 0){
