@@ -198,23 +198,23 @@ get_header();
                 <div id="isbn-info--section-Audio" class="hidden isbn-info--format-section">
                     <label for="isbn-info--audio-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--audio-section--format" class="isbn-info--format-select">
-                        <option selected>Digital File</option>
-                        <option>CD</option>
-                        <option>DVD</option>
+                        <option selected id="section-Audio--digital-file">Digital File</option>
+                        <option id="section-Audio--cd">CD</option>
+                        <option id="section-Audio--dvd">DVD</option>
                     </select>
                 </div>
                 <div class="isbn-info--format-section" id="isbn-info--section-E-book">
                     <label for="isbn-info--ebook-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--ebook-section--format" class="isbn-info--format-select">
-                        <option>Digital Online</option>
-                        <option selected>Digital File</option>
+                        <option id="section-ebook--digital-online">Digital Online</option>
+                        <option selected id="section-ebook--digital-file">Digital File</option>
                     </select>
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-Print">
                     <label for="isbn-info--print-section--format" class="isbn-info--format-label">Format</label>
                     <select id="isbn-info--print-section--format" class="isbn-info--format-select">
-                        <option>Hardback</option>
-                        <option>Paperback</option>
+                        <option id="section-Print--Hardback">Hardback</option>
+                        <option id="section-Print--Paperback">Paperback</option>
                     </select>
                 </div>
                 <br><br>

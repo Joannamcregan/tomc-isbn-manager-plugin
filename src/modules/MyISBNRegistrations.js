@@ -428,11 +428,18 @@ class ISBNRegistrations{
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.removeClass('hidden');
                                         this.printSection.addClass('hidden');
-                                    } else {
+                                    } else if (response[0]['format'] == 'Hardcover Books') {
                                         $('#isbn-info--book-medium--print').attr('selected', 'selected');
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.addClass('hidden');
                                         this.printSection.removeClass('hidden');
+                                        $('#section-Print--Hardback').attr('selected', 'selected');
+                                    } else if (response[0]['format'] == 'Paperback Books') {
+                                        $('#isbn-info--book-medium--print').attr('selected', 'selected');
+                                        this.ebookSection.addClass('hidden');
+                                        this.audioSection.addClass('hidden');
+                                        this.printSection.removeClass('hidden');
+                                        $('#section-Print--Paperback').attr('selected', 'selected');
                                     }
                                     this.contributor0.val(response[0]['contributor']);
                                     this.biography0.val(response[0]['biography']);
@@ -517,8 +524,37 @@ class ISBNRegistrations{
                             this.descriptionField.val(response[i]['fieldvalue']);
                         } else if (response[i]['fieldlabel'] == 'Medium'){
                             $('#isbn-info--book-medium option:contains("'+ response[i]['fieldvalue'] +'")').attr('selected', 'selected');
+                            if (response[i]['fieldvalue'] == 'Hardcover Books' || response[i]['fieldvalue'] == 'Paperback Books'){
+                                this.printSection.removeClass('hidden');
+                                this.ebookSection.addClass('hidden');
+                                this.audioSection.addClass('hidden');                                
+                            } else if (response[i]['fieldvalue'] == 'E-Books'){
+                                this.printSection.addClass('hidden');
+                                this.ebookSection.removeClass('hidden');
+                                this.audioSection.addClass('hidden');
+                            } else {
+                                this.printSection.addClass('hidden');
+                                this.ebookSection.addClass('hidden');
+                                this.audioSection.removeClass('hidden');
+                            }
                         } else if (response[i]['fieldlabel'] == 'Format'){
-                            $('.isbn-info--format-select').val(response[i]['fieldvalue']);
+                            if (response[i]['fieldvalue'] == "Hardback"){
+                                $('#section-Print--Hardback').attr('selected', 'selected');
+                            } else if (response[i]['fieldvalue'] == "Paperback"){
+                                $('#section-Print--Paperback').attr('selected', 'selected');
+                            } else if (response[i]['fieldValue'] == "Digital File"){
+                                if (response[i-1]['fieldValue'] == "E-Books"){
+                                    $('section-ebook--digital-file').attr('selected', 'selected');
+                                } else {
+                                    $('section-Audio--digital-file').attr('selected', 'selected');
+                                }
+                            } else if (response[i]['fieldValue'] == 'Digital Online'){
+                                $('section-ebook--digital-online').attr('selected', 'selected');
+                            } else if (response[i]['fieldValue'] == 'DVD'){
+                                $('section-Audio--dvd').attr('selected', 'selected');
+                            } else if (response[i]['fieldValue'] == 'CD'){
+                                $('section-Audio--cd').attr('selected', 'selected');
+                            }
                         } else if (response[i]['fieldlabel'] == 'First genre'){
                             $('#isbn-info--first-genre option').filter(function(){
                                 if ($(this).text() == response[i]['fieldvalue']){
