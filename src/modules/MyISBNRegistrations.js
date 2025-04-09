@@ -432,12 +432,12 @@ class ISBNRegistrations{
                                     this.titleField.val(response[0]['title']);
                                     this.subtitleField.val(response[0]['subtitle']);
                                     this.descriptionField.val(response[0]['description']);
-                                    if(response[0]['format'] == 'E-Books'){
+                                    if(response[0]['bookFormat'] == 'E-Books'){
                                         $('#isbn-info--book-medium--ebook').attr('selected', 'selected');
                                         this.ebookSection.removeClass('hidden');
                                         this.audioSection.addClass('hidden');
                                         this.printSection.addClass('hidden');
-                                    } else if (response[0]['format'] == 'Audiobooks'){
+                                    } else if (response[0]['bookFormat'] == 'Audiobooks'){
                                         $('#isbn-info--book-medium--audio').attr('selected', 'selected');
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.removeClass('hidden');
@@ -447,7 +447,7 @@ class ISBNRegistrations{
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.addClass('hidden');
                                         this.printSection.removeClass('hidden');
-                                        if (response[0]['format'] == 'Hardcover Books'){
+                                        if (response[0]['bookFormat'] == 'Hardcover Books'){
                                             console.log('hardback');
                                             $('#section-Print--Hardback').attr('selected', 'selected');
                                         } else {
@@ -554,7 +554,7 @@ class ISBNRegistrations{
                                 this.audioSection.addClass('hidden');
                                 $('#isbn-info--book-medium--print').attr('selected', 'selected');
                             }
-                        } else if (response[i]['fieldlabel'] == 'Format'){
+                        } else if (response[i]['fieldlabel'] == 'bookFormat'){
                             if (response[i]['fieldvalue'] == "Hardback"){
                                 $('#section-Print--Hardback').attr('selected', 'selected');
                             } else if (response[i]['fieldvalue'] == "Paperback"){

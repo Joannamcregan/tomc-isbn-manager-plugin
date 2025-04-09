@@ -842,12 +842,12 @@ class ISBNRegistrations {
                   this.titleField.val(response[0]['title']);
                   this.subtitleField.val(response[0]['subtitle']);
                   this.descriptionField.val(response[0]['description']);
-                  if (response[0]['format'] == 'E-Books') {
+                  if (response[0]['bookFormat'] == 'E-Books') {
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--ebook').attr('selected', 'selected');
                     this.ebookSection.removeClass('hidden');
                     this.audioSection.addClass('hidden');
                     this.printSection.addClass('hidden');
-                  } else if (response[0]['format'] == 'Audiobooks') {
+                  } else if (response[0]['bookFormat'] == 'Audiobooks') {
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--audio').attr('selected', 'selected');
                     this.ebookSection.addClass('hidden');
                     this.audioSection.removeClass('hidden');
@@ -857,7 +857,7 @@ class ISBNRegistrations {
                     this.ebookSection.addClass('hidden');
                     this.audioSection.addClass('hidden');
                     this.printSection.removeClass('hidden');
-                    if (response[0]['format'] == 'Hardcover Books') {
+                    if (response[0]['bookFormat'] == 'Hardcover Books') {
                       console.log('hardback');
                       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Hardback').attr('selected', 'selected');
                     } else {
@@ -962,7 +962,7 @@ class ISBNRegistrations {
                 this.audioSection.addClass('hidden');
                 jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--print').attr('selected', 'selected');
               }
-            } else if (response[i]['fieldlabel'] == 'Format') {
+            } else if (response[i]['fieldlabel'] == 'bookFormat') {
               if (response[i]['fieldvalue'] == "Hardback") {
                 jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Hardback').attr('selected', 'selected');
               } else if (response[i]['fieldvalue'] == "Paperback") {
