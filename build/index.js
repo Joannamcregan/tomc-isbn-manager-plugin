@@ -327,8 +327,15 @@ class ISBNRegistrations {
     let description = this.descriptionField.val();
     let name0 = this.contributor0.val();
     let bio0 = this.biography0.val();
-    let bookMedium = this.mediumSelect.val();
-    let bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('select.isbn-info--format-select:visible option:selected').text();
+    let bookMedium = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium option:selected').text();
+    let bookFormat;
+    if (bookMedium == 'E-Books') {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--ebook-section--format option:selected').text();
+    } else if (bookMedium == 'AudioBooks') {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--audio-section--format option:selected').text();
+    } else {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section--format option:selected').text();
+    }
     let pubDate = this.publicationDate.val();
     let status = this.statusSelect.val();
     let price = this.priceField.val();
@@ -581,7 +588,14 @@ class ISBNRegistrations {
     let name0 = this.contributor0.val();
     let bio0 = this.biography0.val();
     let bookMedium = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium option:selected').text();
-    let bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('select.isbn-info--format-select:visible option:selected').text();
+    let bookFormat;
+    if (bookMedium == 'E-Books') {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--ebook-section--format option:selected').text();
+    } else if (bookMedium == 'AudioBooks') {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--audio-section--format option:selected').text();
+    } else {
+      bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section--format option:selected').text();
+    }
     let pubDate = this.publicationDate.val();
     let status = this.statusSelect.val();
     let price = this.priceField.val();

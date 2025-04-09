@@ -106,8 +106,15 @@ class ISBNRegistrations{
         let description = this.descriptionField.val();
         let name0 = this.contributor0.val();
         let bio0 = this.biography0.val();
-        let bookMedium = this.mediumSelect.val();
-        let bookFormat = $('select.isbn-info--format-select:visible option:selected').text();
+        let bookMedium = $('#isbn-info--book-medium option:selected').text();
+        let bookFormat;
+        if (bookMedium == 'E-Books'){
+            bookFormat = $('#isbn-info--ebook-section--format option:selected').text();
+        } else if (bookMedium == 'AudioBooks'){
+            bookFormat = $('#isbn-info--audio-section--format option:selected').text();
+        } else {
+            bookFormat = $('#isbn-info--print-section--format option:selected').text();
+        }
         let pubDate = this.publicationDate.val();
         let status = this.statusSelect.val();
         let price = this.priceField.val();
@@ -267,7 +274,14 @@ class ISBNRegistrations{
         let name0 = this.contributor0.val();
         let bio0 = this.biography0.val();
         let bookMedium = $('#isbn-info--book-medium option:selected').text();
-        let bookFormat = $('select.isbn-info--format-select:visible option:selected').text();
+        let bookFormat;
+        if (bookMedium == 'E-Books'){
+            bookFormat = $('#isbn-info--ebook-section--format option:selected').text();
+        } else if (bookMedium == 'AudioBooks'){
+            bookFormat = $('#isbn-info--audio-section--format option:selected').text();
+        } else {
+            bookFormat = $('#isbn-info--print-section--format option:selected').text();
+        }
         let pubDate = this.publicationDate.val();
         let status = this.statusSelect.val();
         let price = this.priceField.val();
