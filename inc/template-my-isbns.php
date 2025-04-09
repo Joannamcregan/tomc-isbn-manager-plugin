@@ -190,7 +190,7 @@ get_header();
                 <br><br>
                 <label for="isbn-info--book-medium" required>Medium</label>
                 <select id="isbn-info--book-medium">
-                    <option id="isbn-info--book-medium--ebook" selected>E-book</option>
+                    <option id="isbn-info--book-medium--ebook">E-book</option>
                     <option id="isbn-info--book-medium--audio">Audio</option>
                     <option id="isbn-info--book-medium--print">Print</option>
                 </select>

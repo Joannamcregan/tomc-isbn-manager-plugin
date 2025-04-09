@@ -828,7 +828,6 @@ class ISBNRegistrations {
                   this.titleField.val(response[0]['title']);
                   this.subtitleField.val(response[0]['subtitle']);
                   this.descriptionField.val(response[0]['description']);
-                  console.log('format is ' + response[0]['format']);
                   if (response[0]['format'] == 'E-Books') {
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--ebook').attr('selected', 'selected');
                     this.ebookSection.removeClass('hidden');
