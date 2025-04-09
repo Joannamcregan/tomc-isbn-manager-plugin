@@ -838,18 +838,15 @@ class ISBNRegistrations {
                     this.ebookSection.addClass('hidden');
                     this.audioSection.removeClass('hidden');
                     this.printSection.addClass('hidden');
-                  } else if (response[0]['format'] == 'Hardcover Books') {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--print').attr('selected', 'selected');
+                  } else {
                     this.ebookSection.addClass('hidden');
                     this.audioSection.addClass('hidden');
                     this.printSection.removeClass('hidden');
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Hardback').attr('selected', 'selected');
-                  } else if (response[0]['format'] == 'Paperback Books') {
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--print').attr('selected', 'selected');
-                    this.ebookSection.addClass('hidden');
-                    this.audioSection.addClass('hidden');
-                    this.printSection.removeClass('hidden');
-                    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Paperback').attr('selected', 'selected');
+                    if (response[0]['format'] == 'Hardcover Books') {
+                      jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Hardback').attr('selected', 'selected');
+                    } else {
+                      jquery__WEBPACK_IMPORTED_MODULE_0___default()('#section-Print--Paperback').attr('selected', 'selected');
+                    }
                   }
                   this.contributor0.val(response[0]['contributor']);
                   this.biography0.val(response[0]['biography']);

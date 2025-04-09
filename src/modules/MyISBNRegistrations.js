@@ -428,18 +428,15 @@ class ISBNRegistrations{
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.removeClass('hidden');
                                         this.printSection.addClass('hidden');
-                                    } else if (response[0]['format'] == 'Hardcover Books') {
-                                        $('#isbn-info--book-medium--print').attr('selected', 'selected');
+                                    } else {
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.addClass('hidden');
                                         this.printSection.removeClass('hidden');
-                                        $('#section-Print--Hardback').attr('selected', 'selected');
-                                    } else if (response[0]['format'] == 'Paperback Books') {
-                                        $('#isbn-info--book-medium--print').attr('selected', 'selected');
-                                        this.ebookSection.addClass('hidden');
-                                        this.audioSection.addClass('hidden');
-                                        this.printSection.removeClass('hidden');
-                                        $('#section-Print--Paperback').attr('selected', 'selected');
+                                        if (response[0]['format'] == 'Hardcover Books'){
+                                            $('#section-Print--Hardback').attr('selected', 'selected');
+                                        } else {
+                                            $('#section-Print--Paperback').attr('selected', 'selected');
+                                        }
                                     }
                                     this.contributor0.val(response[0]['contributor']);
                                     this.biography0.val(response[0]['biography']);
