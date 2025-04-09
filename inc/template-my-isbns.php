@@ -212,7 +212,7 @@ get_header();
                 </div>
                 <div class="hidden isbn-info--format-section" id="isbn-info--section-Print">
                     <label for="isbn-info--print-section--format" class="isbn-info--format-label">Format</label>
-                    <select id="isbn-info--print-section--format">
+                    <select id="isbn-info--print-section--format" class="isbn-info--format-select">
                         <option>Hardback</option>
                         <option>Paperback</option>
                     </select>
