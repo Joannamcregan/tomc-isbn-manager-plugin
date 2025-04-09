@@ -434,8 +434,10 @@ class ISBNRegistrations{
                                         this.audioSection.addClass('hidden');
                                         this.printSection.removeClass('hidden');
                                         if (response[0]['format'] == 'Hardcover Books'){
+                                            console.log('hardback');
                                             $('#section-Print--Hardback').attr('selected', 'selected');
                                         } else {
+                                            console.log('paperback');
                                             $('#section-Print--Paperback').attr('selected', 'selected');
                                         }
                                     }
