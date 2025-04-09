@@ -428,7 +428,7 @@ class ISBNRegistrations{
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.removeClass('hidden');
                                         this.printSection.addClass('hidden');
-                                    } else if (response[0]['format'] == 'Paperback Books' || response[0]['format'] == 'Hardcover Books'){
+                                    } else {
                                         $('#isbn-info--book-medium--print').attr('selected', 'selected');
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.addClass('hidden');
