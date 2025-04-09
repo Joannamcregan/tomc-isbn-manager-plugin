@@ -931,7 +931,7 @@ class ISBNRegistrations {
             } else if (response[i]['fieldlabel'] == 'Description (up to 350 words)') {
               this.descriptionField.val(response[i]['fieldvalue']);
             } else if (response[i]['fieldlabel'] == 'Medium') {
-              console.log('medium is ' + response[i]['fieldValue']);
+              console.log('medium is ' + response[i]['fieldvalue']);
               if (response[i]['fieldvalue'] == 'Audiobooks') {
                 this.printSection.addClass('hidden');
                 this.ebookSection.addClass('hidden');
