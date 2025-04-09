@@ -448,10 +448,8 @@ class ISBNRegistrations{
                                         this.audioSection.addClass('hidden');
                                         this.printSection.removeClass('hidden');
                                         if (response[0]['bookFormat'] == 'Hardcover Books'){
-                                            console.log('hardback');
                                             $('#section-Print--Hardback').attr('selected', 'selected');
                                         } else {
-                                            console.log('paperback');
                                             $('#section-Print--Paperback').attr('selected', 'selected');
                                         }
                                     }
@@ -555,6 +553,8 @@ class ISBNRegistrations{
                                 $('#isbn-info--book-medium--print').attr('selected', 'selected');
                             }
                         } else if (response[i]['fieldlabel'] == 'bookFormat'){
+                            console.log('we got to book format!');
+                            console.log(response[i]['fieldvalue']);
                             if (response[i]['fieldvalue'] == "Hardback"){
                                 $('#section-Print--Hardback').attr('selected', 'selected');
                             } else if (response[i]['fieldvalue'] == "Paperback"){
