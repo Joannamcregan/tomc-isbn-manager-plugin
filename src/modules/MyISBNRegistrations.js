@@ -266,7 +266,7 @@ class ISBNRegistrations{
         let description = this.descriptionField.val();
         let name0 = this.contributor0.val();
         let bio0 = this.biography0.val();
-        let bookMedium = this.mediumSelect.val();
+        let bookMedium = $('#isbn-info--book-medium option:selected').text();
         let bookFormat = $('select.isbn-info--format-select:visible option:selected').text();
         let pubDate = this.publicationDate.val();
         let status = this.statusSelect.val();

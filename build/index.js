@@ -580,7 +580,7 @@ class ISBNRegistrations {
     let description = this.descriptionField.val();
     let name0 = this.contributor0.val();
     let bio0 = this.biography0.val();
-    let bookMedium = this.mediumSelect.val();
+    let bookMedium = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium option:selected').text();
     let bookFormat = jquery__WEBPACK_IMPORTED_MODULE_0___default()('select.isbn-info--format-select:visible option:selected').text();
     let pubDate = this.publicationDate.val();
     let status = this.statusSelect.val();
