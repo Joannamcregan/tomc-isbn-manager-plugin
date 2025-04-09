@@ -839,6 +839,7 @@ class ISBNRegistrations {
                     this.audioSection.removeClass('hidden');
                     this.printSection.addClass('hidden');
                   } else {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--print').attr('selected', 'selected');
                     this.ebookSection.addClass('hidden');
                     this.audioSection.addClass('hidden');
                     this.printSection.removeClass('hidden');
