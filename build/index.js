@@ -239,9 +239,9 @@ class ISBNRegistrations {
     this.viewOnlyContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#tomc-isbn-view-info-container');
     this.overlayCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info-overlay__close');
     this.viewOnlyCloseButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-view-info-overlay__close');
-    this.audioSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--audio-section');
-    this.ebookSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--ebook-section');
-    this.printSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--print-section');
+    this.audioSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-Audio');
+    this.ebookSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-E-book');
+    this.printSection = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--section-Print');
     this.mediumSelect = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium');
     this.assignedProductDropdown = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--assigned-product');
     this.titleField = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-title');
@@ -829,16 +829,19 @@ class ISBNRegistrations {
                   this.subtitleField.val(response[0]['subtitle']);
                   this.descriptionField.val(response[0]['description']);
                   if (response[0]['format'] == 'E-Books') {
+                    console.log('ebooks');
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--ebook').attr('selected', 'selected');
                     this.ebookSection.removeClass('hidden');
                     this.audioSection.addClass('hidden');
                     this.printSection.addClass('hidden');
                   } else if (response[0]['format'] == 'Audiobooks') {
+                    console.log('audiobook');
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--audio').attr('selected', 'selected');
                     this.ebookSection.addClass('hidden');
                     this.audioSection.removeClass('hidden');
                     this.printSection.addClass('hidden');
                   } else {
+                    console.log('print');
                     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#isbn-info--book-medium--print').attr('selected', 'selected');
                     this.ebookSection.addClass('hidden');
                     this.audioSection.addClass('hidden');
