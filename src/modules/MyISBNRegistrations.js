@@ -419,19 +419,16 @@ class ISBNRegistrations{
                                     this.subtitleField.val(response[0]['subtitle']);
                                     this.descriptionField.val(response[0]['description']);
                                     if(response[0]['format'] == 'E-Books'){
-                                        console.log('ebooks');
                                         $('#isbn-info--book-medium--ebook').attr('selected', 'selected');
                                         this.ebookSection.removeClass('hidden');
                                         this.audioSection.addClass('hidden');
                                         this.printSection.addClass('hidden');
                                     } else if (response[0]['format'] == 'Audiobooks'){
-                                        console.log('audiobook');
                                         $('#isbn-info--book-medium--audio').attr('selected', 'selected');
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.removeClass('hidden');
                                         this.printSection.addClass('hidden');
                                     } else {
-                                        console.log('print');
                                         $('#isbn-info--book-medium--print').attr('selected', 'selected');
                                         this.ebookSection.addClass('hidden');
                                         this.audioSection.addClass('hidden');
