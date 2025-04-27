@@ -30,7 +30,6 @@ class TOMCBookISBNPlugin {
         add_action('wp_enqueue_scripts', array($this, 'pluginFiles'));
         add_filter('template_include', array($this, 'loadTemplate'), 99);
         add_action('woocommerce_payment_complete', array($this, 'assignIsbn'));
-        add_action('woocommerce_thankyou', array($this, 'showIsbn'));
     }	
 
     function registerScripts(){
